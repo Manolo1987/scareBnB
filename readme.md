@@ -12,10 +12,10 @@
 
 ##### (3) Hier wie üblich mit staging und commits arbeiten
 
-> git add.
+> git add .
 > git commit -m "commit message im Imperativ z.B: add UserSchema"
 
-##### (4) Pushen mit Origin - sonst müsste upstream jedes Mal gesetzt werden für jedes Feature
+##### (4) Pushen mit Origin - sonst müsste upstream jedes Mal gesetzt werden für jedes Feature ==> nur mit fertigem funktionierendem Code - da es eines Pull Requests bedarf
 
 > git push origin feat/UserSchema
 
