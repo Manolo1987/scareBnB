@@ -35,3 +35,5 @@ Code überprüfen
 ## Dann der beginnt der Kreislauf von vorne
 
 ![Branch-Struktur](/readmebilder/branchStruktur.png)
+
+Startschuss 05.12.24 13.17 Dev branch wird geöffnet
