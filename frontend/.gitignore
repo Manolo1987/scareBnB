@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+config.js
 
 
 # Editor directories and files
