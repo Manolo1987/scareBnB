@@ -28,7 +28,7 @@ Code überprüfen
 
 ##### lokal --> zur dev branch wechseln
 
-> git pull checkout dev
+> git checkout dev
 > git pull origin dev
 > git branch -d feat/UserSchema
 
