@@ -61,7 +61,7 @@ const userSchema = new Schema(
           // Checks if the email is valid
           return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
         },
-        message: 'Die E-Mail-Adresse ist ungültig!',
+        message: 'Invalid email!',
       },
       set: function (v) {
         // Sanitizing: removes whitespace and converts email to lowercase
