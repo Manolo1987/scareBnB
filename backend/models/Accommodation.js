@@ -20,7 +20,7 @@ const accommodationSchema = new Schema(
     city: {
       type: String,
       required: true,
-      maxlength: [20, 'city must be at most 20 characters'],
+      maxlength: [50, 'city must be at most 50 characters'],
       validate: {
         validator: function (v) {
           return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F]+$/.test(v);
@@ -34,16 +34,24 @@ const accommodationSchema = new Schema(
     state: {
       type: String,
       required: true,
-      maxlength: [20, 'state must be at most 20 characters'],
-      validate: {
-        validator: function (v) {
-          return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F]+$/.test(v);
-        },
-        message: 'state contains invalid characters!',
-      },
-      set: function (v) {
-        return v.replace(/[^\w\s.,;:'"-@_]/g, '');
-      },
+      enum: [
+        'Baden-Württemberg',
+        'Bavaria',
+        'Berlin',
+        'Brandenburg',
+        'Bremen',
+        'Hamburg',
+        'Hesse',
+        'Lower Saxony',
+        'Mecklenburg-Western Pomerania',
+        'North Rhine-Westphalia',
+        'Rhineland-Palatinate',
+        'Saarland',
+        'Saxony',
+        'Saxony-Anhalt',
+        'Schleswig-Holstein',
+        'Thuringia',
+      ],
     },
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
