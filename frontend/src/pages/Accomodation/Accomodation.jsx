@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './UserList.module.css';
+import styles from './Accomodation.module.css'
 
 export default function Accomodation() {
   return (
