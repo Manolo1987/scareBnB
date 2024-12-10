@@ -61,7 +61,7 @@ const userSchema = new Schema(
           // Checks if the email is valid
           return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
         },
-        message: 'Die E-Mail-Adresse ist ungültig!',
+        message: 'Invalid email!',
       },
       set: function (v) {
         // Sanitizing: removes whitespace and converts email to lowercase
@@ -93,8 +93,8 @@ const userSchema = new Schema(
       },
     },
     bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
-    favourites: [{ type: Schema.Types.ObjectId, ref: 'Accomodation' }],
-    listings: [{ type: Schema.Types.ObjectId, ref: 'Accomodation' }],
+    favourites: [{ type: Schema.Types.ObjectId, ref: 'Accommodation' }],
+    listings: [{ type: Schema.Types.ObjectId, ref: 'Accommodation' }],
     bookedListings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
