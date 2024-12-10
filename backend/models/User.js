@@ -80,7 +80,7 @@ const userSchema = new Schema(
         message: 'Phone number must only contain numbers!',
       },
     },
-    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    roles: { type: String, enum: ['user', 'admin'], default: 'user' },
     dateOfBirth: {
       type: Date,
       required: true,
