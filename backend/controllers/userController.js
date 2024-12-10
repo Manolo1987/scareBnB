@@ -6,9 +6,9 @@ import { generateToken } from '../middleware/jwt.js';
 // Register
 export async function register(req, res) {
   try {
-    const { email, username } = req.body;
+    const { email } = req.body;
     const existingUser = await User.findOne({
-      $or: [{ username: username }, { email: email }],
+      email: email.toLowerCase(),
     });
     if (existingUser) {
       return res.status(400).json({ msg: 'User already exists!' });
