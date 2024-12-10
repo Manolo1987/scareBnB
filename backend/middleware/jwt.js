@@ -37,7 +37,9 @@ export const authenticateToken = async (req, res, next) => {
 export const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     try {
-      const userRoles = req.roles || [];
+      const userRoles = Array.isArray(req.roles) ? req.roles : [req.roles];
+      console.log('User Roles:', userRoles);
+      console.log('Allowed Roles:', allowedRoles);
 
       // check if role is included
       const hasPermission = userRoles.some((role) =>
