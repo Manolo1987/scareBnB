@@ -12,7 +12,7 @@ accoRouter.get('/my', authenticateToken, acco.getMyListings);
 
 accoRouter.post('/', authenticateToken, acco.createListing);
 // accoRouter.patch('/:listingId', authenticateToken, acco.updateListing);
-// accoRouter.delete('/:listingId', authenticateToken, acco.deleteListing); // authenticated user oder admin
+accoRouter.delete('/:listingId', authenticateToken, acco.deleteListing); // authenticated user oder admin
 
 // - addComment/:userId/:accomodationId (JWT)
 // - deleteComment/:userId/:accomodationId (JWT und/oder Admin)

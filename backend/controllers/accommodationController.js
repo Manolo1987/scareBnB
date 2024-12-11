@@ -100,3 +100,29 @@ export async function createListing(req, res) {
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
+
+//deleteListing
+export async function deleteListing(req, res) {
+  try {
+    const { listingId } = req.params;
+    const listing = await Accommodation.findById(listingId).populate('owner');
+    const user = await User.findById(req.userId);
+    const ownerId = listing.owner._id.toString();
+
+    if (ownerId === req.userId || user.roles === 'admin') {
+      await User.findByIdAndUpdate(ownerId, {
+        $pull: { listings: listing._id },
+      });
+      // delete comments
+      // delete bookings
+      //delete images on cloudinary if not admin
+      await Accommodation.findByIdAndDelete(listing._id);
+
+      return res.status(200).json({ msg: 'Successfully deleted listing.' });
+    }
+    res.status(403).json({ msg: 'Unauthorized.' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
