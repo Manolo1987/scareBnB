@@ -1,6 +1,7 @@
 // userController.js
 
 import User from '../models/User.js';
+import Accommodation from '../models/Accommodation.js';
 import { generateToken } from '../middleware/jwt.js';
 
 // Register
@@ -83,7 +84,15 @@ export async function logout(req, res) {
 // User profile
 export async function getUser(req, res) {
   try {
-    const user = await User.findById(req.userId); // add populate later
+    const user = await User.findById(req.userId)
+      .populate('favourites')
+      .populate('listings');
+    //.populate('bookings')
+    // .populate({
+    //   path: 'bookedListings',
+    //   populate: { path: 'accommodation' },
+    // });
+    // add populate later for bookedListings and bookings
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
@@ -157,5 +166,72 @@ export async function getAllUsers(req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Fehler!' });
+  }
+}
+
+// delete User as admin
+export async function deleteUserByAdmin(req, res) {
+  try {
+    const { userId } = req.params;
+    console.log(userId);
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({
+      msg: `User ${deletedUser.firstName} ${deletedUser.lastName} deleted`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}
+
+// user add his favourite accomodation
+export async function addFavourite(req, res) {
+  try {
+    const { userId } = req;
+    const { accommodationId } = req.params;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { favourites: accommodationId } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.status(200).json({
+      msg: 'Accommodation added to favorites',
+      favourites: updatedUser.favourites,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}
+
+// user removes accommodation from favourites
+export async function removeFavourite(req, res) {
+  try {
+    const { userId } = req;
+    const { accommodationId } = req.params;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { favourites: accommodationId } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.status(200).json({
+      msg: 'Accommodation removed from favorites',
+      favourites: updatedUser.favourites,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
   }
 }
