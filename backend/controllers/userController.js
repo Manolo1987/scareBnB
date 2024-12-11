@@ -1,6 +1,7 @@
 // userController.js
 
 import User from '../models/User.js';
+import Accommodation from '../models/Accommodation.js';
 import { generateToken } from '../middleware/jwt.js';
 
 // Register
@@ -83,7 +84,15 @@ export async function logout(req, res) {
 // User profile
 export async function getUser(req, res) {
   try {
-    const user = await User.findById(req.userId); // add populate later
+    const user = await User.findById(req.userId)
+      .populate('favourites')
+      .populate('listings');
+    //.populate('bookings')
+    // .populate({
+    //   path: 'bookedListings',
+    //   populate: { path: 'accommodation' },
+    // });
+    // add populate later for bookedListings and bookings
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
