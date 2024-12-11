@@ -1,19 +1,3 @@
-// import { createContext, useState } from "react";
-
-// export const UserAuthContext = createContext();
-
-// export default function UserAuthContextProvider({ children }) {
-//     const [userData, setUserData] = useState({});
-
-//     return (
-//         <UserAuthContext.Provider value={{ userData, setUserData }}>
-//             {children}
-//         </UserAuthContext.Provider>
-//     );
-// }
-
-
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
