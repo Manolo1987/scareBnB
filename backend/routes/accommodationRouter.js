@@ -6,9 +6,10 @@ import { authenticateToken, authorizeRoles } from '../middleware/jwt.js';
 const accoRouter = express.Router();
 
 accoRouter.get('/all', acco.getAllAccommodations);
-//accoRouter.get('/one/:accoId', acco.getOneAccomodation);
+accoRouter.get('/one/:accoId', acco.getOneAccommodation);
+accoRouter.get('/my', authenticateToken, acco.getMyListings);
+//  frontend route + query: /my?onlyBooked=false or true
 
-// accoRouter.get('/my', authenticateToken, acco.getMyListings);
 // accoRouter.post('/', authenticateToken, acco.createListing);
 // accoRouter.patch('/:listingId', authenticateToken, acco.updateListing);
 // accoRouter.delete('/:listingId', authenticateToken, acco.deleteListing); // authenticated user oder admin
