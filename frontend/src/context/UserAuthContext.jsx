@@ -8,7 +8,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
+export default function UserAuthContextProvider ({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null); // Neuen State für den Benutzer hinzufügen
     const [isLoading, setIsLoading] = useState(true);
