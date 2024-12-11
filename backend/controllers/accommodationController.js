@@ -57,3 +57,46 @@ export async function getMyListings(req, res) {
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
+
+//createListing
+export async function createListing(req, res) {
+  try {
+    const userId = req.userId;
+    const user = await User.findById(userId).populate('listings');
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found.' });
+    }
+    //console.log(user);
+
+    const newListing = await Accommodation.create({
+      title: req.body.title,
+      description: req.body.description,
+      state: req.body.state,
+      city: req.body.city,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      pricePerNight: req.body.pricePerNight,
+      bedrooms: req.body.bedrooms,
+      features: req.body.features || [],
+      owner: user._id,
+      titleImage: {
+        secure_url: 'test',
+        public_id: 'test',
+      },
+      images: [
+        {
+          secure_url: 'test',
+          public_id: 'test',
+        },
+      ],
+    });
+    //console.log(newListing);
+
+    await user.updateOne({ $addToSet: { listings: newListing._id } });
+
+    res.status(200).json(newListing);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
