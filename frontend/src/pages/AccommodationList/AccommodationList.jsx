@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './AccomodationList.module.css'
+import styles from './AccommodationList.module.css'
 
 export default function AccomodationList() {
   return (
