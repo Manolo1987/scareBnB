@@ -159,3 +159,24 @@ export async function getAllUsers(req, res) {
     res.status(500).json({ msg: 'Server Fehler!' });
   }
 }
+
+// delete User as admin
+export async function deleteUserByAdmin(req, res) {
+  try {
+    const { userId } = req.params;
+    console.log(userId);
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({
+      msg: `User ${deletedUser.firstName} ${deletedUser.lastName} deleted`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}

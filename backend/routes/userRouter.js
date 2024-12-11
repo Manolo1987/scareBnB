@@ -17,5 +17,11 @@ userRouter.get(
 );
 userRouter.put('/updateProfile', authenticateToken, user.updateUser);
 userRouter.delete('/deleteProfile', authenticateToken, user.deleteUser);
+userRouter.delete(
+  '/deleteUserAsAdmin/:userId',
+  authenticateToken,
+  authorizeRoles('admin'),
+  user.deleteUserByAdmin
+);
 
 export default userRouter;
