@@ -180,3 +180,49 @@ export async function deleteUserByAdmin(req, res) {
     res.status(500).json({ msg: 'Server error' });
   }
 }
+
+// user add his favourite accomodation
+export async function addFavourite(req, res) {
+  try {
+    const { userId } = req;
+    const { accommodationId } = req.params;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { favourites: accommodationId } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.status(200).json({
+      msg: 'Accommodation added to favorites',
+      favourites: updatedUser.favourites,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}
+
+// user removes accommodation from favourites
+export async function removeFavourite(req, res) {
+  try {
+    const { userId } = req;
+    const { accommodationId } = req.params;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { favourites: accommodationId } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.status(200).json({
+      msg: 'Accommodation removed from favorites',
+      favourites: updatedUser.favourites,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}

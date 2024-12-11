@@ -23,5 +23,15 @@ userRouter.delete(
   authorizeRoles('admin'),
   user.deleteUserByAdmin
 );
+userRouter.post(
+  '/addFavourite/:accommodationId',
+  authenticateToken,
+  user.addFavourite
+);
+userRouter.delete(
+  '/removeFavourite/:accommodationId',
+  authenticateToken,
+  user.removeFavourite
+);
 
 export default userRouter;
