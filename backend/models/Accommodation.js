@@ -1,4 +1,4 @@
-// Location.js
+// Accommodation.js
 import { model, Schema } from 'mongoose';
 
 const accommodationSchema = new Schema(
@@ -6,15 +6,15 @@ const accommodationSchema = new Schema(
     title: {
       type: String,
       required: true,
-      maxlength: [30, 'title must be at most 30 characters'],
+      maxlength: [50, 'title must be at most 50 characters'],
       validate: {
         validator: function (v) {
-          return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F]+$/.test(v);
+          return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
         },
         message: 'title contains invalid characters!',
       },
       set: function (v) {
-        return v.replace(/[^\w\s.,;:'"-@_]/g, '');
+        return v.replace(/[^\w\s.,;:'"@_\-\u00C0-\u017F()]/g, '');
       },
     },
     city: {
@@ -23,12 +23,12 @@ const accommodationSchema = new Schema(
       maxlength: [50, 'city must be at most 50 characters'],
       validate: {
         validator: function (v) {
-          return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F]+$/.test(v);
+          return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
         },
         message: 'city contains invalid characters!',
       },
       set: function (v) {
-        return v.replace(/[^\w\s.,;:'"-@_]/g, '');
+        return v.replace(/[^\w\s.,;:'"@_\-\u00C0-\u017F()]/g, '');
       },
     },
     state: {
@@ -101,7 +101,7 @@ const accommodationSchema = new Schema(
     },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     isBooked: { type: Boolean, required: true, default: false },
-    feedback: { type: Number, min: 1, max: 5, default: 1 },
+    feedback: [{ type: Number, min: 1, max: 5, default: 1 }],
     rating: { type: Number, default: 0 },
     titleImage: {
       secure_url: { type: String, required: true },
