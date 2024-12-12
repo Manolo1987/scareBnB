@@ -1,19 +1,18 @@
 .register_button {
   font-size: 1rem;
   color: #fff;
-  background-color: rgba(128, 128, 128, 0.361);
+  background-color: var(--color-dark);
   border: none;
   margin: 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     background-color: crimson;
   }
 }
 
-/* Overlay Styling */
 .overlay {
   position: fixed;
   top: 0;
@@ -41,42 +40,54 @@
   form {
     display: flex;
     flex-direction: column;
+
+    input {
+      width: 100%;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: var(--color-prime);
+        outline: none;
+      }
+    }
+
+    button {
+      background-color: var(--color-dark);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: var(--color-medium);
+      }
+    }
+
+    p {
+      font-size: 12px;
+      font-family: var(--font-basic);
+      color: var(--color-medium);
+      margin-top: -0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem;
+
+      input {
+        width: 2rem;
+        cursor: pointer;
+        margin: 0;
+      }
+    }
   }
-
-  input {
-    width: 100%;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-  }
-}
-
-
-.overlay_content input:focus {
-  border-color: #4caf50;
-  outline: none;
-  box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
-}
-
-.overlay_content button {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.overlay_content button:hover {
-  background-color: #45a049;
-}
-
-.overlay_content button[type="button"] {
-  background-color: #f44336; /* Rot für den Schließen-Button */
-}
-
-.overlay_content button[type="button"]:hover {
-  background-color: #e53935;
 }

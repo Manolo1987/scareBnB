@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Header.module.css';
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 
 export default function Header() {
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
   return (
     <header>
       <section className={styles.top_banner}>
@@ -12,8 +15,8 @@ export default function Header() {
           <p>Scarebnb</p>
         </div>
         <div className={styles.account}>
-          <Login />
-          <Register />
+        <Login showLogin={showLogin} setShowLogin={setShowLogin} setShowRegister={setShowRegister} />
+          <Register showRegister={showRegister} setShowRegister={setShowRegister}/>
         </div>
       </section>
       <div className={styles.title}>

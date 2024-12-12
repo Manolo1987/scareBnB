@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './Register.module.css';
+import axios from "axios";
+import { useAuth } from '../../../context/UserAuthContext';
 
-export default function Register() {
-  const [showRegister, setShowRegister] = useState(false);
+export default function Register({showRegister, setShowRegister}) {
+  const {registration} = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -10,7 +12,7 @@ export default function Register() {
     password: '',
     confirmPassword: '',
     phone: '',
-    birthDate: '',
+    dateOfBirth: '',
     dataConsent: false,
   });
   const [errors, setErrors] = useState({
@@ -20,7 +22,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     phone: "",
-    birthDate: "",
+    dateOfBirth: "",
     dataConsent: "",
   });
 
@@ -39,11 +41,29 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData);
-    
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log({formData});
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: 'Passwords do not match',
+      }));
+      return;
+    }
+  
+    try {
+      await registration(formData);
+      setShowRegister(false);
+    } catch (error) {
+      console.error('Registration error:', error|| error.message);
+  
+      // if (error.response && error.response.data.errors) {
+      //   setErrors(error.response.data.errors);
+      // }
+    }
+  };
 
   return (
     <>
@@ -144,22 +164,23 @@ export default function Register() {
                 Birthday:
                 <input
                   type='date'
-                  name='birthDate'
-                  value={formData.birthDate}
+                  name='dateOfBirth'
+                  value={formData.dateOfBirth}
                   onChange={handleChange}
                   required
                 />
-                {errors.birthDate && (
-                  <p className={styles.error}>{errors.birthDate}</p>
+                {errors.dateOfBirth && (
+                  <p className={styles.error}>{errors.dateOfBirth}</p>
                 )}
               </label>
 
-              <label>
+              <label className={styles.checkbox}>
                 <input
                   type='checkbox'
                   name='dataConsent'
                   checked={formData.dataConsent}
                   onChange={handleChange}
+                  required
                 />
                 I agree to the terms and conditions
               </label>
