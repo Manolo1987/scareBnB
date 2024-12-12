@@ -20,6 +20,23 @@ export default function HandleListings() {
     'Schleswig-Holstein',
     'Thuringia',
   ];
+  const featureList = [
+    'Phantom WiFi',
+    'Bottomless Pool',
+    'Cursed Parking',
+    'Ectoplasm Gym',
+    'Ghost-Friendly',
+    'Seance Room',
+    'Creaky Floorboards',
+    'Haunted Library',
+    'Eternal Fireplace',
+    'Poltergeist Butler Service',
+    'Whispering Walls',
+    'Mystic Fog Generator',
+    'Time-Lost Clock',
+    'Wailing Wind Ventilation',
+    'Portal Closet',
+  ];
 
   const [formData, setFormData] = useState({
     title: '',
@@ -30,6 +47,7 @@ export default function HandleListings() {
     longitude: '',
     bedrooms: 1,
     pricePerNight: 0,
+    features: [],
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -54,11 +72,25 @@ export default function HandleListings() {
     return /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?|[-+]?180(\.0+)?)/.test(v);
   }
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      // if checkbox is checked or unchecked
+      setFormData((prevState) => {
+        const updatedFeatures = checked
+          ? [...prevState.features, value] // add feature if checked
+          : prevState.features.filter((feature) => feature !== value); // remove feature if unchecked
+
+        return {
+          ...prevState,
+          features: updatedFeatures,
+        };
+      });
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
     // Perform validation checks and update the error state
     if (name === 'title') {
       if (value.length > 50) {
@@ -282,7 +314,21 @@ export default function HandleListings() {
             )}
           </div>
           <div className={styles.inputContainer}>
-            {/* feature checkboxes */}
+            <label>Features</label>
+            {featureList.map((feature) => (
+              <div key={feature} className={styles.checkboxContainer}>
+                <label>
+                  <input
+                    type='checkbox'
+                    name='features'
+                    value={feature}
+                    checked={formData.features.includes(feature)}
+                    onChange={handleInputChange}
+                  />
+                  {feature}
+                </label>
+              </div>
+            ))}
           </div>
           <div className={styles.inputContainer}>{/* titleImage upload*/}</div>
           <div className={styles.inputContainer}>
