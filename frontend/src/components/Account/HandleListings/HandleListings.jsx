@@ -192,10 +192,11 @@ export default function HandleListings() {
         }));
       }
     }
-    // for (const [key, value] of Object.entries(formData)) {
-    //   console.log(key, ': ', value);
-    // }
   };
+
+  // for (const [key, value] of Object.entries(formData)) {
+  //   console.log(key, ': ', value);
+  // }
 
   return (
     <div>
@@ -217,12 +218,13 @@ export default function HandleListings() {
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='description'>Description</label>
-            <input
-              type='text'
+            <textarea
               name='description'
               id='description'
               value={formData.description}
               onChange={handleInputChange}
+              rows='4'
+              cols='50'
             />
             {formErrors.description && (
               <p className={styles.error}>{formErrors.description}</p>
