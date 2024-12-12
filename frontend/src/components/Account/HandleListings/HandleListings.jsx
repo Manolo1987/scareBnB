@@ -20,6 +20,23 @@ export default function HandleListings() {
     'Schleswig-Holstein',
     'Thuringia',
   ];
+  const featureList = [
+    'Phantom WiFi',
+    'Bottomless Pool',
+    'Cursed Parking',
+    'Ectoplasm Gym',
+    'Ghost-Friendly',
+    'Seance Room',
+    'Creaky Floorboards',
+    'Haunted Library',
+    'Eternal Fireplace',
+    'Poltergeist Butler Service',
+    'Whispering Walls',
+    'Mystic Fog Generator',
+    'Time-Lost Clock',
+    'Wailing Wind Ventilation',
+    'Portal Closet',
+  ];
 
   const [formData, setFormData] = useState({
     title: '',
@@ -30,6 +47,9 @@ export default function HandleListings() {
     longitude: '',
     bedrooms: 1,
     pricePerNight: 0,
+    features: [],
+    titleImage: null,
+    images: [],
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -41,6 +61,8 @@ export default function HandleListings() {
     longitude: '',
     bedrooms: '',
     pricePerNight: '',
+    titleImage: '',
+    images: '',
   });
 
   function isValidTextField(v) {
@@ -53,12 +75,73 @@ export default function HandleListings() {
   function isValidCoordinate(v) {
     return /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?|[-+]?180(\.0+)?)/.test(v);
   }
+
+  const validateFile = (file, maxSize) => {
+    if (!file) return false;
+    const isImage = file.type.startsWith('image/');
+    const isValidSize = file.size <= maxSize;
+    return isImage && isValidSize;
+  };
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value, type, checked, files } = e.target;
+    if (type === 'checkbox') {
+      setFormData((prevState) => {
+        const updatedFeatures = checked
+          ? [...prevState.features, value]
+          : prevState.features.filter((feature) => feature !== value);
+
+        return { ...prevState, features: updatedFeatures };
+      });
+    } else if (type === 'file') {
+      if (name === 'titleImage') {
+        const file = files[0];
+        if (file && validateFile(file, 5 * 1024 * 1024)) {
+          setFormData((prevState) => ({
+            ...prevState,
+            titleImage: file,
+          }));
+          setFormErrors((prevState) => ({
+            ...prevState,
+            titleImage: '',
+          }));
+        } else {
+          setFormErrors((prevState) => ({
+            ...prevState,
+            titleImage: 'Please upload an image (max 5MB).',
+          }));
+        }
+      } else if (name === 'images') {
+        const selectedFiles = Array.from(files);
+        if (selectedFiles.length > 4) {
+          setFormErrors((prevState) => ({
+            ...prevState,
+            images: 'You can upload up to 4 images, each no larger than 5MB.',
+          }));
+
+          e.target.value = '';
+        } else {
+          // Filter valid files (bis 5 MB und Bilddateien)
+          const validFiles = selectedFiles.filter((file) =>
+            validateFile(file, 5 * 1024 * 1024)
+          );
+
+          setFormData((prevState) => ({
+            ...prevState,
+            images: validFiles,
+          }));
+          setFormErrors((prevState) => ({
+            ...prevState,
+            images: '',
+          }));
+        }
+      }
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
     // Perform validation checks and update the error state
     if (name === 'title') {
       if (value.length > 50) {
@@ -160,10 +243,11 @@ export default function HandleListings() {
         }));
       }
     }
-    // for (const [key, value] of Object.entries(formData)) {
-    //   console.log(key, ': ', value);
-    // }
   };
+
+  // for (const [key, value] of Object.entries(formData)) {
+  //   console.log(key, ': ', value);
+  // }
 
   return (
     <div>
@@ -185,12 +269,13 @@ export default function HandleListings() {
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='description'>Description</label>
-            <input
-              type='text'
+            <textarea
               name='description'
               id='description'
               value={formData.description}
               onChange={handleInputChange}
+              rows='4'
+              cols='50'
             />
             {formErrors.description && (
               <p className={styles.error}>{formErrors.description}</p>
@@ -282,11 +367,50 @@ export default function HandleListings() {
             )}
           </div>
           <div className={styles.inputContainer}>
-            {/* feature checkboxes */}
+            <label>Features</label>
+            {featureList.map((feature) => (
+              <div key={feature} className={styles.checkboxContainer}>
+                <label>
+                  <input
+                    type='checkbox'
+                    name='features'
+                    value={feature}
+                    checked={formData.features.includes(feature)}
+                    onChange={handleInputChange}
+                  />
+                  {feature}
+                </label>
+              </div>
+            ))}
           </div>
-          <div className={styles.inputContainer}>{/* titleImage upload*/}</div>
           <div className={styles.inputContainer}>
-            {/* other images upload*/}
+            <label htmlFor='titleImage'>Title Image</label>
+            <input
+              type='file'
+              name='titleImage'
+              id='titleImage'
+              accept='image/*'
+              onChange={handleInputChange}
+            />
+            {formErrors.titleImage && (
+              <p className={styles.error}>{formErrors.titleImage}</p>
+            )}
+          </div>
+
+          {/* File input for Other Images */}
+          <div className={styles.inputContainer}>
+            <label htmlFor='images'>Other Images</label>
+            <input
+              type='file'
+              name='images'
+              id='images'
+              accept='image/*'
+              multiple
+              onChange={handleInputChange}
+            />
+            {formErrors.images && (
+              <p className={styles.error}>{formErrors.images}</p>
+            )}
           </div>
         </form>
       </div>
