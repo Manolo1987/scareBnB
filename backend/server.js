@@ -4,6 +4,7 @@ import { connectDB } from './config/connectDB.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/userRouter.js';
+import accoRouter from './routes/accommodationRouter.js';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,6 +29,7 @@ app.use(express.json());
 
 // Routes
 app.use('/user', userRouter);
+app.use('/accommodations', accoRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is haunting on port: ${PORT}`);

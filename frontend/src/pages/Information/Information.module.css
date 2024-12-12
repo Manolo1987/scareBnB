@@ -1,0 +1,24 @@
+.info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.info {
+  max-height: 80%;
+  max-width: 768px;
+  margin: 5% auto 8% auto;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.box {
+  padding: 1em;
+  margin-bottom: 3%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 7px;
+  width: 100%;
+}

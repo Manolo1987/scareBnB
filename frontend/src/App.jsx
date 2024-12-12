@@ -17,9 +17,12 @@ import Bookings from './components/Account/Bookings/Bookings.jsx';
 import Listings from './components/Account/Listings/Listings.jsx';
 import AdminUserList from './components/Account/AdminUserList/AdminUserList.jsx';
 import AdminAccoList from './components/Account/AdminAccoList/AdminAccoList.jsx';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
+    <ToastContainer position='top-center' />
     <UserAuthContextProvider>
       <AccommodationContextProvider>
         <Routes>
