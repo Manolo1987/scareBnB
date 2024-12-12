@@ -11,24 +11,28 @@ import NotFound from './pages/NotFound/NotFound.jsx';
 import Information from './pages/Information/Information.jsx';
 import UserAuthContextProvider from './context/UserAuthContext.jsx';
 import AccommodationContextProvider from './context/AccommodationContext.jsx';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
-    <UserAuthContextProvider>
-      <AccommodationContextProvider>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path='accommodation' element={<Accommodation />} />
-            <Route path='accommodationlist' element={<AccommodationList />} />
-            <Route path='account' element={<Account />} />
-            <Route path='booking' element={<Booking />} />
-            <Route path='information' element={<Information />} />
-          </Route>
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </AccommodationContextProvider>
-    </UserAuthContextProvider>
-  )
+    <>
+      <ToastContainer position='top-center' />
+      <UserAuthContextProvider>
+        <AccommodationContextProvider>
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path='accommodation' element={<Accommodation />} />
+              <Route path='accommodationlist' element={<AccommodationList />} />
+              <Route path='account' element={<Account />} />
+              <Route path='booking' element={<Booking />} />
+              <Route path='information' element={<Information />} />
+            </Route>
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </AccommodationContextProvider>
+      </UserAuthContextProvider>
+    </>
+  );
 }
-
