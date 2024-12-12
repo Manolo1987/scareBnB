@@ -13,6 +13,10 @@
 
 h2 {
     margin-top: 0;
+    margin-bottom: 15px;
+}
+h3 {
+   margin: 15px 0;
 }
 
 .box {
@@ -21,4 +25,33 @@ h2 {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 7px;
   width: 100%;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.contactButton {
+  
+                display: inline-block;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                background: #000000;
+                color: #FFFFFF;
+                border-radius: 8px;
+                padding: 14px 24px 16px;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1;
+                transition: transform 200ms,background 200ms;
+                :hover{
+                    transform: translateY(-2px);
+                }
+
+                a {
+                  color: aqua;
+                  margin: 5px 0;
+                }
+                
 }
