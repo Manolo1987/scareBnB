@@ -1,0 +1,18 @@
+.info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.info {
+  width: 738px;
+  margin: 0 auto 5% auto;
+}
+.box {
+  padding: 1em;
+  margin-bottom: 3%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 7px;
+  width: 100%;
+}
