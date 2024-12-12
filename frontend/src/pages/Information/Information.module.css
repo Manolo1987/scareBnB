@@ -6,9 +6,15 @@
 }
 
 .info {
-  width: 738px;
-  margin: 0 auto 5% auto;
+  max-height: 80%;
+  max-width: 768px;
+  margin: 5% auto 8% auto;
 }
+
+h2 {
+    margin-top: 0;
+}
+
 .box {
   padding: 1em;
   margin-bottom: 3%;
