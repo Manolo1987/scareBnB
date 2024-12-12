@@ -10,7 +10,7 @@ export default function Account() {
   return (
     <>
       <AccountNav />
-      <HandleListings />
+      {/* <HandleListings /> */}
       <Outlet />
     </>
   );

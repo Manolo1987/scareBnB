@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './HandleListings.module.css';
+//import { useAcco } from '../../../context/AccommodationContext.jsx';
 
 export default function HandleListings() {
   const states = [
