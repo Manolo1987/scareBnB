@@ -48,6 +48,8 @@ export default function HandleListings() {
     bedrooms: 1,
     pricePerNight: 0,
     features: [],
+    titleImage: null,
+    images: [],
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -59,6 +61,8 @@ export default function HandleListings() {
     longitude: '',
     bedrooms: '',
     pricePerNight: '',
+    titleImage: '',
+    images: '',
   });
 
   function isValidTextField(v) {
@@ -71,20 +75,67 @@ export default function HandleListings() {
   function isValidCoordinate(v) {
     return /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?|[-+]?180(\.0+)?)/.test(v);
   }
+
+  const validateFile = (file, maxSize) => {
+    if (!file) return false;
+    const isImage = file.type.startsWith('image/');
+    const isValidSize = file.size <= maxSize;
+    return isImage && isValidSize;
+  };
+
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
-      // if checkbox is checked or unchecked
       setFormData((prevState) => {
         const updatedFeatures = checked
-          ? [...prevState.features, value] // add feature if checked
-          : prevState.features.filter((feature) => feature !== value); // remove feature if unchecked
+          ? [...prevState.features, value]
+          : prevState.features.filter((feature) => feature !== value);
 
-        return {
-          ...prevState,
-          features: updatedFeatures,
-        };
+        return { ...prevState, features: updatedFeatures };
       });
+    } else if (type === 'file') {
+      if (name === 'titleImage') {
+        const file = files[0];
+        if (file && validateFile(file, 5 * 1024 * 1024)) {
+          setFormData((prevState) => ({
+            ...prevState,
+            titleImage: file,
+          }));
+          setFormErrors((prevState) => ({
+            ...prevState,
+            titleImage: '',
+          }));
+        } else {
+          setFormErrors((prevState) => ({
+            ...prevState,
+            titleImage: 'Please upload an image (max 5MB).',
+          }));
+        }
+      } else if (name === 'images') {
+        const selectedFiles = Array.from(files);
+        if (selectedFiles.length > 4) {
+          setFormErrors((prevState) => ({
+            ...prevState,
+            images: 'You can upload up to 4 images, each no larger than 5MB.',
+          }));
+
+          e.target.value = '';
+        } else {
+          // Filter valid files (bis 5 MB und Bilddateien)
+          const validFiles = selectedFiles.filter((file) =>
+            validateFile(file, 5 * 1024 * 1024)
+          );
+
+          setFormData((prevState) => ({
+            ...prevState,
+            images: validFiles,
+          }));
+          setFormErrors((prevState) => ({
+            ...prevState,
+            images: '',
+          }));
+        }
+      }
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -332,9 +383,34 @@ export default function HandleListings() {
               </div>
             ))}
           </div>
-          <div className={styles.inputContainer}>{/* titleImage upload*/}</div>
           <div className={styles.inputContainer}>
-            {/* other images upload*/}
+            <label htmlFor='titleImage'>Title Image</label>
+            <input
+              type='file'
+              name='titleImage'
+              id='titleImage'
+              accept='image/*'
+              onChange={handleInputChange}
+            />
+            {formErrors.titleImage && (
+              <p className={styles.error}>{formErrors.titleImage}</p>
+            )}
+          </div>
+
+          {/* File input for Other Images */}
+          <div className={styles.inputContainer}>
+            <label htmlFor='images'>Other Images</label>
+            <input
+              type='file'
+              name='images'
+              id='images'
+              accept='image/*'
+              multiple
+              onChange={handleInputChange}
+            />
+            {formErrors.images && (
+              <p className={styles.error}>{formErrors.images}</p>
+            )}
           </div>
         </form>
       </div>
