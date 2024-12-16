@@ -8,43 +8,20 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
+export default function UserAuthContextProvider ({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null); // Neuen State für den Benutzer hinzufügen
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    const verifyAuth = async () => {
-        try {
-            const response = await api.get("/user/verify-token", {
-                withCredentials: true, // Wichtig: Cookies mitschicken
-            });
-            if (response.status === 200) {
-                setIsAuthenticated(true);
-                setUser(response.data.user); // Benutzer setzen
-            }
-        } catch (error) {
-            console.error(
-                "Token verification failed:",
-                error.response?.data || error.message
-            );
-            setIsAuthenticated(false);
-        } finally {
-            setIsLoading(false); // Prüfung abgeschlossen
-        }
-    };
-
-    // Ohne Cookies.get("jwt")
-    useEffect(() => {
-        verifyAuth();
-    }, []);
-
     // Login, Logout und Registrierung wie bisher
-    const login = async (email, password) => {
+    const login = async (formData) => {
         try {
+            console.log(formData);
+            
             const response = await api.post(
                 "/user/login",
-                { email, password },
+                formData,
                 { withCredentials: true }
             );
 
@@ -53,10 +30,11 @@ export const AuthProvider = ({ children }) => {
                 toast.success("Erfolgreich eingeloggt!");
                 setUser(response.data.user); // Benutzer nach erfolgreichem Login setzen
                 Cookies.set("jwt1", response.data.token);
-                navigate("/applications", { replace: true });
+                console.log({user});
+                
             }
         } catch (error) {
-            console.error("Login failed:", error.response?.data || error.message);
+            console.error("Login failed:", error || error.message);
             toast.error("Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.");
             setIsAuthenticated(false);
         }
@@ -79,16 +57,12 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const registration = async (username, email, password) => {
+    const registration = async (formData) => {
         try {
-            const response = await api.post("/user/register", {
-                username,
-                email,
-                password,
-            });
+            const response = await api.post("/user/register", formData);
             if (response.status === 201) {
+                console.log(response);
                 toast.success("Erfolgreich registriert!");
-                navigate("/login", { replace: true });
             }
         } catch (error) {
             // Extrahiere globale und spezifische Fehler

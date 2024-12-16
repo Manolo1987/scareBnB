@@ -1,13 +1,65 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext, useEffect } from 'react';
+import api from '../utils/api';
 
 export const AccommodationContext = createContext();
 
-export default function AccommodationContextProvider({ children }) {
-    const [accoData, setAccoData] = useState({});
+export const useAcco = () => useContext(AccommodationContext);
 
-    return (
-        <AccommodationContext.Provider value={{ accoData, setAccoData }}>
-            {children}
-        </AccommodationContext.Provider>
-    );
+export default function AccommodationContextProvider({ children }) {
+  const [allAccos, setAllAccos] = useState([]);
+  const [currentAcco, setCurrentAcco] = useState(null);
+  const [myListings, setMyListings] = useState([]);
+
+  async function getAllAccommodations() {
+    //apply filter, sort etc. here
+    // apply loading state here
+    try {
+      const response = await api.get('/accommodations/all');
+      setAllAccos(response.data);
+      //console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getOneAccommodation(id) {
+    try {
+      const response = await api.get(`/accommodations/one/${id}`);
+      setCurrentAcco(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getMyListings() {
+    try {
+      const response = await api.get('/accommodations/my');
+      setMyListings(response.data);
+      console.log(response.data); // 401
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    // getAllAccommodations(); //is working
+    //getOneAccommodation('675954a6cbdf5dcef1f79d07'); //is working
+    //getMyListings(); // in progress
+  }, []);
+
+  return (
+    <AccommodationContext.Provider
+      value={{
+        allAccos,
+        setAllAccos,
+        getAllAccommodations,
+        currentAcco,
+        setCurrentAcco,
+        getOneAccommodation,
+      }}
+    >
+      {children}
+    </AccommodationContext.Provider>
+  );
 }
