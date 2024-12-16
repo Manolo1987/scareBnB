@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Register.module.css';
-import axios from 'axios';
 import { useAuth } from '../../../context/UserAuthContext';
 
 export default function Register({
@@ -36,6 +35,14 @@ export default function Register({
     setShowConfirmPassword((prevState) => !prevState);
   };
 
+  const closeAndReset = () => {
+    setShowRegister(false);
+    setFormData({
+      email: '',
+      password: '',
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -53,7 +60,6 @@ export default function Register({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ formData });
 
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
@@ -62,16 +68,11 @@ export default function Register({
       }));
       return;
     }
-
     try {
       await registration(formData);
       setShowRegister(false);
     } catch (error) {
       console.error('Registration error:', error || error.message);
-
-      // if (error.response && error.response.data.errors) {
-      //   setErrors(error.response.data.errors);
-      // }
     }
   };
 
@@ -165,7 +166,9 @@ export default function Register({
                   className={styles.icon}
                   onClick={toggleConfirmPasswordVisibility}
                   role='button'
-                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                  aria-label={
+                    showConfirmPassword ? 'Hide password' : 'Show password'
+                  }
                 >
                   {showConfirmPassword ? '👻' : '👁️'}
                 </span>
@@ -212,7 +215,7 @@ export default function Register({
               </label>
 
               <button type='submit'>Submit</button>
-              <button type='button' onClick={() => setShowRegister(false)}>
+              <button type='button' onClick={closeAndReset}>
                 Close
               </button>
             </form>

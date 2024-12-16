@@ -15,23 +15,24 @@ export default function Login({
     password: '',
   });
 
+  const closeAndReset = () => {
+    setShowLogin(false);
+    setFormData({
+      email: '',
+      password: '',
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-
-    // if (errors[name]) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     [name]: '',
-    //   }));
-    // }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(formData);
-      setShowLogin(false)
+      setShowLogin(false);
     } catch (err) {
       setError('Fehler beim Login. Überprüfe deine Anmeldedaten.');
       toast.error('Fehler beim Login. Überprüfe deine Anmeldedaten.');
@@ -82,7 +83,7 @@ export default function Login({
                 </span>
               </label>
               <button type='submit'>Login</button>
-              <button type='button' onClick={() => setShowLogin(false)}>
+              <button type='button' onClick={closeAndReset}>
                 Close
               </button>
               <p>

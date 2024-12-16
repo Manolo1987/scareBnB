@@ -2,6 +2,7 @@
   font-size: 1rem;
   color: #fff;
   background-color: var(--color-dark);
+  border-radius: 8px;
   border: none;
   margin: 1rem;
   padding: 0.5rem 1rem;
@@ -49,7 +50,6 @@
       margin-bottom: 1rem;
       transition: all 0.3s ease;
 
-
       &:focus {
         border-color: var(--color-prime);
         outline: none;
@@ -73,20 +73,23 @@
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: var(--color-medium);
+        background-color: var(--color-prime);
       }
     }
 
     p {
+      text-align: center;
+      font-size: 1rem;
       font-family: var(--font-basic);
       color: black;
       margin: 1rem 0;
 
       span {
-        color: blue;
+        font-weight: bold;
+        color: purple;
         cursor: pointer;
         &:hover {
-          color: royalblue;
+          color: crimson;
           text-decoration: underline;
         }
       }
