@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './HandleListings.module.css';
-//import { useAcco } from '../../../context/AccommodationContext.jsx';
+import { useAcco } from '../../../context/AccommodationContext.jsx';
 
 export default function HandleListings() {
+  const { getMyListings, getAllAccommodations, getOneAccommodation } =
+    useAcco();
+  useEffect(() => {
+    //getAllAccommodations(); //is working
+    //getOneAccommodation('675954a6cbdf5dcef1f79d07'); //is working
+    //getMyListings(); // is working
+  }, []);
+
   const states = [
     'Baden-Württemberg',
     'Bavaria',
