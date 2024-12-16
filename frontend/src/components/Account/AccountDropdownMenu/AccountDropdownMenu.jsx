@@ -5,8 +5,8 @@ import { useAuth } from '../../../context/UserAuthContext.jsx';
 
 export default function AccountDropdownMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const isAdmin = true; // user?.roles === 'admin'; TODO muss noch geändert werden
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+  const isAdmin = user?.roles === 'admin';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
