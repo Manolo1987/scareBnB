@@ -55,6 +55,11 @@
       }
     }
 
+    .icon {
+      position: absolute;
+      cursor: pointer;
+    }
+
     button {
       background-color: var(--color-dark);
       color: #fff;

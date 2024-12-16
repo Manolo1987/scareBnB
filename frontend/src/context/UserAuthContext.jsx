@@ -17,18 +17,16 @@ export default function UserAuthContextProvider({ children }) {
   // Login, Logout und Registrierung wie bisher
   const login = async (formData) => {
     try {
-      console.log(formData);
-
       const response = await api.post('/user/login', formData, {
         withCredentials: true,
       });
 
       if (response.status === 200) {
         setIsAuthenticated(true);
-        toast.success('Erfolgreich eingeloggt!');
+        toast.success('Login Successfull!');
         setUser(response.data.user); // Benutzer nach erfolgreichem Login setzen
         Cookies.set('jwt', response.data.token);
-        console.log({ user });
+        console.log(response.data.user);
       }
     } catch (error) {
       console.error('Login failed:', error || error.message);
@@ -44,9 +42,10 @@ export default function UserAuthContextProvider({ children }) {
         Cookies.remove('jwt', { path: '/' });
         //Cookies.remove('jwt1');
         setIsAuthenticated(false);
-        toast.success('Erfolgreich ausgeloggt!');
+        toast.success('Goodbye!');
         setUser(null); // Benutzer-Informationen beim Logout löschen
         navigate('/');
+        
         window.location.reload();
       }
     } catch (error) {
