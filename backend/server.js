@@ -21,6 +21,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS')); // Origin is not allowed
     }
   },
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // send cookies
 };
 app.use(cors(corsOptions));
