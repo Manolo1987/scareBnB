@@ -13,6 +13,7 @@ header {
       no-repeat center center / cover;
 
   p {
+    font-size: clamp(16px, 1.5vw, 32px);
     font-family: var(--font-typewriter);
     color: var(--color-light);
   }
@@ -49,10 +50,11 @@ header {
     align-items: center;
 
     h1 {
-      font-size: 6rem;
+    font-size: clamp(1rem, 5vw, 6rem);
       font-family: var(--font-title);
       letter-spacing: 1.2rem;
       color: var(--color-prime);
+      margin-bottom: 1rem;
     }
   }
 }

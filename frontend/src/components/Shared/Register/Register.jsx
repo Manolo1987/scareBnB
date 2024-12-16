@@ -1,10 +1,15 @@
 import React, { useContext, useState } from 'react';
 import styles from './Register.module.css';
-import axios from "axios";
+import axios from 'axios';
 import { useAuth } from '../../../context/UserAuthContext';
 
-export default function Register({showRegister, setShowRegister}) {
-  const {registration} = useAuth();
+export default function Register({
+  showRegister,
+  setShowRegister,
+  showPassword,
+  togglePasswordVisibility,
+}) {
+  const { registration } = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,15 +21,20 @@ export default function Register({showRegister, setShowRegister}) {
     dataConsent: false,
   });
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    dateOfBirth: "",
-    dataConsent: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    dateOfBirth: '',
+    dataConsent: '',
   });
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevState) => !prevState);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -43,7 +53,7 @@ export default function Register({showRegister, setShowRegister}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({formData});
+    console.log({ formData });
 
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
@@ -52,13 +62,13 @@ export default function Register({showRegister, setShowRegister}) {
       }));
       return;
     }
-  
+
     try {
       await registration(formData);
       setShowRegister(false);
     } catch (error) {
-      console.error('Registration error:', error|| error.message);
-  
+      console.error('Registration error:', error || error.message);
+
       // if (error.response && error.response.data.errors) {
       //   setErrors(error.response.data.errors);
       // }
@@ -123,12 +133,20 @@ export default function Register({showRegister, setShowRegister}) {
               <label>
                 Password:
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   name='password'
                   value={formData.password}
                   onChange={handleChange}
                   required
                 />
+                <span
+                  className={styles.icon}
+                  onClick={togglePasswordVisibility}
+                  role='button'
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? '👻' : '👁️'}
+                </span>
                 {errors.password && (
                   <p className={styles.error}>{errors.password}</p>
                 )}
@@ -137,12 +155,20 @@ export default function Register({showRegister, setShowRegister}) {
               <label>
                 Confirm Password:
                 <input
-                  type='password'
+                  type={showConfirmPassword ? 'text' : 'password'}
                   name='confirmPassword'
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
                 />
+                <span
+                  className={styles.icon}
+                  onClick={toggleConfirmPasswordVisibility}
+                  role='button'
+                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showConfirmPassword ? '👻' : '👁️'}
+                </span>
                 {errors.confirmPassword && (
                   <p className={styles.error}>{errors.confirmPassword}</p>
                 )}
