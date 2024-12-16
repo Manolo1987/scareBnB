@@ -1,9 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './AccountNav.module.css';
+import { useAuth } from '../../../context/UserAuthContext.jsx';
 
 export default function AccountNav() {
-  const isAdmin = true; // user?.roles === 'admin'; TODO muss noch geändert werden
+  const { user, logout } = useAuth();
+  const isAdmin = user?.roles === 'admin';
   return (
     <div className={styles.accountNav}>
       <ul className={styles.accountNavList}>
