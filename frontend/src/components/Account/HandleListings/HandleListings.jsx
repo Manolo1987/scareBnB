@@ -3,8 +3,7 @@ import styles from './HandleListings.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 
 export default function HandleListings() {
-  const { getMyListings, getAllAccommodations, getOneAccommodation } =
-    useAcco();
+  const { addNewListing } = useAcco();
   useEffect(() => {
     //getAllAccommodations(); //is working
     //getOneAccommodation('675954a6cbdf5dcef1f79d07'); //is working
@@ -50,7 +49,7 @@ export default function HandleListings() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    state: '',
+    state: states[0],
     city: '',
     latitude: '',
     longitude: '',
@@ -258,11 +257,28 @@ export default function HandleListings() {
   //   console.log(key, ': ', value);
   // }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = new FormData();
+    for (const [key, value] of Object.entries(formData)) {
+      if (key === 'titleImage' && value) {
+        form.append(key, value);
+      } else if (key === 'images' && value.length > 0) {
+        value.forEach((file) => {
+          form.append('images', file);
+        });
+      } else {
+        form.append(key, value);
+      }
+    }
+    addNewListing(form);
+  }
+
   return (
     <div>
       HandleListings
       <div className={styles.formContainer}>
-        <form className={styles.handleListings}>
+        <form className={styles.handleListings} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
             <label htmlFor='title'>Title</label>
             <input
@@ -421,6 +437,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.images}</p>
             )}
           </div>
+          <button type='submit'>Save</button>
         </form>
       </div>
     </div>

@@ -61,12 +61,17 @@ export async function getMyListings(req, res) {
 //createListing
 export async function createListing(req, res) {
   try {
+    console.log(req.file);
+    console.log(req.body);
     const userId = req.userId;
     const user = await User.findById(userId).populate('listings');
+
     if (!user) {
       return res.status(404).json({ msg: 'User not found.' });
     }
     //console.log(user);
+
+    const features = req.body.features.split(',');
 
     const newListing = await Accommodation.create({
       title: req.body.title,
@@ -77,11 +82,11 @@ export async function createListing(req, res) {
       longitude: req.body.longitude,
       pricePerNight: req.body.pricePerNight,
       bedrooms: req.body.bedrooms,
-      features: req.body.features || [],
+      features: features || [],
       owner: user._id,
       titleImage: {
-        secure_url: 'test',
-        public_id: 'test',
+        secure_url: req.file.path,
+        public_id: req.file.filename,
       },
       images: [
         {
@@ -90,7 +95,7 @@ export async function createListing(req, res) {
         },
       ],
     });
-    //console.log(newListing);
+    console.log(newListing);
 
     await user.updateOne({ $addToSet: { listings: newListing._id } });
 
