@@ -19,7 +19,7 @@ const userSchema = new Schema(
       },
       set: function (v) {
         // Sanitizing: Removes unwanted characters but allows valid ones
-        return v.replace(/[^\w\s.,;:'"-@_]/g, '');
+        return v.replace(/[^\w\s.,;:'"@_\-\u00C0-\u017F()]/g, '');
       },
     },
 
@@ -35,7 +35,7 @@ const userSchema = new Schema(
         message: 'last name contains invalid characters!',
       },
       set: function (v) {
-        return v.replace(/[^\w\s.,;:'"-@_]/g, '');
+        return v.replace(/[^\w\s.,;:'"@_\-\u00C0-\u017F()]/g, '');
       },
     },
     password: {

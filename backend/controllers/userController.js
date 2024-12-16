@@ -86,13 +86,13 @@ export async function getUser(req, res) {
   try {
     const user = await User.findById(req.userId)
       .populate('favourites')
-      .populate('listings');
-    //.populate('bookings')
-    // .populate({
-    //   path: 'bookedListings',
-    //   populate: { path: 'accommodation' },
-    // });
-    // add populate later for bookedListings and bookings
+      .populate('listings')
+      .populate('bookings')
+      .populate({
+        path: 'bookedListings',
+        populate: { path: 'accommodation' },
+      });
+
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
