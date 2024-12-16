@@ -1,6 +1,7 @@
 // Booking.js
 import { model, Schema } from 'mongoose';
 import Accommodation from './Accommodation.js';
+import { giveFeedback } from '../controllers/bookingController.js';
 
 const bookingSchema = new Schema({
   accommodation: {
@@ -16,7 +17,7 @@ const bookingSchema = new Schema({
   numberOfGuests: { type: Number, required: true, min: 1, max: 10 },
   checkIn: { type: Date, required: true },
   checkOut: { type: Date, required: true },
-  totalNights: { type: Number, required: true },
+  totalNights: { type: Number, min: 1 },
   host: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -26,7 +27,8 @@ const bookingSchema = new Schema({
     enum: ['creditCard', 'paypal', 'bank transfer'],
     required: true,
   },
-  totalPrice: { type: Number, required: true, min: 0 },
+  giveFeedback: { type: Boolean, default: false },
+  totalPrice: { type: Number, min: 0 },
   isCancelled: { type: Boolean, default: false },
 });
 

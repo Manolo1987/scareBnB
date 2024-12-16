@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/userRouter.js';
 import accoRouter from './routes/accommodationRouter.js';
+import bookingRouter from './routes/bookingRouter.js';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -30,6 +31,7 @@ app.use(express.json());
 // Routes
 app.use('/user', userRouter);
 app.use('/accommodations', accoRouter);
+app.use('/bookings', bookingRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is haunting on port: ${PORT}`);
