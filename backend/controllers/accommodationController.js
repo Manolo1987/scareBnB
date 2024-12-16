@@ -32,25 +32,14 @@ export async function getOneAccommodation(req, res) {
 export async function getMyListings(req, res) {
   try {
     const userId = req.userId;
-    //console.log(userId);
+
     const user = await User.findById(userId).populate('listings');
     if (!user) {
       return res.status(404).json({ msg: 'User not found.' });
     }
-    //console.log(user);
-
-    const onlyBooked = req.query.onlyBooked;
-    //console.log(onlyBooked);
-    if (onlyBooked === 'true') {
-      const myBookedListings = user.listings.filter(
-        (listing) => listing.isBooked === true
-      );
-      //console.log(myBookedListings.length);
-      return res.status(200).json(myBookedListings);
-    }
 
     const myListings = user.listings;
-    //console.log(myListings.length);
+
     res.status(200).json(myListings);
   } catch (error) {
     console.log(error);
@@ -58,7 +47,6 @@ export async function getMyListings(req, res) {
   }
 }
 
-//createListing
 export async function createListing(req, res) {
   try {
     console.log(req.file);
