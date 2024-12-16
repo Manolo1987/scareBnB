@@ -130,7 +130,7 @@ export async function updateUser(req, res) {
     }
 
     // save the updated user
-    await updatedUser.save();
+    await updatedUser.save({ validateModifiedOnly: true });
 
     // send the response with the updated user
     res.status(200).json({ msg: 'User updated successfully!', updatedUser });
