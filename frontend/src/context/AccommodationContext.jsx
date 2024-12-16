@@ -16,7 +16,7 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.get('/accommodations/all');
       setAllAccos(response.data);
-      //console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -34,18 +34,20 @@ export default function AccommodationContextProvider({ children }) {
 
   async function getMyListings() {
     try {
-      const response = await api.get('/accommodations/my');
+      const response = await api.get('/accommodations/my', {
+        withCredentials: true,
+      });
       setMyListings(response.data);
-      console.log(response.data); // 401
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    // getAllAccommodations(); //is working
+    //getAllAccommodations(); //is working
     //getOneAccommodation('675954a6cbdf5dcef1f79d07'); //is working
-    //getMyListings(); // in progress
+    //getMyListings(); // in working
   }, []);
 
   return (
@@ -57,6 +59,9 @@ export default function AccommodationContextProvider({ children }) {
         currentAcco,
         setCurrentAcco,
         getOneAccommodation,
+        myListings,
+        setMyListings,
+        getMyListings,
       }}
     >
       {children}
