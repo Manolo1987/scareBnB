@@ -49,8 +49,9 @@ export async function getMyListings(req, res) {
 
 export async function createListing(req, res) {
   try {
-    console.log(req.file);
-    console.log(req.body);
+    //console.log(req.files['titleImage']);
+    // console.log(req.files['otherImages']);
+    //console.log(req.body);
     const userId = req.userId;
     const user = await User.findById(userId).populate('listings');
 
@@ -60,6 +61,29 @@ export async function createListing(req, res) {
     //console.log(user);
 
     const features = req.body.features.split(',');
+
+    const titleImg = req.files['titleImage'][0];
+
+    if (!titleImg) {
+      return res.status(400).json({ msg: 'Please upload a title image.' });
+    }
+    const titleImage = {
+      secure_url: titleImg.path,
+      public_id: titleImg.filename,
+    };
+
+    //console.log(titleImg);
+
+    const images = [];
+
+    if (req.files['otherImages'] && req.files['otherImages'].length > 0) {
+      for (let img of req.files['otherImages']) {
+        images.push({
+          secure_url: img.path,
+          public_id: img.filename,
+        });
+      }
+    }
 
     const newListing = await Accommodation.create({
       title: req.body.title,
@@ -72,18 +96,10 @@ export async function createListing(req, res) {
       bedrooms: req.body.bedrooms,
       features: features || [],
       owner: user._id,
-      titleImage: {
-        secure_url: req.file.path,
-        public_id: req.file.filename,
-      },
-      images: [
-        {
-          secure_url: 'test',
-          public_id: 'test',
-        },
-      ],
+      titleImage: titleImage,
+      images: images,
     });
-    console.log(newListing);
+    //console.log(newListing);
 
     await user.updateOne({ $addToSet: { listings: newListing._id } });
 
