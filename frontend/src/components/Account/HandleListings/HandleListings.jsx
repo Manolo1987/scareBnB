@@ -57,7 +57,7 @@ export default function HandleListings() {
     pricePerNight: 0,
     features: [],
     titleImage: null,
-    images: [],
+    otherImages: [],
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -70,7 +70,7 @@ export default function HandleListings() {
     bedrooms: '',
     pricePerNight: '',
     titleImage: '',
-    images: '',
+    otherImages: '',
   });
 
   function isValidTextField(v) {
@@ -119,12 +119,13 @@ export default function HandleListings() {
             titleImage: 'Please upload an image (max 5MB).',
           }));
         }
-      } else if (name === 'images') {
+      } else if (name === 'otherImages') {
         const selectedFiles = Array.from(files);
         if (selectedFiles.length > 4) {
           setFormErrors((prevState) => ({
             ...prevState,
-            images: 'You can upload up to 4 images, each no larger than 5MB.',
+            otherImages:
+              'You can upload up to 4 images, each no larger than 5MB.',
           }));
 
           e.target.value = '';
@@ -136,11 +137,11 @@ export default function HandleListings() {
 
           setFormData((prevState) => ({
             ...prevState,
-            images: validFiles,
+            otherImages: validFiles,
           }));
           setFormErrors((prevState) => ({
             ...prevState,
-            images: '',
+            otherImages: '',
           }));
         }
       }
@@ -262,12 +263,12 @@ export default function HandleListings() {
     const form = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       if (key === 'titleImage' && value) {
-        form.append(key, value);
-      } else if (key === 'images' && value.length > 0) {
+        form.append('titleImage', value);
+      } else if (key === 'otherImages' && value.length > 0) {
         value.forEach((file) => {
-          form.append('images', file);
+          form.append('otherImages', file);
         });
-      } else {
+      } else if (key !== 'titleImage' && key !== 'otherImages') {
         form.append(key, value);
       }
     }
@@ -424,17 +425,17 @@ export default function HandleListings() {
 
           {/* File input for Other Images */}
           <div className={styles.inputContainer}>
-            <label htmlFor='images'>Other Images</label>
+            <label htmlFor='otherImages'>Other Images</label>
             <input
               type='file'
-              name='images'
-              id='images'
+              name='otherImages'
+              id='otherImages'
               accept='image/*'
               multiple
               onChange={handleInputChange}
             />
-            {formErrors.images && (
-              <p className={styles.error}>{formErrors.images}</p>
+            {formErrors.otherImages && (
+              <p className={styles.error}>{formErrors.otherImages}</p>
             )}
           </div>
           <button type='submit'>Save</button>

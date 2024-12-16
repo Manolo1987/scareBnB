@@ -57,7 +57,7 @@ export default function AccommodationContextProvider({ children }) {
       console.log(response.data);
       // if success navigate to myListings?
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   }
 
