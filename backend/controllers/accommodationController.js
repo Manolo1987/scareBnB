@@ -292,9 +292,66 @@ export async function postComment(req, res) {
     acco.comments.push(newComment._id);
     await acco.save();
 
+    await User.updateOne(
+      { _id: userId },
+      { $push: { comments: newComment._id } }
+    );
+
     res.status(200).json(newComment);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
+export async function deleteComment(req, res) {
+  try {
+    const { commentId } = req.params;
+    const userId = req.userId;
+
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ msg: 'Comment not found' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    if (comment.author.toString() !== userId && user.roles !== 'admin') {
+      return res
+        .status(403)
+        .json({ msg: 'You are not authorized to delete this comment' });
+    }
+
+    await Comment.deleteOne({ _id: commentId });
+
+    const accommodation = await Accommodation.findOneAndUpdate(
+      { comments: commentId },
+      { $pull: { comments: commentId } },
+      { new: true }
+    );
+
+    if (!accommodation) {
+      return res
+        .status(404)
+        .json({ msg: 'Accommodation not found or comment not associated' });
+    }
+
+    const userUpdate = await User.findByIdAndUpdate(
+      comment.author,
+      { $pull: { comments: commentId } },
+      { new: true }
+    );
+
+    if (!userUpdate) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({ msg: 'Comment deleted successfully' });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }

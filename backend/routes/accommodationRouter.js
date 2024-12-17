@@ -13,6 +13,6 @@ accoRouter.post('/', authenticateToken, uploadMW, acco.createListing);
 accoRouter.delete('/:listingId', authenticateToken, acco.deleteListing);
 
 accoRouter.post('/comment/:accoId', authenticateToken, acco.postComment);
-// - deleteComment/:userId/:accomodationId (JWT und/oder Admin)
+accoRouter.delete('/comment/:commentId', authenticateToken, acco.deleteComment);
 
 export default accoRouter;
