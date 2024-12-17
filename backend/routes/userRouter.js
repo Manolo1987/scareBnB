@@ -33,5 +33,5 @@ userRouter.delete(
   authenticateToken,
   user.removeFavourite
 );
-
+userRouter.get('/verify-token', authenticateToken, user.verifyToken);
 export default userRouter;
