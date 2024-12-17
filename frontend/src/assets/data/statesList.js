@@ -1,0 +1,18 @@
+export const states = [
+  'Baden-Württemberg',
+  'Bavaria',
+  'Berlin',
+  'Brandenburg',
+  'Bremen',
+  'Hamburg',
+  'Hesse',
+  'Lower Saxony',
+  'Mecklenburg-Western Pomerania',
+  'North Rhine-Westphalia',
+  'Rhineland-Palatinate',
+  'Saarland',
+  'Saxony',
+  'Saxony-Anhalt',
+  'Schleswig-Holstein',
+  'Thuringia',
+];
