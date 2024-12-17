@@ -9,12 +9,24 @@ export default function AccommodationContextProvider({ children }) {
   const [allAccos, setAllAccos] = useState([]);
   const [currentAcco, setCurrentAcco] = useState(null);
   const [myListings, setMyListings] = useState([]);
+  //Filters:
+  const [stateFilter, setStateFilter] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxBedrooms, setMaxBedrooms] = useState('');
+  const [minBedrooms, setMinBedrooms] = useState('');
+  const [minRating, setMinRating] = useState('');
+  //sort Options
+  const [sortBy, setSortBy] = useState('pricePerNight');
+  const [sortOrder, setSortOrder] = useState('asc');
+  //pagination
+  const [currentPage, setCurrentPage] = useState(2);
 
   async function getAllAccommodations() {
-    //apply filter, sort etc. here
     // apply loading state here
     try {
-      const response = await api.get('/accommodations/all');
+      const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&minBedrooms=${minBedrooms}&maxBedrooms=${maxBedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}`;
+      const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
       //console.log(response.data);
     } catch (error) {
