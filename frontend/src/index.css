@@ -17,7 +17,8 @@
   --font-typewriter: 'Special Elite', cursive;
   /* global colors */
   --color-prime: crimson;
-  --color-dark: rgb(82, 1, 82);
+  --color-secondary: rgb(82, 1, 82);
+  --color-dark: rgb(21, 21, 21);
   --color-medium: gray;
   --color-light: lightgray;
   --bg_color-prime: #100E09;
