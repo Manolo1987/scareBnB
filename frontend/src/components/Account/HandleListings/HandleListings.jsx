@@ -236,9 +236,10 @@ export default function HandleListings() {
     addNewListing(form);
   }
 
-  useEffect(() => {
-    getAllAccommodations();
-  }, []);
+  //testing:
+  // useEffect(() => {
+  //   getAllAccommodations();
+  // }, []);
 
   return (
     <div>
