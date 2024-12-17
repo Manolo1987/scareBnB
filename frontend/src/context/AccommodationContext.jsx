@@ -7,6 +7,7 @@ export const useAcco = () => useContext(AccommodationContext);
 
 export default function AccommodationContextProvider({ children }) {
   const [allAccos, setAllAccos] = useState([]);
+  const [specialAccos, setSpecialAccos] = useState([]);
   const [currentAcco, setCurrentAcco] = useState(null);
   const [myListings, setMyListings] = useState([]);
   //Filters:
@@ -105,6 +106,15 @@ export default function AccommodationContextProvider({ children }) {
     }
   }
 
+  async function getSpecial() {
+    try {
+      const response = await api.get('/accommodations/special');
+      //console.log(response.data);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  }
+
   return (
     <AccommodationContext.Provider
       value={{
@@ -139,6 +149,9 @@ export default function AccommodationContextProvider({ children }) {
         setCurrentPage,
         postComment,
         deleteComment,
+        specialAccos,
+        setSpecialAccos,
+        getSpecial,
       }}
     >
       {children}
