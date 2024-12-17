@@ -6,6 +6,7 @@ import uploadMW from '../middleware/uploadToCloudinary.js';
 const accoRouter = express.Router();
 
 accoRouter.get('/all', acco.getAllAccommodations);
+accoRouter.get('/special', acco.getSpecial);
 accoRouter.get('/one/:accoId', acco.getOneAccommodation);
 accoRouter.get('/my', authenticateToken, acco.getMyListings);
 accoRouter.post('/', authenticateToken, uploadMW, acco.createListing);

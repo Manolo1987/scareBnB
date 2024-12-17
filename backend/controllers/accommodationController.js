@@ -64,6 +64,21 @@ export async function getAllAccommodations(req, res) {
   }
 }
 
+export async function getSpecial(req, res) {
+  try {
+    const specialAccos = await Accommodation.find().limit(4);
+    // TODO: get handpicked nice Accommodations here
+
+    if (specialAccos.length === 0) {
+      return res.status(404).json({ msg: 'No accommodations found.' });
+    }
+    res.status(200).json(specialAccos);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
 export async function getOneAccommodation(req, res) {
   try {
     const { accoId } = req.params;
