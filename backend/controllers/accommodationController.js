@@ -48,7 +48,6 @@ export async function getAllAccommodations(req, res) {
 
     const totalCount = await Accommodation.countDocuments(filter);
     const totalPages = Math.ceil(totalCount / limitNum);
-    //const allAccos = await Accommodation.find();
 
     res.status(200).json({
       accommodations: allAccos,

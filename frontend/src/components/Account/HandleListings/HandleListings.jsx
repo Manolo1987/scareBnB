@@ -5,7 +5,7 @@ import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
 
 export default function HandleListings() {
-  const { addNewListing } = useAcco();
+  const { addNewListing, getAllAccommodations } = useAcco();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -235,6 +235,10 @@ export default function HandleListings() {
     }
     addNewListing(form);
   }
+
+  useEffect(() => {
+    getAllAccommodations();
+  }, []);
 
   return (
     <div>
