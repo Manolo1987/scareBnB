@@ -24,7 +24,7 @@ export async function register(req, res) {
 }
 
 // Login
-export async function login(req, res) {
+/* export async function login(req, res) {
   try {
     const { email, password } = req.body;
 
@@ -65,6 +65,59 @@ export async function login(req, res) {
   }
 }
 
+*/
+
+export async function login(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const passwordMatch = await user.isValidPassword(password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Check your credentials' });
+    }
+    // Populate related data
+    const fullUser = await User.findById(user._id)
+      .populate('favourites')
+      .populate('listings')
+      .populate('bookings')
+      .populate({
+        path: 'bookedListings',
+        populate: { path: 'accommodation' },
+      });
+
+    const token = generateToken({
+      userId: fullUser._id,
+      email: fullUser.email,
+      roles: fullUser.roles,
+    });
+
+    res
+      .status(200)
+      .cookie('jwt', token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: false, // false in development, true in production
+        path: '/',
+        maxAge: 60 * 60 * 1000, // 1h
+      })
+      .json({
+        msg: 'Login successful',
+        user: fullUser, // access to user data in frontend
+        token,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+}
+
 // Logout
 export async function logout(req, res) {
   try {
@@ -80,7 +133,6 @@ export async function logout(req, res) {
     res.status(500).json({ msg: 'Server error' });
   }
 }
-
 // User profile
 export async function getUser(req, res) {
   try {
