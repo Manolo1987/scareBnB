@@ -15,21 +15,34 @@ export default function UserAuthContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // fetchUserData
-
-  const fetchUserData = async () => {
+  const verifyAuth = async () => {
     try {
-      const response = await api.get('/user/myProfile', {
+      const response = await api.get('/user/verify-token', {
         withCredentials: true,
       });
       if (response.status === 200) {
-        setUser(response.data.user);
-        setIsLoading(false);
+        setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error('Error fetching userdata');
+      console.error(
+        'Token verification failed:',
+        error.response?.data || error.message
+      );
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    verifyAuth();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserData();
+    }
+  }, [isAuthenticated]);
 
   // Registration
   const registration = async (formData) => {
@@ -52,16 +65,32 @@ export default function UserAuthContextProvider({ children }) {
       });
 
       if (response.status === 200) {
+        Cookies.set('jwt', response.data.token);
         setIsAuthenticated(true);
         toast.success('Login Successfull!');
-        await fetchUserData();
-        Cookies.set('jwt', response.data.token);
-        console.log(response.data.user);
       }
     } catch (error) {
       console.error('Login failed:', error);
       toast.error('Login failed, please check your credentials.');
       setIsAuthenticated(false);
+    }
+  };
+
+  // fetchUserData
+
+  const fetchUserData = async () => {
+    try {
+      const response = await api.get('/user/myProfile', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setUser(response.data.user);
+        console.log(response.data.user);
+        console.log('Data from fetchUserData', user);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching userdata', error);
     }
   };
 
@@ -76,7 +105,7 @@ export default function UserAuthContextProvider({ children }) {
         setUser(null); // set User back to null
         navigate('/');
 
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
       console.log('Error during logout:', error);

@@ -2,6 +2,7 @@
 
 import User from '../models/User.js';
 import Accommodation from '../models/Accommodation.js';
+import Booking from '../models/Booking.js';
 import { generateToken } from '../middleware/jwt.js';
 
 // Register
@@ -139,7 +140,14 @@ export async function getUser(req, res) {
     const user = await User.findById(req.userId)
       .populate('favourites')
       .populate('listings')
-      .populate('bookings')
+      .populate({
+        path: 'bookings',
+        populate: [
+          { path: 'accommodation' },
+          { path: 'guest' },
+          { path: 'host' },
+        ],
+      })
       .populate({
         path: 'bookedListings',
         populate: { path: 'accommodation' },
@@ -152,7 +160,7 @@ export async function getUser(req, res) {
     res.status(200).json({ msg: 'User found', user: user });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ msg: 'Server Fehler!' });
+    res.status(500).json({ msg: 'Server Error!' });
   }
 }
 
@@ -227,7 +235,7 @@ export async function getAllUsers(req, res) {
     res.status(200).json({ msg: 'Users found', users: users });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ msg: 'Server Fehler!' });
+    res.status(500).json({ msg: 'Server error!' });
   }
 }
 
@@ -296,4 +304,8 @@ export async function removeFavourite(req, res) {
     console.error(error);
     res.status(500).json({ msg: 'Server error' });
   }
+}
+
+export async function verifyToken(req, res) {
+  res.status(200).json({ msg: 'Token ist valid!', user: req.userId }); // die Route prüft beim einloggen vorab, ob der Nutzer noch einen gültigen Token hat - die Funktion aus der Middleware muss diese Route schützen
 }
