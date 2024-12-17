@@ -7,16 +7,29 @@ export const useAcco = () => useContext(AccommodationContext);
 
 export default function AccommodationContextProvider({ children }) {
   const [allAccos, setAllAccos] = useState([]);
+  const [specialAccos, setSpecialAccos] = useState([]);
   const [currentAcco, setCurrentAcco] = useState(null);
   const [myListings, setMyListings] = useState([]);
+  //Filters:
+  const [stateFilter, setStateFilter] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxBedrooms, setMaxBedrooms] = useState('');
+  const [minBedrooms, setMinBedrooms] = useState('');
+  const [minRating, setMinRating] = useState('');
+  //sort Options
+  const [sortBy, setSortBy] = useState('pricePerNight');
+  const [sortOrder, setSortOrder] = useState('asc');
+  //pagination
+  const [currentPage, setCurrentPage] = useState(2);
 
   async function getAllAccommodations() {
-    //apply filter, sort etc. here
     // apply loading state here
     try {
-      const response = await api.get('/accommodations/all');
+      const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&minBedrooms=${minBedrooms}&maxBedrooms=${maxBedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}`;
+      const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
-      //console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -70,6 +83,38 @@ export default function AccommodationContextProvider({ children }) {
     }
   }
 
+  async function postComment(id) {
+    // send accommodation id as req.params
+    //send comment as body
+    try {
+      const response = await api.post(`/accommodations/comment/${id}`, {
+        title: 'cool',
+        content: 'sehr cool',
+      });
+      //console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deleteComment(commentId) {
+    try {
+      const response = await api.delete(`/accommodations/comment/${commentId}`);
+      //console.log(response.data);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  }
+
+  async function getSpecial() {
+    try {
+      const response = await api.get('/accommodations/special');
+      //console.log(response.data);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  }
+
   return (
     <AccommodationContext.Provider
       value={{
@@ -84,6 +129,29 @@ export default function AccommodationContextProvider({ children }) {
         getMyListings,
         addNewListing,
         deleteListing,
+        stateFilter,
+        setStateFilter,
+        maxPrice,
+        setMaxPrice,
+        minPrice,
+        setMinPrice,
+        maxBedrooms,
+        setMaxBedrooms,
+        minBedrooms,
+        setMinBedrooms,
+        minRating,
+        setMinRating,
+        sortBy,
+        setSortBy,
+        sortOrder,
+        setSortOrder,
+        currentPage,
+        setCurrentPage,
+        postComment,
+        deleteComment,
+        specialAccos,
+        setSpecialAccos,
+        getSpecial,
       }}
     >
       {children}

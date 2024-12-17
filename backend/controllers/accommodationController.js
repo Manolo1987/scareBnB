@@ -7,9 +7,72 @@ import cloudinary from '../config/cloudinary.js';
 
 export async function getAllAccommodations(req, res) {
   try {
-    // get currentPage, Sort and Filter Options from req.params
-    const allAccos = await Accommodation.find();
-    res.status(200).json(allAccos);
+    // get currentPage, Sort and Filter Options from req.query
+    const {
+      state,
+      maxPrice,
+      minPrice,
+      minBedrooms,
+      maxBedrooms,
+      minRating,
+      page = 1,
+      sortBy = 'pricePerNight',
+      sortOrder = 'asc',
+    } = req.query;
+
+    const pageNum = parseInt(page, 10);
+    const limitNum = 21;
+
+    const filter = {};
+
+    if (state) filter.state = state;
+    if (minPrice || maxPrice) {
+      filter.pricePerNight = {};
+      if (minPrice) filter.pricePerNight.$gte = minPrice;
+      if (maxPrice) filter.pricePerNight.$lte = maxPrice;
+    }
+    if (minBedrooms || maxBedrooms) {
+      filter.bedrooms = {};
+      if (minBedrooms) filter.bedrooms.$gte = minBedrooms;
+      if (maxBedrooms) filter.bedrooms.$lte = maxBedrooms;
+    }
+    if (minRating) filter.rating = { $gte: minRating };
+
+    const sort = {};
+    sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
+
+    const allAccos = await Accommodation.find(filter)
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
+      .sort(sort);
+
+    const totalCount = await Accommodation.countDocuments(filter);
+    const totalPages = Math.ceil(totalCount / limitNum);
+
+    res.status(200).json({
+      accommodations: allAccos,
+      pagination: {
+        totalCount,
+        totalPages,
+        currentPage: pageNum,
+        perPage: limitNum,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
+export async function getSpecial(req, res) {
+  try {
+    const specialAccos = await Accommodation.find().limit(4);
+    // TODO: get handpicked nice Accommodations here
+
+    if (specialAccos.length === 0) {
+      return res.status(404).json({ msg: 'No accommodations found.' });
+    }
+    res.status(200).json(specialAccos);
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error!' });
@@ -217,6 +280,93 @@ export async function deleteListing(req, res) {
     res.status(403).json({ msg: 'Unauthorized.' });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
+// Comment Controllers:
+
+export async function postComment(req, res) {
+  try {
+    const userId = req.userId;
+    const { accoId } = req.params;
+    const { title, content } = req.body;
+
+    const acco = await Accommodation.findById(accoId);
+    if (!acco) {
+      return res.status(404).json({ msg: 'Accommodation not found.' });
+    }
+
+    const newComment = await Comment.create({
+      author: userId,
+      location: accoId,
+      title,
+      content,
+    });
+
+    acco.comments.push(newComment._id);
+    await acco.save();
+
+    await User.updateOne(
+      { _id: userId },
+      { $push: { comments: newComment._id } }
+    );
+
+    res.status(200).json(newComment);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
+export async function deleteComment(req, res) {
+  try {
+    const { commentId } = req.params;
+    const userId = req.userId;
+
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ msg: 'Comment not found' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    if (comment.author.toString() !== userId && user.roles !== 'admin') {
+      return res
+        .status(403)
+        .json({ msg: 'You are not authorized to delete this comment' });
+    }
+
+    await Comment.deleteOne({ _id: commentId });
+
+    const accommodation = await Accommodation.findOneAndUpdate(
+      { comments: commentId },
+      { $pull: { comments: commentId } },
+      { new: true }
+    );
+
+    if (!accommodation) {
+      return res
+        .status(404)
+        .json({ msg: 'Accommodation not found or comment not associated' });
+    }
+
+    const userUpdate = await User.findByIdAndUpdate(
+      comment.author,
+      { $pull: { comments: commentId } },
+      { new: true }
+    );
+
+    if (!userUpdate) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({ msg: 'Comment deleted successfully' });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
