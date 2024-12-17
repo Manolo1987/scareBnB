@@ -1,6 +1,9 @@
 //accommodationController.js
 import User from '../models/User.js';
 import Accommodation from '../models/Accommodation.js';
+import Booking from '../models/Booking.js';
+import Comment from '../models/Comment.js';
+import cloudinary from '../config/cloudinary.js';
 
 export async function getAllAccommodations(req, res) {
   try {
@@ -115,16 +118,98 @@ export async function deleteListing(req, res) {
   try {
     const { listingId } = req.params;
     const listing = await Accommodation.findById(listingId).populate('owner');
+    //console.log(listing);
+
     const user = await User.findById(req.userId);
     const ownerId = listing.owner._id.toString();
 
     if (ownerId === req.userId || user.roles === 'admin') {
+      //delete listing entry in user (owner)
       await User.findByIdAndUpdate(ownerId, {
         $pull: { listings: listing._id },
       });
-      // delete comments
+
       // delete bookings
+      const bookings = listing.bookings;
+
+      if (listing.bookings.length > 0) {
+        //find all bookings with ids
+        // delete bookings in users.bookings
+        for (let bookingId of bookings) {
+          bookingId = bookingId.toString();
+
+          const users = await User.updateMany(
+            { bookings: bookingId },
+            { $pull: { bookings: bookingId } }
+          );
+
+          //delete from bookedListings
+          await User.findByIdAndUpdate(ownerId, {
+            $pull: { bookedListings: bookingId },
+          });
+
+          //delete bookings itself
+          await Booking.findByIdAndDelete(bookingId);
+        }
+      }
+      // delete from users favourite list
+      const users = await User.updateMany(
+        { favourites: listing._id },
+        { $pull: { favourites: listing._id } }
+      );
+
+      // delete comments
+      // find all comments with location = listingId
+      const comments = await Comment.find({ location: listingId }).populate(
+        'author'
+      );
+      if (comments.length === 0) {
+        console.log('No comments found for the specified listing.');
+      } else {
+        // find all users (authors) from comments
+        //pull them from user.comments
+        const userIds = comments.map((comment) => comment.author._id);
+        await User.updateMany(
+          { _id: { $in: userIds } },
+          {
+            $pull: {
+              comments: { $in: comments.map((comment) => comment._id) },
+            },
+          }
+        );
+        console.log(
+          `Removed comment IDs from the 'comments' array of ${userIds.length} users.`
+        );
+        //delete comments itself
+        const deletedComments = await Comment.deleteMany({
+          location: listingId,
+        });
+        console.log(`${deletedComments.deletedCount} comments were deleted.`);
+      }
+
       //delete images on cloudinary if not admin
+      if (user.roles !== 'admin') {
+        //find all images ids
+        const imagesIds = [listing.titleImage.public_id];
+        if (listing.images.length > 0) {
+          for (let img of listing.images) {
+            imagesIds.push(img.public_id);
+          }
+        }
+
+        //delete images on cloudinary
+        for (let imgId of imagesIds) {
+          console.log(imgId, 'deleted');
+          await cloudinary.uploader.destroy(imgId, function (error, result) {
+            console.log(result);
+            console.error(error);
+          });
+        }
+        console.log('Deleted images on cloudinary.');
+      } else {
+        console.log('Images not deleted, because owner of listing is admin.');
+      }
+      //delete listing itself
       await Accommodation.findByIdAndDelete(listing._id);
 
       return res.status(200).json({ msg: 'Successfully deleted listing.' });
