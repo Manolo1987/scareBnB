@@ -28,7 +28,7 @@ export default function AccommodationContextProvider({ children }) {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&minBedrooms=${minBedrooms}&maxBedrooms=${maxBedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}`;
       const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
-      //console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

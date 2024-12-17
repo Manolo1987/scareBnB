@@ -268,3 +268,33 @@ export async function deleteListing(req, res) {
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
+
+// Comment Controllers:
+
+export async function postComment(req, res) {
+  try {
+    const userId = req.userId;
+    const { accoId } = req.params;
+    const { title, content } = req.body;
+
+    const acco = await Accommodation.findById(accoId);
+    if (!acco) {
+      return res.status(404).json({ msg: 'Accommodation not found.' });
+    }
+
+    const newComment = await Comment.create({
+      author: userId,
+      location: accoId,
+      title,
+      content,
+    });
+
+    acco.comments.push(newComment._id);
+    await acco.save();
+
+    res.status(200).json(newComment);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server Error!' });
+  }
+}
