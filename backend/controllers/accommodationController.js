@@ -7,9 +7,58 @@ import cloudinary from '../config/cloudinary.js';
 
 export async function getAllAccommodations(req, res) {
   try {
-    // get currentPage, Sort and Filter Options from req.params
-    const allAccos = await Accommodation.find();
-    res.status(200).json(allAccos);
+    // get currentPage, Sort and Filter Options from req.query
+    const {
+      state,
+      maxPrice,
+      minPrice,
+      minBedrooms,
+      maxBedrooms,
+      minRating,
+      page = 1,
+      sortBy = 'pricePerNight',
+      sortOrder = 'asc',
+    } = req.query;
+
+    const pageNum = parseInt(page, 10);
+    const limitNum = 21;
+
+    const filter = {};
+
+    if (state) filter.state = state;
+    if (minPrice || maxPrice) {
+      filter.pricePerNight = {};
+      if (minPrice) filter.pricePerNight.$gte = minPrice;
+      if (maxPrice) filter.pricePerNight.$lte = maxPrice;
+    }
+    if (minBedrooms || maxBedrooms) {
+      filter.bedrooms = {};
+      if (minBedrooms) filter.bedrooms.$gte = minBedrooms;
+      if (maxBedrooms) filter.bedrooms.$lte = maxBedrooms;
+    }
+    if (minRating) filter.rating = { $gte: minRating };
+
+    const sort = {};
+    sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
+
+    const allAccos = await Accommodation.find(filter)
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
+      .sort(sort);
+
+    const totalCount = await Accommodation.countDocuments(filter);
+    const totalPages = Math.ceil(totalCount / limitNum);
+    //const allAccos = await Accommodation.find();
+
+    res.status(200).json({
+      accommodations: allAccos,
+      pagination: {
+        totalCount,
+        totalPages,
+        currentPage: pageNum,
+        perPage: limitNum,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error!' });
