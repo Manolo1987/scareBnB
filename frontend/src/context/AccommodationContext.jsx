@@ -61,6 +61,15 @@ export default function AccommodationContextProvider({ children }) {
     }
   }
 
+  async function deleteListing(id) {
+    try {
+      const response = await api.delete(`/accommodations/${id}`);
+      console.log(response.data.msg);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <AccommodationContext.Provider
       value={{
@@ -74,6 +83,7 @@ export default function AccommodationContextProvider({ children }) {
         setMyListings,
         getMyListings,
         addNewListing,
+        deleteListing,
       }}
     >
       {children}

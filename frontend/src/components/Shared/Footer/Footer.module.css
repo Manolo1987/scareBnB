@@ -1,10 +1,8 @@
 .footer {
-  border-top: 1px solid rgba(220, 220, 220, 0.648);
-  height: 60px;
   width: 100%;
-  /* position: fixed;
-    bottom: 0; */
-  background-color: white;
+  height: 60px;
+  border-top: 1px solid rgba(220, 220, 220, 0.648);
+  background-color: rgb(21, 21, 21);
 }
 
 nav {
@@ -23,5 +21,5 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: black;
+  color: gray;
 }
