@@ -149,7 +149,7 @@ export async function getUser(req, res) {
       return res.status(404).json({ msg: 'User not found' });
     }
     console.log({ user }); // debugging
-    res.status(200).json({ msg: 'User found', user });
+    res.status(200).json({ msg: 'User found', user: user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Fehler!' });
@@ -166,8 +166,7 @@ export async function updateUser(req, res) {
       return res.status(401).json({ msg: 'Unauthorized' });
     }
 
-    // Findet den Benutzer in der Datenbank
-    const updatedUser = await User.findById(userId);
+    let updatedUser = await User.findById(userId);
 
     if (!updatedUser) {
       return res.status(404).json({ msg: 'User not found!' });
@@ -184,8 +183,19 @@ export async function updateUser(req, res) {
     // save the updated user
     await updatedUser.save({ validateModifiedOnly: true });
 
+    updatedUser = await User.findById(req.userId)
+      .populate('favourites')
+      .populate('listings')
+      .populate('bookings')
+      .populate({
+        path: 'bookedListings',
+        populate: { path: 'accommodation' },
+      });
+
     // send the response with the updated user
-    res.status(200).json({ msg: 'User updated successfully!', updatedUser });
+    res
+      .status(200)
+      .json({ msg: 'User updated successfully!', user: updatedUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: 'Server error!' });
@@ -209,12 +219,12 @@ export async function deleteUser(req, res) {
 // find all Users as admin
 export async function getAllUsers(req, res) {
   try {
-    const user = await User.find(); // add populate later
-    if (user.length === 0) {
+    const users = await User.find(); // add populate later
+    if (users.length === 0) {
       return res.status(404).json({ msg: 'No users found' });
     }
-    console.log({ user }); // debugging
-    res.status(200).json({ msg: 'User found', user });
+    console.log({ users }); // debugging
+    res.status(200).json({ msg: 'Users found', users: users });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Fehler!' });
