@@ -1,0 +1,17 @@
+export const featureList = [
+  'Phantom WiFi',
+  'Bottomless Pool',
+  'Cursed Parking',
+  'Ectoplasm Gym',
+  'Ghost-Friendly',
+  'Seance Room',
+  'Creaky Floorboards',
+  'Haunted Library',
+  'Eternal Fireplace',
+  'Poltergeist Butler Service',
+  'Whispering Walls',
+  'Mystic Fog Generator',
+  'Time-Lost Clock',
+  'Wailing Wind Ventilation',
+  'Portal Closet',
+];

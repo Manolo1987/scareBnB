@@ -1,50 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './HandleListings.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
+import { states } from '../../../assets/data/statesList.js';
+import { featureList } from '../../../assets/data/featureList.js';
 
 export default function HandleListings() {
   const { addNewListing } = useAcco();
-  useEffect(() => {
-    //getAllAccommodations(); //is working
-    //getOneAccommodation('675954a6cbdf5dcef1f79d07'); //is working
-    //getMyListings(); // is working
-  }, []);
-
-  const states = [
-    'Baden-Württemberg',
-    'Bavaria',
-    'Berlin',
-    'Brandenburg',
-    'Bremen',
-    'Hamburg',
-    'Hesse',
-    'Lower Saxony',
-    'Mecklenburg-Western Pomerania',
-    'North Rhine-Westphalia',
-    'Rhineland-Palatinate',
-    'Saarland',
-    'Saxony',
-    'Saxony-Anhalt',
-    'Schleswig-Holstein',
-    'Thuringia',
-  ];
-  const featureList = [
-    'Phantom WiFi',
-    'Bottomless Pool',
-    'Cursed Parking',
-    'Ectoplasm Gym',
-    'Ghost-Friendly',
-    'Seance Room',
-    'Creaky Floorboards',
-    'Haunted Library',
-    'Eternal Fireplace',
-    'Poltergeist Butler Service',
-    'Whispering Walls',
-    'Mystic Fog Generator',
-    'Time-Lost Clock',
-    'Wailing Wind Ventilation',
-    'Portal Closet',
-  ];
 
   const [formData, setFormData] = useState({
     title: '',
