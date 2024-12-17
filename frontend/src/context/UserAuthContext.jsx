@@ -10,11 +10,41 @@ export const useAuth = () => useContext(AuthContext);
 
 export default function UserAuthContextProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null); // Neuen State für den Benutzer hinzufügen
+  const [user, setUser] = useState(null);
+  const [allUsers, setAllUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Login, Logout und Registrierung wie bisher
+  // fetchUserData
+
+  const fetchUserData = async () => {
+    try {
+      const response = await api.get('/user/myProfile', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setUser(response.data.user);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching userdata');
+    }
+  };
+
+  // Registration
+  const registration = async (formData) => {
+    try {
+      const response = await api.post('/user/register', formData);
+      if (response.status === 201) {
+        console.log(response);
+        toast.success('Successfully registered!');
+      }
+    } catch (error) {
+      console.error('Error during registration', error);
+    }
+  };
+
+  // Login
   const login = async (formData) => {
     try {
       const response = await api.post('/user/login', formData, {
@@ -24,53 +54,124 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         setIsAuthenticated(true);
         toast.success('Login Successfull!');
-        setUser(response.data.user); // Benutzer nach erfolgreichem Login setzen
+        await fetchUserData();
         Cookies.set('jwt', response.data.token);
         console.log(response.data.user);
       }
     } catch (error) {
-      console.error('Login failed:', error || error.message);
-      toast.error('Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.');
+      console.error('Login failed:', error);
+      toast.error('Login failed, please check your credentials.');
       setIsAuthenticated(false);
     }
   };
 
+  // Logout
   const logout = async () => {
     try {
       const response = await api.post('/user/logout');
       if (response.status === 200) {
         Cookies.remove('jwt', { path: '/' });
-        //Cookies.remove('jwt1');
         setIsAuthenticated(false);
         toast.success('Goodbye!');
-        setUser(null); // Benutzer-Informationen beim Logout löschen
+        setUser(null); // set User back to null
         navigate('/');
-        
-        window.location.reload();
+
+        // window.location.reload();
       }
     } catch (error) {
-      console.log('Fehler beim Logout:', error);
+      console.log('Error during logout:', error);
     }
   };
 
-  const registration = async (formData) => {
+  // update user profile
+
+  const updateProfile = async (formData) => {
     try {
-      const response = await api.post('/user/register', formData);
-      if (response.status === 201) {
-        console.log(response);
-        toast.success('Erfolgreich registriert!');
+      const response = await api.put('/user/updateProfile', formData, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        toast.success('User updated succesfully');
+        await fetchUserData();
       }
     } catch (error) {
-      // Extrahiere globale und spezifische Fehler
-      const globalMsg =
-        error.response?.data?.msg || 'Ein unbekannter Fehler ist aufgetreten.';
-      const fieldErrors = error.response?.data?.errors || [];
+      console.error('Error during update the user', error);
+    }
+  };
 
-      // Werfe ein detailliertes Fehlerobjekt
-      throw {
-        globalMsg,
-        fieldErrors,
-      };
+  // get all Users as Admin
+  const getAllUsers = async () => {
+    try {
+      const response = await api.get('/user/allUsers', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setAllUsers(response.data.users);
+      }
+    } catch (error) {
+      console.error('Error fetching userdata from all users');
+    }
+  };
+
+  // delete user Profile by user
+
+  const deleteMyProfile = async () => {
+    try {
+      const response = await api.delete('/user/deleteProfile', {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        toast.success('Your Profil is deleted, goodbye!');
+        await logout();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // delete user Profile by Admin
+
+  const deleteUserAsAdmin = async (userId) => {
+    try {
+      const response = await api.delete(`/user/deleteUserAsAdmin/${userId}`, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        toast.success('User deleted, well done!');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // user add his favourite accomodation
+
+  const addFavourite = async (accommodationId) => {
+    try {
+      const response = await api.post(`/user/addFavourite/${accommodationId}`);
+      if (response.status === 200) {
+        toast.success('Added to favourites!');
+        await fetchUserData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // user remove a favourite
+  const removeFavourite = async (accommodationId) => {
+    try {
+      const response = await api.post(
+        `/user/removeFavourite/${accommodationId}`
+      );
+      if (response.status === 200) {
+        toast.success('Remove from favourites!');
+        await fetchUserData();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -78,11 +179,19 @@ export default function UserAuthContextProvider({ children }) {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        user, // Den Benutzer hier verfügbar machen
+        user,
         login,
         logout,
         registration,
         isLoading,
+        updateProfile,
+        fetchUserData, // use it at any time you need to update the user
+        getAllUsers,
+        allUsers, // to see all Users as an Admin
+        deleteMyProfile,
+        deleteUserAsAdmin,
+        addFavourite,
+        removeFavourite,
       }}
     >
       {children}
