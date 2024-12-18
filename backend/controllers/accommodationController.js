@@ -38,7 +38,9 @@ export async function getAllAccommodations(req, res) {
 
     if (!limit) {
       const allAccos = await Accommodation.find(filter);
-      return res.status(200).json(allAccos);
+      return res.status(200).json({
+        accommodations: allAccos,
+      });
     }
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
