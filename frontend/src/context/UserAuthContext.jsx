@@ -14,6 +14,11 @@ export default function UserAuthContextProvider({ children }) {
   const [allUsers, setAllUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  
+    const togglePasswordVisibility = () => {
+      setShowPassword((prevState) => !prevState);
+    };
 
   const verifyAuth = async () => {
     try {
@@ -221,6 +226,9 @@ export default function UserAuthContextProvider({ children }) {
         deleteUserAsAdmin,
         addFavourite,
         removeFavourite,
+        showPassword,
+        setShowPassword,
+        togglePasswordVisibility
       }}
     >
       {children}
