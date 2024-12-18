@@ -16,7 +16,8 @@ export default function AccomodationList() {
   };
 
   useEffect(() => {
-    getAllAccommodations();
+    //getAllAccommodations(); // for Map
+    //getAllAccommodations(21); // for AccoGallery with limit
   }, []);
 
   return (
