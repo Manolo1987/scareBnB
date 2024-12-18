@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './HomePage.module.css';
 import AccoCard from '../../components/Shared/AccoCard/AccoCard';
 import { Link } from 'react-router-dom';
+import { useAcco } from '../../context/AccommodationContext';
 
 export default function HomePage() {
+  const { specialAccos, getSpecial } = useAcco();
+
+  useEffect(() => {
+    getSpecial();
+  }, []);
+
   return (
     <div className={styles.homepage}>
       <section className={styles.intro_text}>
@@ -30,27 +37,22 @@ export default function HomePage() {
         </p>
 
         <hr />
-
       </section>
       <section className={styles.highlight_section}>
         <h3>Our Most Haunted Stays</h3>
         <div className={styles.acco_highlights}>
-          <div className={`${styles.card} ${styles.card_one}`}>
-            <AccoCard />
-          </div>
-          <div className={`${styles.card} ${styles.card_two}`}>
-            <AccoCard />
-          </div>
-          <div className={`${styles.card} ${styles.card_three}`}>
-            <AccoCard />
-          </div>
-          <div className={`${styles.card} ${styles.card_four}`}>
-            <AccoCard />
-          </div>
+          {specialAccos?.map((acco, index) => (
+            <div
+              key={acco.id || index}
+              className={`${styles.card} ${styles[`card_${index + 1}`]}`}
+            >
+              <AccoCard acco={acco} />
+            </div>
+          ))}
         </div>
         <div className={styles.highlight_bottom}>
           <p>Stay Here… If You Dare</p>
-          <Link to="/accommodationlist">
+          <Link to='/accommodationlist'>
             <button>See All Chilling Options</button>
           </Link>
         </div>

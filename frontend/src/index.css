@@ -16,7 +16,7 @@
   --font-headline: 'Haunted', sans-serif;
   --font-typewriter: 'Special Elite', cursive;
   /* global colors */
-  --color-prime: crimson;
+  --color-prime: rgb(0, 0, 0);
   --color-secondary: rgb(82, 1, 82);
   --color-dark: rgb(21, 21, 21);
   --color-medium: gray;

@@ -109,7 +109,7 @@ export default function AccommodationContextProvider({ children }) {
   async function getSpecial() {
     try {
       const response = await api.get('/accommodations/special');
-      setSpecialAccos(response.data)
+      setSpecialAccos(response.data);
     } catch (error) {
       console.error('Error deleting comment:', error);
     }

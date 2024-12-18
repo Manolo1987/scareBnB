@@ -9,12 +9,9 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const { isAuthenticated } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
+  const {isAuthenticated, showPassword, togglePasswordVisibility} = useAuth();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
-  };
+  togglePasswordVisibility
 
   return (
     <header>

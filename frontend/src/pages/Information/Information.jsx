@@ -24,7 +24,7 @@ export default function Information() {
       <div className={styles.info}>
         <section id='privacy' className={styles.box}>
           <h2>Privacy</h2>
-          <div class="privacyContent">
+          <div className="privacyContent">
             <h3>Introduction</h3>
             <p>Welcome to Scarebnb, an experimental project focused on providing unique, spooky accommodation experiences.</p>
 
