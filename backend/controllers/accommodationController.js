@@ -16,12 +16,10 @@ export async function getAllAccommodations(req, res) {
       maxBedrooms,
       minRating,
       page = 1,
+      limit,
       sortBy = 'pricePerNight',
       sortOrder = 'asc',
     } = req.query;
-
-    const pageNum = parseInt(page, 10);
-    const limitNum = 21;
 
     const filter = {};
 
@@ -37,6 +35,13 @@ export async function getAllAccommodations(req, res) {
       if (maxBedrooms) filter.bedrooms.$lte = maxBedrooms;
     }
     if (minRating) filter.rating = { $gte: minRating };
+
+    if (!limit) {
+      const allAccos = await Accommodation.find(filter);
+      return res.status(200).json(allAccos);
+    }
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
 
     const sort = {};
     sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
