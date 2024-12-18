@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
 
-export default function Login({
-  showLogin,
-  setShowLogin,
-  setShowRegister,
-  showPassword,
-  togglePasswordVisibility,
-}) {
-  const { login } = useAuth();
+export default function Login({ showLogin, setShowLogin, setShowRegister }) {
+  const { login, showPassword, setShowPassword, togglePasswordVisibility } =
+    useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,6 +12,7 @@ export default function Login({
 
   const closeAndReset = () => {
     setShowLogin(false);
+    setShowPassword(false);
     setFormData({
       email: '',
       password: '',
@@ -90,9 +86,11 @@ export default function Login({
                 No Account?{' '}
                 <span
                   onClick={() => {
-                    setShowLogin(false);
+                    closeAndReset();
                     setShowRegister(true);
                   }}
+                  role='button'
+                  tabIndex='0'
                 >
                   Register now!
                 </span>

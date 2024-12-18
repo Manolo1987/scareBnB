@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styles from './Register.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
 
-export default function Register({
-  showRegister,
-  setShowRegister,
-  showPassword,
-  togglePasswordVisibility,
-}) {
-  const { registration } = useAuth();
+export default function Register({ showRegister, setShowRegister }) {
+  const {
+    registration,
+    showPassword,
+    setShowPassword,
+    togglePasswordVisibility,
+  } = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -37,10 +37,19 @@ export default function Register({
 
   const closeAndReset = () => {
     setShowRegister(false);
+    setShowPassword(false);
+    setShowConfirmPassword(false);
     setFormData({
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
+      phone: '',
+      dateOfBirth: '',
+      dataConsent: false,
     });
+    setErrors({});
   };
 
   const handleChange = (e) => {
@@ -60,7 +69,6 @@ export default function Register({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
         ...prev,

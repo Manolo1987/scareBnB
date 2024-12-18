@@ -10,7 +10,7 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: crimson;
+    background-color: var(--color-secondary);
   }
 }
 
@@ -27,9 +27,18 @@
   z-index: 1000;
 }
 
+/* testing */
 .overlay_content {
   width: 350px;
-  background: #fff;
+  color: var(--color-light);
+  /* background-image: url("https://png.pngtree.com/background/20210716/original/pngtree-light-white-line-crack-marble-texture-background-picture-image_1347308.jpg"); */
+  background-image: url("https://img.freepik.com/premium-photo/dark-background-with-copyspace-spooky-old-cobweb_960396-576716.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover;
+  /* background: var(--color-light); */
+  border: 2px solid black;
+  outline: 1px solid gray;
   border-radius: 8px;
   padding: 2rem;
 
@@ -72,7 +81,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: var(--color-prime);
+        background-color: var(--color-secondary);
       }
     }
 

@@ -16,12 +16,18 @@
   --font-headline: 'Haunted', sans-serif;
   --font-typewriter: 'Special Elite', cursive;
   /* global colors */
-  --color-prime: rgb(0, 0, 0);
-  --color-secondary: rgb(82, 1, 82);
-  --color-dark: rgb(21, 21, 21);
+  --color-prime: black;
+  --color-secondary: #660000;
+  --color-dark: #111;
   --color-medium: gray;
   --color-light: lightgray;
-  --bg_color-prime: #100E09;
+  /* global gradients */
+  --gradient-sides: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
   /* global shadows */
   --shadow-basic: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   --shadow-invert: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
