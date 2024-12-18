@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const {isAuthenticated, showPassword, togglePasswordVisibility} = useAuth();
-
-  togglePasswordVisibility
+  const { isAuthenticated } = useAuth();
 
   return (
     <header>
@@ -33,14 +31,10 @@ export default function Header() {
                 showLogin={showLogin}
                 setShowLogin={setShowLogin}
                 setShowRegister={setShowRegister}
-                showPassword={showPassword}
-                togglePasswordVisibility={togglePasswordVisibility}
               />
               <Register
                 showRegister={showRegister}
                 setShowRegister={setShowRegister}
-                showPassword={showPassword}
-                togglePasswordVisibility={togglePasswordVisibility}
               />
             </>
           )}
