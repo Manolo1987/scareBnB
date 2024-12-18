@@ -12,11 +12,11 @@ bookingRouter.get(
   authenticateToken,
   booking.getMyBookedListings
 );
-bookingRouter.get(
-  '/oneBooking/:bookingId',
-  authenticateToken,
-  booking.getOneBooking
-);
+// bookingRouter.get(
+//   '/oneBooking/:bookingId',
+//   authenticateToken,
+//   booking.getOneBooking
+// );
 bookingRouter.put(
   '/cancelBooking/:bookingId',
   authenticateToken,
