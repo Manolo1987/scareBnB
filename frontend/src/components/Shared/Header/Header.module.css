@@ -63,6 +63,7 @@ header {
       font-family: var(--font-title);
       letter-spacing: 1.2rem;
       color: var(--color-prime);
+      text-shadow: 0px 0px 10px white;
     }
   }
 }

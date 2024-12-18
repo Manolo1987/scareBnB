@@ -49,27 +49,22 @@
 
       .card {
         width: 250px;
-        height: 350px;
-        background-color: #222;
-        border: 1px solid #444;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         transition: transform 0.3s ease-in-out;
       }
 
-      .card_one {
+      .card_1 {
         animation: float 3s ease-in-out infinite;
         animation-delay: 0s;
       }
-      .card_two {
+      .card_2 {
         animation: float 3s ease-in-out infinite;
         animation-delay: 0.3s;
       }
-      .card_three {
+      .card_3 {
         animation: float 3s ease-in-out infinite;
         animation-delay: 0.6s;
       }
-      .card_four {
+      .card_4 {
         animation: float 3s ease-in-out infinite;
         animation-delay: 0.9s;
       }
