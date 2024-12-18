@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Profile.module.css';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
 
-export default function Profile({ showPassword, togglePasswordVisibility }) {
-  const { user, updateProfile } = useAuth();
+export default function Profile() {
+  const { user, updateProfile, showPassword, togglePasswordVisibility } =
+    useAuth();
+  const navigate = useNavigate();
 
-  console.log(user);
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -72,13 +79,13 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
 
     try {
       const changedData = getChangedValues();
-      console.log('Geänderte Daten:', changedData);
+      console.log('changedData:', changedData);
 
       if (Object.keys(changedData).length > 0) {
         await updateProfile(changedData);
         setIsEditing(false);
       } else {
-        alert('Keine Änderungen gefunden.');
+        alert('no changes found');
       }
     } catch (error) {
       console.error('Profile update error:', error || error.message);
@@ -127,7 +134,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
               className={styles.editProfileButton}
               onClick={() => setIsEditing(true)}
             >
-              edit profile
+              Edit Profile
             </button>
           )}
         </div>
@@ -161,6 +168,34 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   />
                   {errors.lastName && (
                     <p className={styles.error}>{errors.lastName}</p>
+                  )}
+                </label>
+
+                <label>
+                  Phone:
+                  <input
+                    type='tel'
+                    name='phone'
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.phone && (
+                    <p className={styles.error}>{errors.phone}</p>
+                  )}
+                </label>
+
+                <label>
+                  Birthday:
+                  <input
+                    type='date'
+                    name='dateOfBirth'
+                    value={formData.dateOfBirth}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.dateOfBirth && (
+                    <p className={styles.error}>{errors.dateOfBirth}</p>
                   )}
                 </label>
 
@@ -224,71 +259,20 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   )}
                 </label>
 
-                <label>
-                  Phone:
-                  <input
-                    type='tel'
-                    name='phone'
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.phone && (
-                    <p className={styles.error}>{errors.phone}</p>
-                  )}
-                </label>
-
-                <label>
-                  Birthday:
-                  <input
-                    type='date'
-                    name='dateOfBirth'
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.dateOfBirth && (
-                    <p className={styles.error}>{errors.dateOfBirth}</p>
-                  )}
-                </label>
                 <button className={styles.saveButton} type='submit'>
-                  save
+                  Save
                 </button>
                 <button
                   className={styles.cancelButton}
+                  type='button'
                   onClick={() => setIsEditing(false)}
                 >
-                  cancel
+                  Cancel
                 </button>
               </form>
             </div>
           )}
         </div>
-
-        {/* {!isEditing ? (
-          <button
-            className={styles.editProfileButton}
-            onClick={() => setIsEditing(true)}
-          >
-            edit profile
-          </button>
-        ) : (
-          <>
-            <button
-              className={styles.saveButton}
-              type='submit'
-              onSubmit={handleSubmit}
-            >
-              save
-            </button>
-            <button
-              className={styles.cancelButton}
-              onClick={() => setIsEditing(false)}
-            >
-              cancel
-            </button>
-          </>
-        )} */}
       </div>
     </div>
   );
