@@ -20,6 +20,8 @@ export const BookingContextProvider = ({ children }) => {
   const [checkOut, setCheckOut] = useState(tomorrow);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
+  const [myBookings, setMyBookings] = useState([]);
+  const [myListings, setMyListings] = useState([]);
   const createBookingObject = () => ({
     accommodationId: currentAcco?._id || null,
     numberOfGuests,
@@ -47,20 +49,104 @@ export const BookingContextProvider = ({ children }) => {
     setBookingPreview(createBookingPreview());
   }, [currentAcco, checkIn, checkOut, numberOfGuests, paymentMethod]);
 
+  useEffect(() => {
+    if (user) {
+      setMyBookings(user?.bookings || []);
+      setMyListings(user?.listings || []);
+    }
+  }, [user]);
+
   const createBooking = async () => {
     try {
       const response = await api.post(
         '/bookings/createBooking',
         currentBooking
       );
-      toast.success('Booking successful!');
-      navigate('/my-bookings');
+      if (response.status === 201) {
+        toast.success('Booking successful!');
+        setMyBookings((prev) => [...prev, response.data.newBooking]);
+        navigate('/account/bookings');
+      }
     } catch (error) {
       toast.error(error.response?.data?.msg || 'Booking failed.');
     }
   };
 
+  const getMyBookedListings = async () => {
+    try {
+      const response = await api.get('/bookings/myBookedListings', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setMyListings(response.data.bookings);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const cancelBooking = async (bookingId) => {
+    try {
+      if (today > checkOut) {
+        toast.error('You cannot cancel a booking in the past');
+        return;
+      }
+      const response = await api.put(`/bookings/cancelBooking/${bookingId}`);
+      if (response.status === 200) {
+        toast.success('Booking cancelled successfully');
+        setMyBookings((prev) =>
+          prev.map((booking) =>
+            booking._id === bookingId ? response.data.booking : booking
+          )
+        );
+        navigate('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const giveFeedback = async (bookingId, feedback) => {
+    try {
+      if (today > checkOut) {
+        const response = await api.put(
+          `/bookings/giveFeedback/${bookingId}`,
+          feedback
+        );
+        if (response.status === 200) {
+          toast.success('Feedback given successfully');
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <BookingContext.Provider value={{}}>{children}</BookingContext.Provider>
+    <BookingContext.Provider
+      value={{
+        today,
+        tomorrow,
+        checkIn,
+        checkOut,
+        setCheckIn,
+        setCheckOut,
+        numberOfGuests,
+        setNumberOfGuests,
+        paymentMethod,
+        setPaymentMethod,
+        myBookings,
+        myListings,
+        createBooking,
+        getMyBookedListings,
+        currentBooking,
+        bookingPreview,
+        cancelBooking,
+        giveFeedback,
+      }}
+    >
+      {children}
+    </BookingContext.Provider>
   );
 };
