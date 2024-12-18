@@ -23,10 +23,10 @@ export default function AccommodationContextProvider({ children }) {
   //pagination
   const [currentPage, setCurrentPage] = useState(2);
 
-  async function getAllAccommodations(limit) {
+  async function getAllAccommodations() {
     // apply loading state here
     try {
-      const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&minBedrooms=${minBedrooms}&maxBedrooms=${maxBedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
+      const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&minBedrooms=${minBedrooms}&maxBedrooms=${maxBedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}`;
       const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
       console.log(response.data);
