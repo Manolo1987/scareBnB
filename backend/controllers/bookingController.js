@@ -54,7 +54,9 @@ export async function createBooking(req, res) {
     foundAccommodation.isBooked = true;
     await foundAccommodation.save();
 
-    res.status(201).json({ msg: 'Booking created successfully!', newBooking });
+    res
+      .status(201)
+      .json({ msg: 'Booking created successfully!', newBooking: newBooking });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -76,7 +78,7 @@ export async function getMyBookedListings(req, res) {
     const bookings = await Booking.find({ host: req.userId })
       .populate('accommodation guest')
       .sort({ checkIn: -1 });
-    res.status(200).json({ msg: 'Bookings found', bookings });
+    res.status(200).json({ msg: 'Bookings found', bookings: bookings });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -84,20 +86,20 @@ export async function getMyBookedListings(req, res) {
 
 // get one Booking by Id
 
-export async function getOneBooking(req, res) {
-  try {
-    const { bookingId } = req.params;
-    const foundBooking = await Booking.findById(bookingId).populate(
-      'accommodation guest host'
-    );
-    if (!foundBooking) {
-      return res.status(404).json({ msg: 'Booking not found' });
-    }
-    res.status(200).json({ msg: 'Booking found', foundBooking });
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
-  }
-}
+// export async function getOneBooking(req, res) {
+//   try {
+//     const { bookingId } = req.params;
+//     const foundBooking = await Booking.findById(bookingId).populate(
+//       'accommodation guest host'
+//     );
+//     if (!foundBooking) {
+//       return res.status(404).json({ msg: 'Booking not found' });
+//     }
+//     res.status(200).json({ msg: 'Booking found', foundBooking });
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
+//   }
+// }
 
 // cancel a booking
 export async function cancelBooking(req, res) {
@@ -123,7 +125,9 @@ export async function cancelBooking(req, res) {
     accommodation.isBooked = false;
     await booking.save();
     await accommodation.save();
-    res.status(200).json({ msg: 'Booking cancelled successfully' });
+    res
+      .status(200)
+      .json({ msg: 'Booking cancelled successfully', booking: booking });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
