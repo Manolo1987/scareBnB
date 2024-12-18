@@ -3,20 +3,21 @@ import styles from './Profile.module.css';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
 
 export default function Profile({ showPassword, togglePasswordVisibility }) {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
 
   console.log(user);
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
     password: '',
     confirmPassword: '',
-    phone: '',
-    dateOfBirth: '',
-    dataConsent: false,
+    phone: user?.phone || '',
+    dateOfBirth: user?.dateOfBirth
+      ? new Date(user.dateOfBirth).toISOString().split('T')[0]
+      : '',
   });
   const [errors, setErrors] = useState({
     firstName: '',
@@ -26,7 +27,6 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
     confirmPassword: '',
     phone: '',
     dateOfBirth: '',
-    dataConsent: '',
   });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -49,6 +49,16 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
     }
   };
 
+  const getChangedValues = () => {
+    const changedValues = {};
+    for (const key in formData) {
+      if (formData[key] !== user[key] && formData[key] !== '') {
+        changedValues[key] = formData[key];
+      }
+    }
+    return changedValues;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,53 +69,67 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
       }));
       return;
     }
+
     try {
-      const response = await api.put('/user/updateProfile', formData, {
-        withCredentials: true,
-      });
-      if (response.status === 200) {
-        alert('profile updated!');
-        setUser(response.data.user);
+      const changedData = getChangedValues();
+      console.log('Geänderte Daten:', changedData);
+
+      if (Object.keys(changedData).length > 0) {
+        await updateProfile(changedData);
         setIsEditing(false);
+      } else {
+        alert('Keine Änderungen gefunden.');
       }
     } catch (error) {
-      console.error('profile update error:', error || error.message);
+      console.error('Profile update error:', error || error.message);
     }
   };
 
   return (
     <div className={styles.profileContainer}>
       <div className={styles.myProfile}>
-        <h2>Mein Profil</h2>
+        <h2>My Profile</h2>
         <div className={styles.profileInfo}>
           <table>
-            <tr>
-              <td>
-                <span>Name: </span>
-              </td>
-              <td>
-                {user?.firstName} {user?.lastName}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span>Email: </span>
-              </td>
-              <td>{user?.email}</td>
-            </tr>
-            <tr>
-              <td>
-                <span>Phone: </span>
-              </td>
-              <td>{user?.phone}</td>
-            </tr>
-            <tr>
-              <td>
-                <span>Date of Birth: </span>
-              </td>
-              <td>{new Date(user?.dateOfBirth).toLocaleDateString('de-DE')}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <span>Name: </span>
+                </td>
+                <td>
+                  {user?.firstName} {user?.lastName}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Email: </span>
+                </td>
+                <td>{user?.email}</td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Phone: </span>
+                </td>
+                <td>{user?.phone}</td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Date of Birth: </span>
+                </td>
+                <td>
+                  {new Date(user?.dateOfBirth).toLocaleDateString('de-DE')}
+                </td>
+              </tr>
+            </tbody>
           </table>
+          {!isEditing && (
+            <button
+              className={styles.editProfileButton}
+              onClick={() => setIsEditing(true)}
+            >
+              edit profile
+            </button>
+          )}
         </div>
 
         <div className={styles.editProfile}>
@@ -117,7 +141,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type='text'
                     name='firstName'
-                    value={user?.firstName}
+                    value={formData.firstName}
                     onChange={handleChange}
                     required
                   />
@@ -131,7 +155,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type='text'
                     name='lastName'
-                    value={user?.lastName}
+                    value={formData.lastName}
                     onChange={handleChange}
                     required
                   />
@@ -145,7 +169,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type='email'
                     name='email'
-                    value={user?.email}
+                    value={formData.email}
                     onChange={handleChange}
                     required
                   />
@@ -159,9 +183,8 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name='password'
-                    value={user?.password}
+                    value={formData.password}
                     onChange={handleChange}
-                    required
                   />
                   <span
                     className={styles.icon}
@@ -183,9 +206,8 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
                     name='confirmPassword'
-                    value={user?.confirmPassword}
+                    value={formData.confirmPassword}
                     onChange={handleChange}
-                    required
                   />
                   <span
                     className={styles.icon}
@@ -207,7 +229,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                   <input
                     type='tel'
                     name='phone'
-                    value={user?.phone}
+                    value={formData.phone}
                     onChange={handleChange}
                     required
                   />
@@ -219,11 +241,9 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                 <label>
                   Birthday:
                   <input
-                    type='text'
+                    type='date'
                     name='dateOfBirth'
-                    value={new Date(user?.dateOfBirth).toLocaleDateString(
-                      'de-DE'
-                    )}
+                    value={formData.dateOfBirth}
                     onChange={handleChange}
                     required
                   />
@@ -231,23 +251,21 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
                     <p className={styles.error}>{errors.dateOfBirth}</p>
                   )}
                 </label>
-
-                {/* <label className={styles.checkbox}>
-                  <input
-                    type='checkbox'
-                    name='dataConsent'
-                    checked={user?.dataConsent}
-                    onChange={handleChange}
-                    required
-                  />
-                  I agree to the terms and conditions
-                </label> */}
+                <button className={styles.saveButton} type='submit'>
+                  save
+                </button>
+                <button
+                  className={styles.cancelButton}
+                  onClick={() => setIsEditing(false)}
+                >
+                  cancel
+                </button>
               </form>
             </div>
           )}
         </div>
 
-        {!isEditing ? (
+        {/* {!isEditing ? (
           <button
             className={styles.editProfileButton}
             onClick={() => setIsEditing(true)}
@@ -256,7 +274,13 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
           </button>
         ) : (
           <>
-            <button className={styles.saveButton}>save</button>
+            <button
+              className={styles.saveButton}
+              type='submit'
+              onSubmit={handleSubmit}
+            >
+              save
+            </button>
             <button
               className={styles.cancelButton}
               onClick={() => setIsEditing(false)}
@@ -264,7 +288,7 @@ export default function Profile({ showPassword, togglePasswordVisibility }) {
               cancel
             </button>
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
