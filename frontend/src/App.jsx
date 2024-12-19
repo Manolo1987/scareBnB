@@ -15,6 +15,7 @@ import Profile from './components/Account/Profile/Profile.jsx';
 import Favourites from './components/Account/Favourites/Favourites.jsx';
 import Bookings from './components/Account/Bookings/Bookings.jsx';
 import Listings from './components/Account/Listings/Listings.jsx';
+import HandleListings from './components/Account/HandleListings/HandleListings.jsx';
 import AdminUserList from './components/Account/AdminUserList/AdminUserList.jsx';
 import AdminAccoList from './components/Account/AdminAccoList/AdminAccoList.jsx';
 import { ToastContainer } from 'react-toastify';
@@ -34,7 +35,9 @@ export default function App() {
               <Route path='profile' element={<Profile />} />
               <Route path='favourites' element={<Favourites />} />
               <Route path='bookings' element={<Bookings />} />
-              <Route path='listings' element={<Listings />} />
+              <Route path='listings' element={<Listings />}>
+                <Route path='handleListing' element={<HandleListings />} />
+              </Route>
               <Route path='adminUserList' element={<AdminUserList />} />
               <Route path='adminAccoList' element={<AdminAccoList />} />
             </Route>
