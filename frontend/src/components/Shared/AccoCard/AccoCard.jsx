@@ -3,8 +3,10 @@ import styles from './AccoCard.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { Link } from 'react-router-dom';
 import FavouriteIcon from '../FavouriteIcon/FavouriteIcon';
+import { useAuth } from '../../../context/UserAuthContext';
 
 export default function AccoCard(acco) {
+  const { isAuthenticated } = useAuth();
   return (
     <Link to={`/accommodation`} className={styles.cardLink}>
       {' '}
@@ -13,9 +15,7 @@ export default function AccoCard(acco) {
         <div className={styles.info_container}>
           <h4>
             {acco.acco.title}{' '}
-            <span>
-              <FavouriteIcon accoId={acco.acco._id} />
-            </span>
+            {isAuthenticated && <FavouriteIcon accoId={acco.acco._id} />}
           </h4>
           <span>{acco.acco.city}</span>
         </div>

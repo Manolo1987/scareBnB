@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './FavouriteIcon.module.css';
 import { HeartStraight } from '@phosphor-icons/react';
 import { useAuth } from '../../../context/UserAuthContext';
 
 export default function FavouriteIcon({ accoId }) {
-  const [isFavourite, setIsFavourite] = useState(false);
-  const { addFavourite, removeFavourite } = useAuth();
+  const { favourites, addFavourite, removeFavourite } = useAuth();
 
-  const handleAddFavourite = (e) => {
+  const isFavourite = (favourites || []).some((fav) => fav._id === accoId);
+
+  const handleAddFavourite = async (e) => {
     e.stopPropagation();
-    setIsFavourite(true);
-    addFavourite(accoId);
+    e.preventDefault();
+    try {
+      await addFavourite(accoId);
+    } catch (error) {
+      console.error('Error adding to favourites:', error);
+    }
   };
 
-  const handleRemoveFavourite = (e) => {
+  const handleRemoveFavourite = async (e) => {
     e.stopPropagation();
-    setIsFavourite(false);
-    removeFavourite(accoId);
+    e.preventDefault();
+    console.log('Removing from favourites...');
+    try {
+      await removeFavourite(accoId);
+    } catch (error) {
+      console.error('Error removing from favourites:', error);
+    }
   };
+
   return (
     <>
       {!isFavourite ? (
-        <div>
-          <HeartStraight
-            size={32}
-            color='#f70202'
-            onClick={handleAddFavourite}
-          />
+        <div onClick={handleAddFavourite}>
+          <HeartStraight size={32} color='#f70202' />
         </div>
       ) : (
-        <div>
-          <HeartStraight
-            size={32}
-            color='#f70202'
-            weight='fill'
-            onClick={handleRemoveFavourite}
-          />
+        <div onClick={handleRemoveFavourite}>
+          <HeartStraight size={32} color='#f70202' weight='fill' />
         </div>
       )}
     </>
