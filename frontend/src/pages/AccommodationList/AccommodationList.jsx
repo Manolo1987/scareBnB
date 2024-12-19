@@ -24,7 +24,7 @@ export default function AccomodationList() {
 
       <div className={styles.controls}>
         <Filter />
-        <Sort />
+        {selectedView === 'gallery-view' && <Sort />}
         <div className={styles.switchView_container}>
           <div className={styles.radio_container}>
             <input
