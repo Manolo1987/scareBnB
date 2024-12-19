@@ -8,9 +8,10 @@ import { useAcco } from '../../context/AccommodationContext.jsx';
 import { MapTrifold, SquaresFour } from '@phosphor-icons/react';
 
 export default function AccomodationList() {
-  const { stateFilter, getAllAccommodations } = useAcco();
+  const { stateFilter, getAllAccommodations, selectedView, setSelectedView } =
+    useAcco();
 
-  const [selectedView, setSelectedView] = useState('map-view');
+  // const [selectedView, setSelectedView] = useState('map-view');
 
   const handleToggleChange = (event) => {
     setSelectedView(event.target.id);
@@ -29,22 +30,6 @@ export default function AccomodationList() {
             <input
               type='radio'
               name='view'
-              id='map-view'
-              className={styles.radio}
-              checked={selectedView === 'map-view'}
-              onChange={handleToggleChange}
-            />
-            <label
-              htmlFor='map-view'
-              className={`${styles.icon} ${styles.mapIcon}`}
-            >
-              <MapTrifold size={32} className={styles.icon} />
-            </label>
-          </div>
-          <div className={styles.radio_container}>
-            <input
-              type='radio'
-              name='view'
               id='gallery-view'
               className={styles.radio}
               checked={selectedView === 'gallery-view'}
@@ -55,6 +40,22 @@ export default function AccomodationList() {
               className={`${styles.icon} ${styles.galleryIcon}`}
             >
               <SquaresFour size={32} className={styles.icon} />
+            </label>
+          </div>
+          <div className={styles.radio_container}>
+            <input
+              type='radio'
+              name='view'
+              id='map-view'
+              className={styles.radio}
+              checked={selectedView === 'map-view'}
+              onChange={handleToggleChange}
+            />
+            <label
+              htmlFor='map-view'
+              className={`${styles.icon} ${styles.mapIcon}`}
+            >
+              <MapTrifold size={32} className={styles.icon} />
             </label>
           </div>
         </div>
