@@ -1,0 +1,34 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1rem 0;
+
+  .pg_button {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:disabled {
+      color: var(--color-medium);
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: var(--color-medium);
+      color: var(--color-dark);
+    }
+  }
+  .active {
+    background-color: var(--color-dark);
+  }
+
+  span {
+    padding: 0 10px;
+    color: #666;
+  }
+}
