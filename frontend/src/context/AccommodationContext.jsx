@@ -22,7 +22,7 @@ export default function AccommodationContextProvider({ children }) {
   //pagination
   const [currentPage, setCurrentPage] = useState(2);
 
-  async function getAllAccommodations(limit = 21, currentPage = 1) {
+  async function getAllAccommodations(limit) {
     // apply loading state here
     try {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&bedrooms=${bedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
