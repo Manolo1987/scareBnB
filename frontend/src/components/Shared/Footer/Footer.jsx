@@ -21,12 +21,12 @@ export default function Footer() {
   };
 
   return (
-    <div className={styles.footer}>
+    <footer className={styles.footer}>
       <nav>
         <ul>
           <li>
             <Link
-              to="/information#privacy"
+              to='/information#privacy'
               onClick={(e) => handleSmoothScroll(e, 'privacy')}
             >
               Privacy
@@ -34,7 +34,7 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              to="/information#imprint"
+              to='/information#imprint'
               onClick={(e) => handleSmoothScroll(e, 'imprint')}
             >
               Imprint
@@ -42,7 +42,7 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              to="/information#contact"
+              to='/information#contact'
               onClick={(e) => handleSmoothScroll(e, 'contact')}
             >
               Contact
@@ -50,6 +50,6 @@ export default function Footer() {
           </li>
         </ul>
       </nav>
-    </div>
-  )
+    </footer>
+  );
 }
