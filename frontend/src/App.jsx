@@ -40,8 +40,8 @@ export default function App() {
             </Route>
             <Route path='booking' element={<Booking />} />
             <Route path='information' element={<Information />} />
+            <Route path='*' element={<NotFound />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
         </Routes>
       </AccommodationContextProvider>
     </UserAuthContextProvider>
