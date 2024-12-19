@@ -4,7 +4,7 @@
   align-items: center;
   padding: 2rem;
   gap: 2rem;
-  background-color: #1f1f1f;
+  /* background-color: #1f1f1f; */
 }
 
 .accoList {
@@ -20,7 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2a2a2a; 
+  background: #2a2a2a;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
