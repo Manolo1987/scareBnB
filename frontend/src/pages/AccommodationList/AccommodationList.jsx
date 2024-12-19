@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './AccommodationList.module.css';
 import OverviewMap from '../../components/AccomodationList/OverviewMap/OverviewMap.jsx';
 import AccoGallery from '../../components/AccomodationList/AccoGallery/AccoGallery.jsx';
-import FilterAndSort from '../../components/Shared/FilterAndSort/FilterAndSort.jsx';
+import Filter from '../../components/Shared/FilterAndSort/Filter.jsx';
+import Sort from '../../components/Shared/FilterAndSort/Sort.jsx';
 import { useAcco } from '../../context/AccommodationContext.jsx';
 import { MapTrifold, SquaresFour } from '@phosphor-icons/react';
 
@@ -15,18 +16,14 @@ export default function AccomodationList() {
     setSelectedView(event.target.id);
   };
 
-  useEffect(() => {
-    //getAllAccommodations(); // for Map
-    //getAllAccommodations(21); // for AccoGallery with limit
-  }, []);
-
   return (
     <div>
       {!stateFilter && <h1>All Accommodations</h1>}
       {stateFilter && <h1>Accommodations in {stateFilter}</h1>}
 
       <div className={styles.controls}>
-        <FilterAndSort />
+        <Filter />
+        <Sort />
         <div className={styles.switchView_container}>
           <div className={styles.radio_container}>
             <input
