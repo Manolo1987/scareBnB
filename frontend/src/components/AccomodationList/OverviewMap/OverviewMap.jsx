@@ -21,8 +21,7 @@ export default function OverviewMap() {
     stateFilter,
     maxPrice,
     minPrice,
-    maxBedrooms,
-    minBedrooms,
+    bedrooms,
     minRating,
     sortBy,
     sortOrder,
@@ -32,16 +31,7 @@ export default function OverviewMap() {
 
   useEffect(() => {
     getAllAccommodations();
-  }, [
-    stateFilter,
-    maxPrice,
-    minPrice,
-    maxBedrooms,
-    minBedrooms,
-    minRating,
-    sortBy,
-    sortOrder,
-  ]);
+  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
 
   const accommodations = allAccos?.accommodations || [];
 
