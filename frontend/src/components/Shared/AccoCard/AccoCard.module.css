@@ -18,6 +18,10 @@
 
   &:hover {
     background-color: #111;
+
+    .ghost {
+      animation: floatSide 6s ease-in-out infinite;
+    }
   }
 
   .info_container {
@@ -25,6 +29,8 @@
     padding: 1rem;
 
     h4 {
+      display: flex;
+      justify-content: space-between;
       font-size: 1.2rem;
     }
 
@@ -37,12 +43,18 @@
     p {
       margin: 0.5rem 0;
       font-size: 1rem;
+
+      .ghost {
+        display: inline-block;
+        margin-right: 4px;
+      }
     }
 
     .rating {
       text-align: end;
       font-size: 1.1rem;
-      font-weight: bold;
+      /* font-weight: bold; */
+      color: orange;
     }
   }
 
@@ -56,5 +68,23 @@
       height: 100%;
       object-fit: cover;
     }
+  }
+}
+
+@keyframes floatSide {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(-5px) translateY(2px);
+  }
+  50% {
+    transform: translateX(0) translateY(0);
+  }
+  75% {
+    transform: translateX(5px) translateY(2px);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
   }
 }
