@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--gradient-sides);
+  /* background: var(--gradient-sides); */
   box-shadow: inset 0 8px 16px rgba(0, 0, 0, 0.6),
     inset 8px 0 16px rgba(0, 0, 0, 0.6);
 

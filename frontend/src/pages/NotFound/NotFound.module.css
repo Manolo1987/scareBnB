@@ -1,0 +1,32 @@
+.foundWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  margin: 0 auto;
+  background-color: var(--color-dark);
+
+  div {
+    background-image: url('../../assets/notFoundImage.png');
+    background-size: cover;
+
+    width: 80%;
+    height: 100vh;
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(92, 75, 75, 0.5);
+      padding: 2rem;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      color: white;
+      line-height: 3rem;
+      margin: 2rem auto;
+      width: fit-content;
+    }
+  }
+}

@@ -1,8 +1,12 @@
 import React from 'react';
-import styles from './Accommodation.module.css'
+import styles from './Accommodation.module.css';
+import Search from '../../components/Shared/Search/Search.jsx';
 
 export default function Accommodation() {
   return (
-    <div>Test</div>
-  )
+    <>
+      <Search />
+      <div>Test</div>
+    </>
+  );
 }

@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import styles from './FavouriteIcon.module.css';
 import { HeartStraight } from '@phosphor-icons/react';
 import { useAuth } from '../../../context/UserAuthContext';
