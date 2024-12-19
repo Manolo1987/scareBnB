@@ -8,12 +8,12 @@ export default function Filter() {
   // possible ratings: up to 5 (seeded between 3 and 5)
   const [price, setPrice] = useState();
   const {
-    minPrice,
-    maxPrice,
     setMinPrice,
     setMaxPrice,
     bedrooms,
     setBedrooms,
+    minRating,
+    setMinRating,
   } = useAcco();
 
   const handlePriceChange = (e) => {
@@ -31,6 +31,13 @@ export default function Filter() {
       setBedrooms('');
     } else {
       setBedrooms(e.target.value);
+    }
+  };
+  const handleRatingChange = (e) => {
+    if (e.target.value === 'all') {
+      setMinRating('');
+    } else {
+      setMinRating(e.target.value);
     }
   };
   return (
@@ -64,7 +71,21 @@ export default function Filter() {
           <option value='5'>5</option>
         </select>
       </div>
-      <div className={styles.filter_item}></div>
+      <div className={styles.filter_item}>
+        <label htmlFor='bedrooms'>Rating:</label>
+        <select
+          name='rating'
+          id='rating'
+          value={minRating}
+          onChange={handleRatingChange}
+        >
+          <option value={'all'}>all</option>
+          <option value='2'>min 2</option>
+          <option value='3'>min 3</option>
+          <option value='4'>min 4</option>
+          <option value='5'> 5</option>
+        </select>
+      </div>
     </div>
   );
 }
