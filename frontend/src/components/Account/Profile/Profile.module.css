@@ -1,0 +1,58 @@
+.myProfile {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--color-light);
+  border-radius: 8px;
+  box-shadow: var(--shadow-basic);
+
+  h2 {
+    font-family: var(--font-headline);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .profileInfo {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+    td {
+      font-family: var(--font-typewriter);
+      padding: 0.2rem;
+    }
+
+    span {
+      font-family: var(--font-typewriter);
+      font-weight: bold;
+    }
+  }
+
+  .editForm {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+
+        input {
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 1rem;
+        }
+
+        span {
+          cursor: pointer;
+          margin-left: 0.5rem;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

@@ -12,8 +12,7 @@ export async function getAllAccommodations(req, res) {
       state,
       maxPrice,
       minPrice,
-      minBedrooms,
-      maxBedrooms,
+      bedrooms,
       minRating,
       page = 1,
       limit,
@@ -29,10 +28,8 @@ export async function getAllAccommodations(req, res) {
       if (minPrice) filter.pricePerNight.$gte = minPrice;
       if (maxPrice) filter.pricePerNight.$lte = maxPrice;
     }
-    if (minBedrooms || maxBedrooms) {
-      filter.bedrooms = {};
-      if (minBedrooms) filter.bedrooms.$gte = minBedrooms;
-      if (maxBedrooms) filter.bedrooms.$lte = maxBedrooms;
+    if (bedrooms) {
+      filter.bedrooms = bedrooms;
     }
     if (minRating) filter.rating = { $gte: minRating };
 

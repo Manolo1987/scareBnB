@@ -11,14 +11,15 @@ export const useAuth = () => useContext(AuthContext);
 export default function UserAuthContextProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [favourites, setFavourites] = useState([]);
   const [allUsers, setAllUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  
-    const togglePasswordVisibility = () => {
-      setShowPassword((prevState) => !prevState);
-    };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const verifyAuth = async () => {
     try {
@@ -45,7 +46,10 @@ export default function UserAuthContextProvider({ children }) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchUserData();
+      const fetchData = async () => {
+        await fetchUserData();
+      };
+      fetchData();
     }
   }, [isAuthenticated]);
 
@@ -90,6 +94,8 @@ export default function UserAuthContextProvider({ children }) {
       });
       if (response.status === 200) {
         setUser(response.data.user);
+        setFavourites(response.data.user.favourites || []);
+        console.log('user favourites', favourites);
         console.log(response.data.user);
         console.log('Data from fetchUserData', user);
         setIsLoading(false);
@@ -186,7 +192,6 @@ export default function UserAuthContextProvider({ children }) {
     try {
       const response = await api.post(`/user/addFavourite/${accommodationId}`);
       if (response.status === 200) {
-        toast.success('Added to favourites!');
         await fetchUserData();
       }
     } catch (error) {
@@ -197,11 +202,11 @@ export default function UserAuthContextProvider({ children }) {
   // user remove a favourite
   const removeFavourite = async (accommodationId) => {
     try {
-      const response = await api.post(
+      const response = await api.delete(
         `/user/removeFavourite/${accommodationId}`
       );
+      console.log(response);
       if (response.status === 200) {
-        toast.success('Remove from favourites!');
         await fetchUserData();
       }
     } catch (error) {
@@ -228,7 +233,8 @@ export default function UserAuthContextProvider({ children }) {
         removeFavourite,
         showPassword,
         setShowPassword,
-        togglePasswordVisibility
+        togglePasswordVisibility,
+        favourites,
       }}
     >
       {children}
