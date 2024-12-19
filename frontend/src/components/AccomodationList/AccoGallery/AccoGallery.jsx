@@ -5,7 +5,19 @@ import AccoCard from '../../Shared/AccoCard/AccoCard';
 import PaginationPage from '../PaginationPage/PaginationPage';
 
 export default function AccoGallery() {
-  const { allAccos, getAllAccommodations, currentPage, setCurrentPage } = useAcco();
+  const {
+    allAccos,
+    getAllAccommodations,
+    currentPage,
+    setCurrentPage,
+    stateFilter,
+    maxPrice,
+    minPrice,
+    bedrooms,
+    minRating,
+    sortBy,
+    sortOrder
+  } = useAcco();
   const limit = 21;
 
   useEffect(() => {
@@ -13,13 +25,13 @@ export default function AccoGallery() {
   }, []);
 
   useEffect(() => {
-    getAllAccommodations(limit, currentPage);
-  }, [currentPage]);
+    getAllAccommodations(limit);
+  }, [currentPage, stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
 
   const handlePageChange = (page) => {
-    console.log("Switching to page:", page);
+    console.log('Switching to page:', page);
     setCurrentPage(page);
-  }
+  };
 
   const totalPages = allAccos.pagination?.totalCount
     ? Math.ceil(allAccos.pagination.totalCount / limit)
