@@ -21,6 +21,8 @@ export default function AccommodationContextProvider({ children }) {
   const [sortOrder, setSortOrder] = useState('asc');
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
+  // map and gallery view in AccommodationList Component:
+  const [selectedView, setSelectedView] = useState('gallery-view');
 
   async function getAllAccommodations(limit) {
     // apply loading state here
@@ -149,6 +151,8 @@ export default function AccommodationContextProvider({ children }) {
         specialAccos,
         setSpecialAccos,
         getSpecial,
+        selectedView,
+        setSelectedView,
       }}
     >
       {children}
