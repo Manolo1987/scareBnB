@@ -16,11 +16,6 @@ export default function AccomodationList() {
     setSelectedView(event.target.id);
   };
 
-  useEffect(() => {
-    //getAllAccommodations(); // for Map
-    //getAllAccommodations(21); // for AccoGallery with limit
-  }, []);
-
   return (
     <div>
       {!stateFilter && <h1>All Accommodations</h1>}
