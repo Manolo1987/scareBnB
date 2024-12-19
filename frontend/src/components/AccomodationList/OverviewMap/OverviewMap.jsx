@@ -43,9 +43,9 @@ export default function OverviewMap() {
     }
   }, [stateFilter]);
 
-  if (accommodations.length === 0) {
-    return <div>Loading accommodations...</div>; //loader
-  }
+  // if (accommodations.length === 0) {
+  //   return <div>Loading accommodations...</div>; //loader
+  // }
 
   return (
     <div className={styles.map_outerContainer}>
@@ -72,40 +72,42 @@ export default function OverviewMap() {
         />
         <ZoomControl position='bottomright' />
         {/* <ChangeView /> */}
-        {accommodations.map((acco, index) => {
-          if (acco.latitude && acco.longitude) {
-            return (
-              <Marker key={index} position={[acco.latitude, acco.longitude]}>
-                <Popup>
-                  <Link to={`/accommodation`} className={styles.cardLink}>
-                    <div className={styles.accoCardContainer}>
-                      <div className={styles.info_container}>
-                        <h4>{acco.title}</h4>
-                        <span>{acco.city}</span>
+        {accommodations.length > 0 &&
+          accommodations.map((acco, index) => {
+            if (acco.latitude && acco.longitude) {
+              return (
+                <Marker key={index} position={[acco.latitude, acco.longitude]}>
+                  <Popup>
+                    <Link to={`/accommodation`} className={styles.cardLink}>
+                      <div className={styles.accoCardContainer}>
+                        <div className={styles.info_container}>
+                          <h4>{acco.title}</h4>
+                          <span>{acco.city}</span>
+                        </div>
+                        <div className={styles.img_container}>
+                          <img
+                            src={acco.titleImage.secure_url}
+                            alt='location-preview'
+                          />
+                        </div>
+                        <div className={styles.info_container}>
+                          <p className={styles.rating}>🕸️ {acco.rating}</p>
+                          <p>Bedrooms: {acco.bedrooms} </p>
+                          <p>Price per Night: {acco.pricePerNight}€</p>
+                          <p>
+                            Availability:{' '}
+                            {acco.isBooked ? 'Close 🔒' : 'Open 🚪'}
+                          </p>
+                        </div>
                       </div>
-                      <div className={styles.img_container}>
-                        <img
-                          src={acco.titleImage.secure_url}
-                          alt='location-preview'
-                        />
-                      </div>
-                      <div className={styles.info_container}>
-                        <p className={styles.rating}>🕸️ {acco.rating}</p>
-                        <p>Bedrooms: {acco.bedrooms} </p>
-                        <p>Price per Night: {acco.pricePerNight}€</p>
-                        <p>
-                          Availability: {acco.isBooked ? 'Close 🔒' : 'Open 🚪'}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                </Popup>
-              </Marker>
-            );
-          } else {
-            return null;
-          }
-        })}
+                    </Link>
+                  </Popup>
+                </Marker>
+              );
+            } else {
+              return null;
+            }
+          })}
       </MapContainer>
     </div>
   );
