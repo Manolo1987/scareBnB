@@ -1,0 +1,10 @@
+.searchbar {
+  --width: 500px;
+  --height: 40px;
+  background-color: red;
+  width: var(--width);
+  height: var(--height);
+  position: absolute;
+  top: calc(var(--height) / -2);
+  left: calc(50vw - var(--width) / 2);
+}

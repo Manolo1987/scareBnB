@@ -1,0 +1,108 @@
+.register_button {
+  font-size: 1rem;
+  color: #fff;
+  background-color: var(--color-dark);
+  border-radius: 8px;
+  border: none;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--color-secondary);
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* testing */
+.overlay_content {
+  width: 350px;
+  color: var(--color-light);
+  /* background-image: url("https://png.pngtree.com/background/20210716/original/pngtree-light-white-line-crack-marble-texture-background-picture-image_1347308.jpg"); */
+  background-image: url("https://img.freepik.com/premium-photo/dark-background-with-copyspace-spooky-old-cobweb_960396-576716.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover;
+  /* background: var(--color-light); */
+  border: 2px solid black;
+  outline: 1px solid gray;
+  border-radius: 8px;
+  padding: 2rem;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: 100%;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: var(--color-prime);
+        outline: none;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: var(--color-dark);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: var(--color-secondary);
+      }
+    }
+
+    p {
+      font-size: 12px;
+      font-family: var(--font-basic);
+      color: var(--color-medium);
+      margin-top: -0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem;
+
+      input {
+        width: 2rem;
+        cursor: pointer;
+        margin: 0;
+      }
+    }
+  }
+}
