@@ -2,13 +2,21 @@ import React, { useEffect } from 'react';
 import styles from './AccoCard.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { Link } from 'react-router-dom';
+import FavouriteIcon from '../FavouriteIcon/FavouriteIcon';
+import { useAuth } from '../../../context/UserAuthContext';
 
 export default function AccoCard(acco) {
+  const { isAuthenticated } = useAuth();
   return (
-    <Link to={`/accommodation`} className={styles.cardLink}> {/* /${acco.id} */}
+    <Link to={`/accommodation`} className={styles.cardLink}>
+      {' '}
+      {/* /${acco.id} */}
       <div className={styles.accoCardContainer}>
         <div className={styles.info_container}>
-          <h4>{acco.acco.title}</h4>
+          <h4>
+            {acco.acco.title}{' '}
+            {isAuthenticated && <FavouriteIcon accoId={acco.acco._id} />}
+          </h4>
           <span>{acco.acco.city}</span>
         </div>
         <div className={styles.img_container}>
