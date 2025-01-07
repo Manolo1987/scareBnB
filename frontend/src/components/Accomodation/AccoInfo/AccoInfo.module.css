@@ -13,6 +13,11 @@
     margin-bottom: 1rem;
   }
 
+  .info_box {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .section {
     margin-bottom: 1.5rem;
 
@@ -55,10 +60,3 @@
     }
   }
 }
-
-
-
-
-
-
-
