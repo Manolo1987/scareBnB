@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import api from '../utils/api';
 import { toast } from 'react-toastify';
-import { useAuth } from './AuthContext.jsx';
+import { useAuth } from './UserAuthContext.jsx';
 import { useAcco } from './AccommodationContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,18 +31,17 @@ export const BookingContextProvider = ({ children }) => {
   });
   const [currentBooking, setCurrentBooking] = useState(createBookingObject);
   const createBookingPreview = () => ({
-    accommodation: currentAcco?._id || null,
+    accommodation: currentAcco?.title || null,
     numberOfGuests,
     checkIn,
     checkOut,
+    nights: Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)),
+    pricePerNight: currentAcco?.pricePerNight || null,
+    totalPrice:
+      currentAcco?.pricePerNight *
+      Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)),
   });
   const [bookingPreview, setBookingPreview] = useState(createBookingPreview);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     setCurrentBooking(createBookingObject());
