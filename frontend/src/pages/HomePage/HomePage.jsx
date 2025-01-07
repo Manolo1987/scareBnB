@@ -4,6 +4,7 @@ import AccoCard from '../../components/Shared/AccoCard/AccoCard';
 import { Link } from 'react-router-dom';
 import { useAcco } from '../../context/AccommodationContext';
 import Search from '../../components/Shared/Search/Search.jsx';
+import { DiamondsFour } from '@phosphor-icons/react';
 
 export default function HomePage() {
   const { specialAccos, getSpecial } = useAcco();
@@ -16,10 +17,14 @@ export default function HomePage() {
     <>
       <Search />
       <div className={styles.homepage}>
-        <section className={styles.intro_text}>
-          <h3>Welcome to ScareBnB – Where Fear Finds a Home</h3>
+        <section className={styles.intro_textArea}>
+          <h3 className={styles.intro_title} >Welcome to ScareBnB – Where Fear Finds a Home</h3>
 
-          <hr />
+          <div className={styles.lineBreak} >
+            <hr />
+            <DiamondsFour size={20} />
+            <hr />
+          </div>
 
           <p>
             Looking for a stay that sends shivers down your spine? ScareBnB
@@ -39,7 +44,11 @@ export default function HomePage() {
             able to check out.
           </p>
 
-          <hr />
+          <div className={styles.lineBreak} >
+            <hr />
+            <DiamondsFour size={20} />
+            <hr />
+          </div>
         </section>
         <section className={styles.highlight_section}>
           <h3>Our Most Haunted Stays</h3>
