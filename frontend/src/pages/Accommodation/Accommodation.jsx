@@ -32,7 +32,7 @@ export default function Accommodation() {
             titleImage={currentAcco?.titleImage}
             images={currentAcco?.images}
           />
-          <AccoInfo />
+          <AccoInfo currentAcco={currentAcco} />
           <AccoMap
             lat={currentAcco?.latitude}
             lon={currentAcco?.longitude}
