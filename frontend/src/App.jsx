@@ -28,8 +28,11 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path='accommodation' element={<Accommodation />} />
-            <Route path='accommodationlist' element={<AccommodationList />} />
+            <Route
+              path='accommodationList/:title'
+              element={<Accommodation />}
+            />
+            <Route path='accommodationList' element={<AccommodationList />} />
             <Route path='account' element={<Account />}>
               <Route path='profile' element={<Profile />} />
               <Route path='favourites' element={<Favourites />} />
