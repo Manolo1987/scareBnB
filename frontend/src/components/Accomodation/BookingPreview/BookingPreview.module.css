@@ -1,7 +1,7 @@
 .bookingPreviewWrapper {
   background-color: white;
   color: black;
-  width: 250px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,12 +19,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 95%;
 
   h2 {
-    text-align: center;
+    align-self: flex-start;
+    font-style: italic;
   }
 
-  p {
+  p,
+  label {
     display: flex;
     justify-content: space-between;
     width: 100%;
