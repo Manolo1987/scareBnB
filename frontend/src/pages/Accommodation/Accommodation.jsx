@@ -10,12 +10,13 @@ import { useLocation } from 'react-router-dom';
 
 export default function Accommodation() {
   const location = useLocation();
-  const { currentAcco, getOneAccommodation } = useAcco();
+  const { currentAcco, getOneAccommodation, setCurrentAcco } = useAcco();
 
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
 
   useEffect(() => {
+    setCurrentAcco(null); //important for marker rendering
     if (id) {
       getOneAccommodation(id);
     }
@@ -27,17 +28,17 @@ export default function Accommodation() {
       {/* if currentAcco not found -> navigate to NotFound */}
       {currentAcco && (
         <>
-          <h1>{currentAcco?.title}</h1>
+          <h2 className={styles.acco_title} >{currentAcco?.title}</h2>
           <AccoSlider
             titleImage={currentAcco?.titleImage}
             images={currentAcco?.images}
           />
           <AccoInfo currentAcco={currentAcco} />
-          <AccoMap
+          {/* <AccoMap
             lat={currentAcco?.latitude}
             lon={currentAcco?.longitude}
             title={currentAcco?.title}
-          />
+          /> */}
           <BookingPreview />
         </>
       )}

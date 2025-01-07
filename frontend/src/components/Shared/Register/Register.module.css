@@ -27,16 +27,13 @@
   z-index: 1000;
 }
 
-/* testing */
 .overlay_content {
   width: 350px;
-  color: var(--color-light);
-  /* background-image: url("https://png.pngtree.com/background/20210716/original/pngtree-light-white-line-crack-marble-texture-background-picture-image_1347308.jpg"); */
-  background-image: url("https://img.freepik.com/premium-photo/dark-background-with-copyspace-spooky-old-cobweb_960396-576716.jpg");
+  color: var(--color-dark);
   background-repeat: no-repeat;
   background-position: right;
   background-size: cover;
-  /* background: var(--color-light); */
+  background: var(--color-light);
   border: 2px solid black;
   outline: 1px solid gray;
   border-radius: 8px;

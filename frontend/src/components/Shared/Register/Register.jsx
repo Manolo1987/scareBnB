@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styles from './Register.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
 
-export default function Register({ showRegister, setShowRegister }) {
+export default function Register() {
   const {
     registration,
     showPassword,
     setShowPassword,
     togglePasswordVisibility,
+    showRegister,
+    setShowRegister,
   } = useAuth();
   const [formData, setFormData] = useState({
     firstName: '',
