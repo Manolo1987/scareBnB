@@ -1,0 +1,64 @@
+.accoInfo_container {
+  max-width: 800px;
+  background-color: var(--color-dark);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  padding: 1.5rem;
+  margin: 1rem auto;
+
+  .title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--color-light);
+    margin-bottom: 1rem;
+  }
+
+  .section {
+    margin-bottom: 1.5rem;
+
+    h4 {
+      font-size: 1.8rem;
+      font-family: var(--font-headline);
+      font-weight: normal;
+      letter-spacing: 0.3rem;
+      color: var(--color-medium);
+      text-shadow: 3px 3px 3px rgb(76, 76, 76);
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 1.2rem;
+      font-family: var(--font-typewriter);
+      line-height: 1.5;
+      color: var(--color-light);
+    }
+    
+    .features {
+    
+      ul {
+        padding-left: 1.5rem;
+    
+        li {
+          color: var(--color-light);
+          margin-bottom: 0.3rem;
+        }
+      }
+    }
+    
+    p {
+      color: var(--color-light);
+      padding: 0.3rem 0;
+    
+      strong {
+        color: var(--color-medium);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+

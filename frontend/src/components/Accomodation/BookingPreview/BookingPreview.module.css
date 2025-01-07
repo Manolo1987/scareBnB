@@ -1,0 +1,46 @@
+.bookingPreviewWrapper {
+  background-color: white;
+  color: black;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 1rem 0;
+  position: fixed;
+  right: 5px;
+  top: 50%;
+}
+
+.bookingPreviewContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+
+  h2 {
+    align-self: flex-start;
+    font-style: italic;
+  }
+
+  p,
+  label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0.5rem 0;
+
+    span {
+      font-style: italic;
+    }
+  }
+
+  button {
+    margin-top: 1rem;
+    background-color: red;
+    font-weight: 600;
+  }
+}
