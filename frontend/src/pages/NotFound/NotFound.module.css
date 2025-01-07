@@ -4,29 +4,43 @@
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-  background-size: cover;
+  width: 100%;
   margin: 0 auto;
   background-color: var(--color-dark);
 
   div {
-    background-image: url('../../assets/notFoundImage.png');
+    background-image: url('../../assets/notFoundImage.jpg');
     background-size: cover;
-
-    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: 100vh;
     section {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: rgba(92, 75, 75, 0.5);
+      background-color: transparent;
       padding: 2rem;
       border-radius: 10px;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(2px);
       color: white;
       line-height: 3rem;
       margin: 2rem auto;
       width: fit-content;
+      text-align: center;
+      width: 35%;
+
+      h1 {
+        font-size: 3rem;
+        color: gold;
+      }
+
+      p:nth-of-type(2) {
+        font-weight: 600;
+        font-style: italic;
+      }
     }
   }
 }
