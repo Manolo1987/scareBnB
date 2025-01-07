@@ -10,12 +10,13 @@ import { useLocation } from 'react-router-dom';
 
 export default function Accommodation() {
   const location = useLocation();
-  const { currentAcco, getOneAccommodation } = useAcco();
+  const { currentAcco, getOneAccommodation, setCurrentAcco } = useAcco();
 
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
 
   useEffect(() => {
+    setCurrentAcco(null); //important for marker rendering
     if (id) {
       getOneAccommodation(id);
     }

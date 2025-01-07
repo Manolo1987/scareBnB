@@ -10,9 +10,31 @@ import {
   useMap,
   TileLayer,
 } from 'react-leaflet';
-import L from 'leaflet';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { regionBounds } from '../../../assets/data/regionBounds.js';
+
+const MapZoomHandler = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map) {
+      const handleWheel = (e) => {
+        if (e.ctrlKey && e.deltaY !== 0) {
+          e.preventDefault();
+          map.zoomIn();
+        }
+      };
+      map.getContainer().addEventListener('wheel', handleWheel);
+      return () => {
+        map.getContainer().removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, [map]);
+
+  return null;
+};
 
 export default function OverviewMap() {
   const {
@@ -62,6 +84,7 @@ export default function OverviewMap() {
           [85.06, 180],
         ]}
         scrollWheelZoom={false}
+        gestureHandling={true}
         // whenCreated={(map) => {
         //   map.flyToBounds(bounds);
         // }}
