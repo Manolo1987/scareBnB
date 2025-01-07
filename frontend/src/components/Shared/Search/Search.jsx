@@ -1,10 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Search.module.css';
-import { AccommodationContext } from '../../../context/AccommodationContext';
+import { useAcco } from '../../../context/AccommodationContext';
+import { useBooking } from '../../../context/bookingContext';
 
 
 export default function Search() {
-  const { setStateFilter } = useContext(AccommodationContext);
+  const { setStateFilter } = useAcco();
+  const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
+    useBooking();
+
+  const handleCheckInChange = (e) => {
+    setCheckIn(new Date(e.target.value));
+  };
+
+  const handleCheckOutChange = (e) => {
+    setCheckOut(new Date(e.target.value));
+  };
+
+  const handleGuestsChange = (e) => {
+    setNumberOfGuests(Number(e.target.value));
+  };
 
   const handleRegionChange = (event) => {
     const selectedRegion = event.target.value;
@@ -26,22 +41,57 @@ export default function Search() {
         >
           <option value="">Choose your final destination</option>
           <option value="Baden-Württemberg">Baden-Württemberg</option>
-          <option value="Bayern">Bayern</option>
+          <option value="Bavaria">Bavaria</option>
           <option value="Berlin">Berlin</option>
           <option value="Brandenburg">Brandenburg</option>
           <option value="Bremen">Bremen</option>
           <option value="Hamburg">Hamburg</option>
-          <option value="Hessen">Hessen</option>
-          <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
-          <option value="Niedersachsen">Niedersachsen</option>
-          <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
-          <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+          <option value="Hesse">Hesse</option>
+          <option value="Mecklenburg-Western Pomerania">Mecklenburg-Western Pomerania</option>
+          <option value="Lower Saxony">Lower Saxony</option>
+          <option value="North Rhine-Westphalia">North Rhine-Westphalia</option>
+          <option value="Rhineland-Palatinate">Rhineland-Palatinate</option>
           <option value="Saarland">Saarland</option>
-          <option value="Sachsen">Sachsen</option>
-          <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+          <option value="Saxony">Saxony</option>
+          <option value="Saxony-Anhalt">Saxony-Anhalt</option>
           <option value="Schleswig-Holstein">Schleswig-Holstein</option>
-          <option value="Thüringen">Thüringen</option>
+          <option value="Thuringia">Thuringia</option>
         </select>
+
+        <label>
+          CheckIn:
+          <input
+            type='date'
+            value={bookingPreview.checkIn.toISOString().split('T')[0]} // Format YYYY-MM-DD
+            onChange={handleCheckInChange}
+          />
+        </label>
+
+        {/* Check-out Date */}
+        <label>
+          CheckOut:
+          <input
+            type='date'
+            value={bookingPreview.checkOut.toISOString().split('T')[0]} // Format YYYY-MM-DD
+            onChange={handleCheckOutChange}
+          />
+        </label>
+
+        {/* Guests Dropdown */}
+        <label>
+          Guests:
+          <select
+            value={bookingPreview.numberOfGuests}
+            onChange={handleGuestsChange}
+          >
+            {[...Array(5)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1} {i + 1 === 1 ? 'Guest' : 'Guests'}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <button type="submit">Submit</button>
       </form>
     </div>

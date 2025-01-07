@@ -3,7 +3,7 @@
   --height: 50px;
   border-radius: 8px;
   border: solid white 1px;
-  background-color: rgb(123, 0, 0);
+  background-color: #FE0300;
   width: var(--width);
   height: var(--height);
   position: absolute;
@@ -23,4 +23,16 @@ form {
     padding: 0.3em;
     margin-left: 8px;
    }
+
+   label {
+    margin-left: 8px;
+   }
+   input {
+    margin-left: 8px;
+   }
+   select {
+    margin-left: 8px;
+   }
+
+  
 }
