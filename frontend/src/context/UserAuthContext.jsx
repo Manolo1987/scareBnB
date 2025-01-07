@@ -16,6 +16,8 @@ export default function UserAuthContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -235,6 +237,10 @@ export default function UserAuthContextProvider({ children }) {
         setShowPassword,
         togglePasswordVisibility,
         favourites,
+        showLogin,
+        setShowLogin,
+        showRegister,
+        setShowRegister,
       }}
     >
       {children}

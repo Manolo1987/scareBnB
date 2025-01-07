@@ -29,6 +29,7 @@
 
 .overlay_content {
   width: 350px;
+  color: var(--color-dark);
   background: var(--color-light);
   border-radius: 8px;
   padding: 2rem;

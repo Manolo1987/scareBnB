@@ -9,7 +9,7 @@
   background-color: var(--color-dark);
 
   div {
-    background-image: url('../../assets/notFoundImage.jpg');
+    background-image: url('../../assets/images/notFoundImage.jpg');
     background-size: cover;
     display: flex;
     justify-content: center;
