@@ -1,7 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import styles from './AccoMap.module.css';
+
+const MapZoomHandler = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map) {
+      const handleWheel = (e) => {
+        if (e.ctrlKey && e.deltaY !== 0) {
+          e.preventDefault();
+          map.zoomIn();
+        }
+      };
+      map.getContainer().addEventListener('wheel', handleWheel);
+      return () => {
+        map.getContainer().removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, [map]);
+
+  return null;
+};
 
 const AccoMap = ({ lat, lon, title }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +47,7 @@ const AccoMap = ({ lat, lon, title }) => {
         style={{ width: '100%', height: '400px', aspectRatio: 1 }}
         scrollWheelZoom={false}
         zoomControl={false}
+        gestureHandling={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
