@@ -3,6 +3,7 @@ import styles from './HandleListings.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
+import ListingsNav from '../ListingsNav/ListingsNav.jsx';
 
 export default function HandleListings() {
   const { addNewListing, getAllAccommodations } = useAcco();
@@ -243,6 +244,7 @@ export default function HandleListings() {
 
   return (
     <div>
+      <ListingsNav />
       HandleListings
       <div className={styles.formContainer}>
         <form className={styles.handleListings} onSubmit={handleSubmit}>
