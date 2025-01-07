@@ -1,0 +1,8 @@
+.acco_title {
+  font-size: 3rem;
+  font-family: var(--font-headline);
+  font-weight: normal;
+  text-align: center;
+  color: var(--color-light);
+  margin-top: 2rem;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './AccoInfo.module.css';
 import { Desk } from '@phosphor-icons/react';
+import AccoMap from '../AccoMap/AccoMap';
 
 export default function AccoInfo({ currentAcco }) {
   return (
@@ -14,45 +15,59 @@ export default function AccoInfo({ currentAcco }) {
         </p>
       </div>
 
-      <div className={styles.section}>
-        <h4>Location</h4>
-        <p>
-          <strong>State:</strong> {currentAcco?.state || 'N/A'}
-        </p>
-        <p>
-          <strong>City:</strong> {currentAcco?.city || 'N/A'}
-        </p>
-      </div>
+      <div className={styles.info_box}>
+        <div>
+          <div className={styles.section}>
+            <h4>Location</h4>
+            <p>
+              <strong>State:</strong> {currentAcco?.state || 'N/A'}
+            </p>
+            <p>
+              <strong>City:</strong> {currentAcco?.city || 'N/A'}
+            </p>
+          </div>
 
-      <div className={styles.section}>
-        <h4>Property Details</h4>
-        <p>
-          <strong>Bedrooms:</strong> {currentAcco?.bedrooms || 'N/A'}
-        </p>
-        <div className={styles.features}>
-          <p><strong>Features:</strong></p>
-          {currentAcco?.features?.length > 0 ? (
-            <ul>
-              {currentAcco.features.map((feature, index) => (
-                <li key={index}><Desk size={20} /> {feature}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No features available.</p>
-          )}
+          <div className={styles.section}>
+            <h4>Property Details</h4>
+            <p>
+              <strong>Bedrooms:</strong> {currentAcco?.bedrooms || 'N/A'}
+            </p>
+            <div className={styles.features}>
+              <p>
+                <strong>Features:</strong>
+              </p>
+              {currentAcco?.features?.length > 0 ? (
+                <ul>
+                  {currentAcco.features.map((feature, index) => (
+                    <li key={index}>
+                      <Desk size={20} /> {feature}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No features available.</p>
+              )}
+            </div>
+            <p>
+              <strong>Price per Night:</strong>{' '}
+              {currentAcco?.pricePerNight?.toFixed(2) || 'N/A'}€
+            </p>
+            <p>
+              <strong>Status:</strong>{' '}
+              {currentAcco?.isBooked ? 'Booked' : 'Available'}
+            </p>
+            <p>
+              <strong>Rating:</strong>{' '}
+              {currentAcco?.rating?.toFixed(1) || 'No rating'}
+            </p>
+          </div>
         </div>
-        <p>
-          <strong>Price per Night:</strong> {' '}
-          {currentAcco?.pricePerNight?.toFixed(2) || 'N/A'}€
-        </p>
-        <p>
-          <strong>Status:</strong>{' '}
-          {currentAcco?.isBooked ? 'Booked' : 'Available'}
-        </p>
-        <p>
-          <strong>Rating:</strong>{' '}
-          {currentAcco?.rating?.toFixed(1) || 'No rating'}
-        </p>
+        <div>
+          <AccoMap
+          lat={currentAcco?.latitude}
+          lon={currentAcco?.longitude}
+          title={currentAcco?.title} />
+        </div>
       </div>
     </section>
   );

@@ -27,17 +27,17 @@ export default function Accommodation() {
       {/* if currentAcco not found -> navigate to NotFound */}
       {currentAcco && (
         <>
-          <h1>{currentAcco?.title}</h1>
+          <h2 className={styles.acco_title} >{currentAcco?.title}</h2>
           <AccoSlider
             titleImage={currentAcco?.titleImage}
             images={currentAcco?.images}
           />
           <AccoInfo currentAcco={currentAcco} />
-          <AccoMap
+          {/* <AccoMap
             lat={currentAcco?.latitude}
             lon={currentAcco?.longitude}
             title={currentAcco?.title}
-          />
+          /> */}
           <BookingPreview />
         </>
       )}
