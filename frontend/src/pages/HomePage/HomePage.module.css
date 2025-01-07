@@ -11,6 +11,7 @@
     max-width: 50%;
     text-align: center;
     color: var(--color-light);
+    margin-top: 2rem;
 
     h3 {
       font-size: clamp(1rem, 1.5vw, 5rem);
