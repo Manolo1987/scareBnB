@@ -9,7 +9,7 @@ header {
       rgba(0, 0, 0, 1) 100%
     ),
     linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%),
-    url('https://www.theorlandoreal.com/uploads/AdobeStock_620713762.jpeg')
+    url('../../../assets/images/Scarebnb-header-img.jpeg')
       no-repeat center center / cover;
 
   p {

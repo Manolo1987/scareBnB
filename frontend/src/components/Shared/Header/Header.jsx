@@ -7,8 +7,6 @@ import { useAuth } from '../../../context/UserAuthContext';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
   const { isAuthenticated } = useAuth();
 
   return (
@@ -27,15 +25,8 @@ export default function Header() {
             <AccountDropdownMenu />
           ) : (
             <>
-              <Login
-                showLogin={showLogin}
-                setShowLogin={setShowLogin}
-                setShowRegister={setShowRegister}
-              />
-              <Register
-                showRegister={showRegister}
-                setShowRegister={setShowRegister}
-              />
+              <Login />
+              <Register />
             </>
           )}
         </div>
