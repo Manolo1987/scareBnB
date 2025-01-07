@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './BookingPreview.module.css';
 import { useBooking } from '../../../context/bookingContext';
 import { useAuth } from '../../../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
+
+import styles from './BookingPreview.module.css';
 
 export default function BookingPreview() {
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
@@ -11,11 +12,18 @@ export default function BookingPreview() {
   const navigate = useNavigate();
 
   const handleCheckInChange = (e) => {
-    setCheckIn(new Date(e.target.value));
+    if (e.target.value === '') {
+      setCheckIn(new Date());
+    } else {
+      setCheckIn(new Date(e.target.value));
+    }
   };
 
   const handleCheckOutChange = (e) => {
-    setCheckOut(new Date(e.target.value));
+    const value = e.target.value;
+    const newDate = value ? new Date(value) : new Date();
+    newDate.setDate(newDate.getDate() + 1); // Setzt auf morgen
+    setCheckOut(newDate);
   };
 
   const handleGuestsChange = (e) => {
@@ -36,6 +44,7 @@ export default function BookingPreview() {
           CheckIn:
           <input
             type='date'
+            required
             value={bookingPreview.checkIn.toISOString().split('T')[0]} // Format YYYY-MM-DD
             onChange={handleCheckInChange}
           />
@@ -46,6 +55,7 @@ export default function BookingPreview() {
           CheckOut:
           <input
             type='date'
+            required
             value={bookingPreview.checkOut.toISOString().split('T')[0]} // Format YYYY-MM-DD
             onChange={handleCheckOutChange}
           />
