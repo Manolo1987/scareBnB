@@ -10,7 +10,12 @@ accoRouter.get('/special', acco.getSpecial);
 accoRouter.get('/one/:accoId', acco.getOneAccommodation);
 accoRouter.get('/my', authenticateToken, acco.getMyListings);
 accoRouter.post('/', authenticateToken, uploadMW, acco.createListing);
-accoRouter.patch('/:listingId', authenticateToken, acco.updateListing);
+accoRouter.patch(
+  '/:listingId',
+  authenticateToken,
+  uploadMW,
+  acco.updateListing
+);
 accoRouter.delete('/:listingId', authenticateToken, acco.deleteListing);
 
 accoRouter.post('/comment/:accoId', authenticateToken, acco.postComment);

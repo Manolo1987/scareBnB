@@ -185,7 +185,7 @@ export async function createListing(req, res) {
 //updateListing
 export async function updateListing(req, res) {
   try {
-    const listingId = req.params.id;
+    const { listingId } = req.params;
     const userId = req.userId;
 
     const listing = await Accommodation.findById(listingId);
@@ -231,6 +231,26 @@ export async function updateListing(req, res) {
       updatedFields.bedrooms = bedrooms;
     if (features && features !== listing.features)
       updatedFields.features = features.split(',');
+
+    //delete old images here
+
+    // if (req.files) {
+    //   if (req.files['titleImage']) {
+    //     const titleImg = req.files['titleImage'][0];
+    //     updatedFields.titleImage = {
+    //       secure_url: titleImg.path,
+    //       public_id: titleImg.filename,
+    //     };
+    //   }
+
+    //   if (req.files['otherImages']) {
+    //     const images = req.files['otherImages'].map((img) => ({
+    //       secure_url: img.path,
+    //       public_id: img.filename,
+    //     }));
+    //     updatedFields.images = images;
+    //   }
+    // }
 
     if (Object.keys(updatedFields).length > 0) {
       const updatedListing = await Accommodation.findByIdAndUpdate(

@@ -29,9 +29,9 @@ async function uploadMW(req, res, next) {
       return res.status(400).json({ message: 'Error uploading images.' });
     }
 
-    if (!req.files['titleImage']) {
-      return res.status(400).json({ message: 'Title image is required.' });
-    }
+    // if (!req.files['titleImage']) {
+    //   return res.status(400).json({ message: 'Title image is required.' });
+    // }
     if (req.files['otherImages'] && req.files['otherImages'].length > 4) {
       return res.status(400).json({
         message: 'Maximum number of other images exceeded (4 images allowed).',
