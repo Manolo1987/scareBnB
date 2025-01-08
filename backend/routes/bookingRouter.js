@@ -6,17 +6,12 @@ import { authenticateToken } from '../middleware/jwt.js';
 const bookingRouter = express.Router();
 
 bookingRouter.post('/createBooking', authenticateToken, booking.createBooking);
-// all Bookings is in userController via populate bookings
+bookingRouter.get('/myBookings', authenticateToken, booking.getMyBookings);
 bookingRouter.get(
   '/myBookedListings',
   authenticateToken,
   booking.getMyBookedListings
 );
-// bookingRouter.get(
-//   '/oneBooking/:bookingId',
-//   authenticateToken,
-//   booking.getOneBooking
-// );
 bookingRouter.put(
   '/cancelBooking/:bookingId',
   authenticateToken,

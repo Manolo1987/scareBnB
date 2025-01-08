@@ -24,7 +24,7 @@ const bookingSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['creditCard', 'paypal', 'banktransfer'],
+    enum: ['creditCard', 'banktransfer'],
     required: true,
   },
   giveFeedback: { type: Boolean, default: false },
