@@ -7,24 +7,39 @@ export default function ListingsNav() {
     <div className={styles.listingsNav}>
       <ul className={styles.listingsNavList}>
         <li>
-          <NavLink to='/account/listings' className={styles.listingsNavLink}>
+          <NavLink
+            to='/account/listings'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.listingsNavLink} ${styles.activeLink}`
+                : styles.listingsNavLink
+            }
+          >
             My Listings
           </NavLink>
         </li>
         <li>
           <NavLink
             to='/account/bookedListings'
-            className={styles.listingsNavLink}
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.listingsNavLink} ${styles.activeLink}`
+                : styles.listingsNavLink
+            }
           >
             Booked Listings
           </NavLink>
         </li>
         <li>
           <NavLink
-            to='/account/handleListings'
-            className={styles.listingsNavLink}
+            to='/account/add-new-listing'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.listingsNavLink} ${styles.activeLink}`
+                : styles.listingsNavLink
+            }
           >
-            Create Listings
+            Create Listing
           </NavLink>
         </li>
       </ul>

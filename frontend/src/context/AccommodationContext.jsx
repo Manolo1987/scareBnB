@@ -62,14 +62,14 @@ export default function AccommodationContextProvider({ children }) {
     console.log(formData);
     try {
       const response = await api.post('/accommodations', formData, {
-        //withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       console.log(response.data);
-      // if success navigate to myListings?
+      // success toast?
+      return response.data;
     } catch (error) {
       console.log(error.response);
     }
@@ -79,6 +79,8 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
       console.log(response.data.msg);
+      //sucess toast ?
+      getMyListings();
     } catch (error) {
       console.log(error);
     }
