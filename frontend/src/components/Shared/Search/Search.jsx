@@ -1,12 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './Search.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { useBooking } from '../../../context/bookingContext';
+import { useNavigate } from 'react-router-dom';
+import { states } from '../../../assets/data/statesList';
 
 export default function Search() {
-  const { setStateFilter } = useAcco();
-  const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
-    useBooking();
+  const navigate = useNavigate();
+  const {
+    setStateFilter,
+    getAllAccommodations,
+    setCurrentPage,
+  } = useAcco();
+
+  const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } = useBooking();
+  
+  const [selectedRegion, setSelectedRegion] = useState('');
+
   const handleCheckInChange = (e) => {
     if (e.target.value === '') {
       setCheckIn(new Date());
@@ -27,60 +37,63 @@ export default function Search() {
   };
 
   const handleRegionChange = (event) => {
-    const selectedRegion = event.target.value;
-    setStateFilter(selectedRegion);
-    console.log('Selected Region:', selectedRegion);
+    setSelectedRegion(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // pagination Reset bei neuer Suche
+    setCurrentPage(1);
+
+    setStateFilter(selectedRegion);
+
+    // Fetch accommodations mit neuem filter
+    getAllAccommodations(10);
+
+    // Navigate mit search parametern
+    const searchParams = new URLSearchParams({
+      state: selectedRegion,
+      checkIn: bookingPreview.checkIn.toISOString().split('T')[0],
+      checkOut: bookingPreview.checkOut.toISOString().split('T')[0],
+      guests: bookingPreview.numberOfGuests
+    });
+
+    navigate(`/accommodationlist?${searchParams.toString()}`);
+
   };
 
   return (
     <div className={styles.searchbar}>
-      <form onSubmit={handleSubmit}>
-        <select id='selection' onChange={handleRegionChange}>
-          <option value=''>Choose your final destination</option>
-          <option value='Baden-Württemberg'>Baden-Württemberg</option>
-          <option value='Bavaria'>Bavaria</option>
-          <option value='Berlin'>Berlin</option>
-          <option value='Brandenburg'>Brandenburg</option>
-          <option value='Bremen'>Bremen</option>
-          <option value='Hamburg'>Hamburg</option>
-          <option value='Hesse'>Hesse</option>
-          <option value='Mecklenburg-Western Pomerania'>
-            Mecklenburg-Western Pomerania
-          </option>
-          <option value='Lower Saxony'>Lower Saxony</option>
-          <option value='North Rhine-Westphalia'>North Rhine-Westphalia</option>
-          <option value='Rhineland-Palatinate'>Rhineland-Palatinate</option>
-          <option value='Saarland'>Saarland</option>
-          <option value='Saxony'>Saxony</option>
-          <option value='Saxony-Anhalt'>Saxony-Anhalt</option>
-          <option value='Schleswig-Holstein'>Schleswig-Holstein</option>
-          <option value='Thuringia'>Thuringia</option>
+      <form onSubmit={handleSubmit} className={styles.searchbarForm}>
+        <select
+          id="selection"
+          value={selectedRegion}
+          onChange={handleRegionChange}
+        >
+          <option value="">Choose your final destination</option>
+          {states.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
         </select>
-
         <label>
           CheckIn:
           <input
-            type='date'
-            value={bookingPreview.checkIn.toISOString().split('T')[0]} // Format YYYY-MM-DD
+            type="date"
+            value={bookingPreview.checkIn.toISOString().split('T')[0]}
             onChange={handleCheckInChange}
           />
         </label>
-
-        {/* Check-out Date */}
         <label>
           CheckOut:
           <input
-            type='date'
-            value={bookingPreview.checkOut.toISOString().split('T')[0]} // Format YYYY-MM-DD
+            type="date"
+            value={bookingPreview.checkOut.toISOString().split('T')[0]}
             onChange={handleCheckOutChange}
           />
         </label>
-
-        {/* Guests Dropdown */}
         <label>
           Guests:
           <select
@@ -94,7 +107,6 @@ export default function Search() {
             ))}
           </select>
         </label>
-
         <button type='submit'>Submit</button>
       </form>
     </div>
