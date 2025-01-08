@@ -17,7 +17,7 @@ import Favourites from './components/Account/Favourites/Favourites.jsx';
 import Bookings from './components/Account/Bookings/Bookings.jsx';
 import Listings from './components/Account/Listings/Listings.jsx';
 import HandleListings from './components/Account/HandleListings/HandleListings.jsx';
-import BookedListings from './components/Account/BookedListingsCard/BookedListingsCard.jsx';
+import BookedListings from './components/Account/BookedListings/BookedListings.jsx';
 import AdminUserList from './components/Account/AdminUserList/AdminUserList.jsx';
 import AdminAccoList from './components/Account/AdminAccoList/AdminAccoList.jsx';
 import { ToastContainer } from 'react-toastify';
