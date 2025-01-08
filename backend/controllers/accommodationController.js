@@ -182,6 +182,73 @@ export async function createListing(req, res) {
   }
 }
 
+//updateListing
+export async function updateListing(req, res) {
+  try {
+    const listingId = req.params.id;
+    const userId = req.userId;
+
+    const listing = await Accommodation.findById(listingId);
+    if (!listing) {
+      return res.status(404).json({ msg: 'Listing not found.' });
+    }
+
+    const user = await User.findById(req.userId);
+    const ownerId = listing.owner._id.toString();
+
+    if (ownerId !== userId || !user) {
+      return res
+        .status(403)
+        .json({ msg: 'You are not authorized to update this listing.' });
+    }
+
+    const updatedFields = {};
+
+    const {
+      title,
+      description,
+      state,
+      city,
+      latitude,
+      longitude,
+      pricePerNight,
+      bedrooms,
+      features,
+    } = req.body;
+
+    if (title && title !== listing.title) updatedFields.title = title;
+    if (description && description !== listing.description)
+      updatedFields.description = description;
+    if (state && state !== listing.state) updatedFields.state = state;
+    if (city && city !== listing.city) updatedFields.city = city;
+    if (latitude && latitude !== listing.latitude)
+      updatedFields.latitude = latitude;
+    if (longitude && longitude !== listing.longitude)
+      updatedFields.longitude = longitude;
+    if (pricePerNight && pricePerNight !== listing.pricePerNight)
+      updatedFields.pricePerNight = pricePerNight;
+    if (bedrooms && bedrooms !== listing.bedrooms)
+      updatedFields.bedrooms = bedrooms;
+    if (features && features !== listing.features)
+      updatedFields.features = features.split(',');
+
+    if (Object.keys(updatedFields).length > 0) {
+      const updatedListing = await Accommodation.findByIdAndUpdate(
+        listingId,
+        updatedFields,
+        { new: true }
+      );
+
+      res.status(200).json(updatedListing);
+    } else {
+      res.status(400).json({ msg: 'No fields to update.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error, please try again later.' });
+  }
+}
+
 //deleteListing
 export async function deleteListing(req, res) {
   try {
