@@ -21,7 +21,7 @@ export const BookingContextProvider = ({ children }) => {
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [myBookings, setMyBookings] = useState([]);
-  const [myListings, setMyListings] = useState([]);
+  const [myBookedListings, setMyBookedListings] = useState([]);
   const createBookingObject = () => ({
     accommodationId: currentAcco?._id || null,
     accommodation: currentAcco?.title || null,
@@ -52,7 +52,7 @@ export const BookingContextProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       setMyBookings(user?.bookings || []);
-      setMyListings(user?.listings || []);
+      setMyBookedListings(user?.listings || []);
     }
   }, [user]);
 
@@ -78,7 +78,7 @@ export const BookingContextProvider = ({ children }) => {
         withCredentials: true,
       });
       if (response.status === 200) {
-        setMyListings(response.data.bookings);
+        setMyBookedListings(response.data.bookings);
       }
     } catch (error) {
       console.error(error);
@@ -137,7 +137,8 @@ export const BookingContextProvider = ({ children }) => {
         paymentMethod,
         setPaymentMethod,
         myBookings,
-        myListings,
+        myBookedListings,
+        setMyBookedListings,
         createBooking,
         getMyBookedListings,
         currentBooking,
