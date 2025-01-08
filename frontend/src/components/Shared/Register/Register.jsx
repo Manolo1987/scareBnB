@@ -89,7 +89,7 @@ export default function Register() {
   return (
     <>
       <button
-        className={styles.register_button}
+        className={`buttonEffect ${styles.register_button}`}
         onClick={() => setShowRegister(true)}
       >
         Register

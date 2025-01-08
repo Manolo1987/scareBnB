@@ -1,9 +1,9 @@
 .searchbar {
-  --width: 1100px;
+  --width: 75vw;
   --height: 50px;
   border-radius: 8px;
   border: solid white 1px;
-  background-color: #FE0300;
+  background-color: #fe0300;
   width: var(--width);
   height: var(--height);
   position: absolute;
@@ -17,23 +17,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-   padding: .3em .3em;
+  padding: 0.3em 0.3em;
 
-   button {
-    padding: 0.3em;
+  button {
+    padding: 0.4em;
     margin-left: 8px;
-   }
+    border-radius: 50%;
+    aspect-ratio: 1;
+  }
 
-   label {
+  label {
     margin-left: 8px;
-   }
-   input {
+  }
+  input {
     height: 100%;
     margin-left: 8px;
-   }
-   select {
+  }
+  select {
     margin-left: 8px;
-   }
+  }
+}
 
-  
+@media (max-width: 768px) {
+  .searchbar {
+    width: 80%;
+
+    .searchbarSelect {
+      width: 100px;
+    }
+
+    .searchbarLabel {
+      visibility: hidden;
+      width: 0px;
+    }
+
+    .searchbarInput {
+      /* background-color: #FE0300; */
+      width: 20px;
+      height: 24px;
+      position: relative;
+    }
+
+    button {
+      border-radius: 50%;
+      aspect-ratio: 1;
+    }
+  }
 }

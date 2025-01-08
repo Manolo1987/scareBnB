@@ -32,7 +32,7 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
     <div className={styles.pagination}>
       <CaretLeft size={20} color='#fcfcfc' />
       <button
-        className={styles.pg_button}
+        className={`buttonEffect ${styles.pg_button}`}
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -46,7 +46,7 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
         ) : (
           <button
             key={`page-${page}`}
-            className={page === currentPage ? styles.active : styles.pg_button}
+            className={`buttonEffect ${page === currentPage ? styles.active : styles.pg_button}`}
             onClick={() => onPageChange(page)}
           >
             {page}
@@ -54,7 +54,7 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
         )
       )}
       <button
-        className={styles.pg_button}
+        className={`buttonEffect ${styles.pg_button}`}
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
