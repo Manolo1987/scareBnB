@@ -65,7 +65,7 @@ export default function HomePage() {
           <div className={styles.highlight_bottom}>
             <p>Stay Here… If You Dare</p>
             <Link to='/accommodationlist'>
-              <button>See All Chilling Options</button>
+              <button className="buttonEffect">See All Chilling Options</button>
             </Link>
           </div>
         </section>

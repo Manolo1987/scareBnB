@@ -45,7 +45,7 @@ export default function Login() {
   return (
     <>
       <button
-        className={styles.login_button}
+        className={`buttonEffect ${styles.login_button}`}
         onClick={() => setShowLogin(true)}
       >
         Login
