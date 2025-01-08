@@ -15,12 +15,12 @@ export default function Listings() {
     <div>
       <ListingsNav />
       {myListings?.length < 1 && (
-        <p>
-          You don't have any listings yet.{' '}
-          <Link to='/account/handleListings'>
+        <div className={styles.messageContainer}>
+          <p className={styles.message}>You don't have any listings yet.</p>
+          <Link to='/account/handleListings' className={styles.messageLink}>
             Create your first Listing here.
           </Link>
-        </p>
+        </div>
       )}
       {myListings?.length > 0 && (
         <div className={styles.mylistings_list}>
