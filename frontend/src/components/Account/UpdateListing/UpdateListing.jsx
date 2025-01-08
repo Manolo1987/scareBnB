@@ -4,15 +4,13 @@ import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
-import ListingsNav from '../ListingsNav/ListingsNav.jsx';
 
 export default function UpdateListing({ listing, setShowUpdateForm }) {
-  const { updateListing } = useAcco(); // Funktion, um das Listing zu aktualisieren
+  const { updateListing } = useAcco();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Initialisiere den Formulardatenzustand mit den erhaltenen Listing-Daten
   const [formData, setFormData] = useState({
     title: listing.title || '',
     description: listing.description || '',
@@ -159,10 +157,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     setIsLoading(true);
     setError(null);
 
-    updateListing(listing._id, form) // Aufruf der updateListing-Funktion mit Listing-ID und Formulardaten
+    updateListing(listing._id, form)
       .then((response) => {
         setIsLoading(false);
-        navigate('/account/listings');
+        setShowUpdateForm(false);
       })
       .catch((error) => {
         setIsLoading(false);

@@ -1,6 +1,6 @@
 import express from 'express';
 import * as acco from '../controllers/accommodationController.js';
-import { authenticateToken, authorizeRoles } from '../middleware/jwt.js';
+import { authenticateToken } from '../middleware/jwt.js';
 import uploadMW from '../middleware/uploadToCloudinary.js';
 
 const accoRouter = express.Router();
