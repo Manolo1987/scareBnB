@@ -6,11 +6,17 @@
   padding: 1.5rem;
   margin: 1rem auto;
 
-  .title {
-    text-align: center;
-    font-size: 1.8rem;
-    color: var(--color-light);
-    margin-bottom: 1rem;
+  .titleAndFavIcon {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    .title {
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--color-light);
+      margin-bottom: 1rem;
+    }
   }
 
   .info_box {

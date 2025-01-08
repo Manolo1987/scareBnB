@@ -11,13 +11,13 @@
   left: calc(50vw - var(--width) / 2);
 }
 
-form {
+.searchbarForm {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-   padding: .3em 1em;
+   padding: .3em .3em;
 
    button {
     padding: 0.3em;
@@ -28,6 +28,7 @@ form {
     margin-left: 8px;
    }
    input {
+    height: 100%;
     margin-left: 8px;
    }
    select {
