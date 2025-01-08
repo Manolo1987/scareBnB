@@ -4,6 +4,7 @@ import { useAcco } from '../../../context/AccommodationContext';
 import { useBooking } from '../../../context/bookingContext';
 import { useNavigate } from 'react-router-dom';
 import { states } from '../../../assets/data/statesList';
+import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export default function Search() {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export default function Search() {
           id="selection"
           value={selectedRegion}
           onChange={handleRegionChange}
+          className={styles.searchbarSelect}
         >
           <option value="">Choose your final destination</option>
           {states.map((state) => (
@@ -78,27 +80,32 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <label>
+        <label className={styles.searchbarLabel} >
           CheckIn:
+        </label>
           <input
             type="date"
             value={bookingPreview.checkIn.toISOString().split('T')[0]}
             onChange={handleCheckInChange}
+            className={styles.searchbarInput}
+            id='checkIn'
           />
-        </label>
-        <label>
+        <label className={styles.searchbarLabel} >
           CheckOut:
+        </label>
           <input
             type="date"
             value={bookingPreview.checkOut.toISOString().split('T')[0]}
             onChange={handleCheckOutChange}
-          />
-        </label>
-        <label>
+            className={styles.searchbarInput}
+            />
+        <label className={styles.searchbarLabel} >
           Guests:
+        </label>
           <select
             value={bookingPreview.numberOfGuests}
-            onChange={handleGuestsChange}
+          onChange={handleGuestsChange}
+          className={styles.searchbarSelect}
           >
             {[...Array(5)].map((_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -106,8 +113,7 @@ export default function Search() {
               </option>
             ))}
           </select>
-        </label>
-        <button type='submit'>Submit</button>
+        <button type='submit'><MagnifyingGlass size={16} /></button>
       </form>
     </div>
   );
