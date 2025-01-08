@@ -8,7 +8,7 @@ import styles from './BookingPreview.module.css';
 export default function BookingPreview() {
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
     useBooking();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, showLogin, setShowLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleCheckInChange = (e) => {
@@ -31,7 +31,11 @@ export default function BookingPreview() {
   };
 
   const handleClick = () => {
-    navigate('/booking');
+    if (!isAuthenticated) {
+      setShowLogin(true);
+    } else {
+      navigate('/booking');
+    }
   };
 
   return (
