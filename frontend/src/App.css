@@ -1,4 +1,4 @@
-button {
+.buttonEffect {
   position: relative;
   overflow: hidden;
   color: var(--color-light);
