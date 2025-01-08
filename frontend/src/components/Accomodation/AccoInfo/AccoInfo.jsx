@@ -2,12 +2,19 @@ import React from 'react';
 import styles from './AccoInfo.module.css';
 import { Desk } from '@phosphor-icons/react';
 import AccoMap from '../AccoMap/AccoMap';
+import FavouriteIcon from '../../Shared/FavouriteIcon/FavouriteIcon';
+import { useAuth } from '../../../context/UserAuthContext';
+
 
 export default function AccoInfo({ currentAcco }) {
+    const { isAuthenticated } = useAuth();
+  
   return (
     <section className={styles.accoInfo_container}>
-      <h2 className={styles.title}>Accommodation Details</h2>
-
+      <div className={styles.titleAndFavIcon}>
+        <h2 className={styles.title}>Accommodation Details</h2>
+        {isAuthenticated && <FavouriteIcon accoId={currentAcco._id} />}
+      </div>
       <div className={styles.section}>
         <h4>Story</h4>
         <p className={styles.description}>
@@ -64,9 +71,10 @@ export default function AccoInfo({ currentAcco }) {
         </div>
         <div>
           <AccoMap
-          lat={currentAcco?.latitude}
-          lon={currentAcco?.longitude}
-          title={currentAcco?.title} />
+            lat={currentAcco?.latitude}
+            lon={currentAcco?.longitude}
+            title={currentAcco?.title}
+          />
         </div>
       </div>
     </section>
