@@ -69,6 +69,7 @@ export default function AccommodationContextProvider({ children }) {
       });
 
       console.log(response.data);
+      return response.data;
       // if success navigate to myListings?
     } catch (error) {
       console.log(error.response);
@@ -79,6 +80,8 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
       console.log(response.data.msg);
+      //sucess toast ?
+      getMyListings();
     } catch (error) {
       console.log(error);
     }

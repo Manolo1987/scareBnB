@@ -2,8 +2,15 @@ import React from 'react';
 import styles from './ListingsCard.module.css';
 import { Link } from 'react-router-dom';
 import { Trash, Pencil } from '@phosphor-icons/react';
+import { useAcco } from '../../../context/AccommodationContext.jsx';
 
 export default function ListingsCard({ listing }) {
+  const { deleteListing } = useAcco();
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    deleteListing(listing._id);
+  };
   return (
     <Link
       to={`/accommodationList/${listing.title
@@ -23,7 +30,7 @@ export default function ListingsCard({ listing }) {
         <button className={styles.listingsButton}>
           <Pencil size={32} />
         </button>
-        <button className={styles.listingsButton}>
+        <button className={styles.listingsButton} onClick={handleDelete}>
           <Trash size={32} />
         </button>
       </div>

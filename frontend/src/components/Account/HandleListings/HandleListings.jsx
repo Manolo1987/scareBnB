@@ -4,9 +4,13 @@ import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
 import ListingsNav from '../ListingsNav/ListingsNav.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function HandleListings() {
   const { addNewListing, getAllAccommodations } = useAcco();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -216,10 +220,6 @@ export default function HandleListings() {
     }
   };
 
-  // for (const [key, value] of Object.entries(formData)) {
-  //   console.log(key, ': ', value);
-  // }
-
   function handleSubmit(e) {
     e.preventDefault();
     const form = new FormData();
@@ -234,13 +234,19 @@ export default function HandleListings() {
         form.append(key, value);
       }
     }
-    addNewListing(form);
-  }
+    setIsLoading(true);
+    setError(null);
 
-  //testing:
-  // useEffect(() => {
-  //   getAllAccommodations();
-  // }, []);
+    addNewListing(form)
+      .then((response) => {
+        setIsLoading(false);
+        navigate('/account/listings');
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError('Server error, please try again later.');
+      });
+  }
 
   return (
     <div>
@@ -406,7 +412,10 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.otherImages}</p>
             )}
           </div>
-          <button type='submit'>Save</button>
+          {error && <p className={styles.error}>{error}</p>}
+          <button type='submit' disabled={isLoading}>
+            {isLoading ? 'Saving...' : 'Save'}
+          </button>
         </form>
       </div>
     </div>
