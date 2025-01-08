@@ -32,7 +32,7 @@ export default function ListingsNav() {
         </li>
         <li>
           <NavLink
-            to='/account/handleListings'
+            to='/account/add-new-listing'
             className={({ isActive }) =>
               isActive
                 ? `${styles.listingsNavLink} ${styles.activeLink}`

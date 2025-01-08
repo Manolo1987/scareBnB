@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import styles from './HandleListings.module.css';
+import { useNavigate } from 'react-router-dom';
+import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
 import ListingsNav from '../ListingsNav/ListingsNav.jsx';
-import { useNavigate } from 'react-router-dom';
 
-export default function HandleListings() {
-  const { addNewListing, getAllAccommodations } = useAcco();
+export default function UpdateListing({ listing, setShowUpdateForm }) {
+  const { updateListing } = useAcco(); // Funktion, um das Listing zu aktualisieren
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Initialisiere den Formulardatenzustand mit den erhaltenen Listing-Daten
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    state: states[0],
-    city: '',
-    latitude: '',
-    longitude: '',
-    bedrooms: 1,
-    pricePerNight: 0,
-    features: [],
-    titleImage: null,
+    title: listing.title || '',
+    description: listing.description || '',
+    state: listing.state || states[0],
+    city: listing.city || '',
+    latitude: listing.latitude || '',
+    longitude: listing.longitude || '',
+    bedrooms: listing.bedrooms || 1,
+    pricePerNight: listing.pricePerNight || 0,
+    features: listing.features || [],
+    titleImage: null, // Bilder werden vorerst ignoriert
     otherImages: [],
   });
 
   const [formErrors, setFormErrors] = useState({
     title: '',
     description: '',
-    //state: '',
     city: '',
     latitude: '',
     longitude: '',
@@ -42,6 +42,7 @@ export default function HandleListings() {
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
   }
+
   function isValidTextFieldWithLineBreaks(v) {
     return /^[a-zA-Z0-9\s.,;:'"()!?&_\-\u00C0-\u017F\n\r]+$/.test(v);
   }
@@ -117,7 +118,9 @@ export default function HandleListings() {
         [name]: value,
       }));
     }
-    // Perform validation checks and update the error state
+
+    // Durchführung der gleichen Validierungen wie in HandleListings
+    // Beispiel für Title-Validierung
     if (name === 'title') {
       if (value.length > 50) {
         setFormErrors((prevState) => ({
@@ -133,88 +136,6 @@ export default function HandleListings() {
         setFormErrors((prevState) => ({
           ...prevState,
           title: '',
-        }));
-      }
-    } else if (name === 'description') {
-      if (value.length > 5000) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          description: 'Description must not be longer than 5000 characters.',
-        }));
-      } else if (value.length > 0 && !isValidTextFieldWithLineBreaks(value)) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          description: 'Description contains invalid characters.',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          description: '',
-        }));
-      }
-    } else if (name === 'city') {
-      if (value.length > 50) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          city: 'City must not be longer than 50 characters.',
-        }));
-      } else if (value.length > 0 && !isValidTextField(value)) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          city: 'City contains invalid characters.',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          city: '',
-        }));
-      }
-    } else if (name === 'latitude') {
-      if (value.length > 0 && !isValidCoordinate(value)) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          latitude: 'Latitude contains invalid characters.',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          latitude: '',
-        }));
-      }
-    } else if (name === 'longitude') {
-      if (value.length > 0 && !isValidCoordinate(value)) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          longitude: 'Longitude contains invalid characters.',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          longitude: '',
-        }));
-      }
-    } else if (name === 'bedrooms') {
-      if (value.length > 0 && value < 1) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          bedrooms: 'Your accommodation must at least have 1 bedroom.',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          bedrooms: '',
-        }));
-      }
-    } else if (name === 'pricePerNight') {
-      if (value.length > 0 && value < 1) {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          pricePerNight: 'Please set a price for your accommodation',
-        }));
-      } else {
-        setFormErrors((prevState) => ({
-          ...prevState,
-          pricePerNight: '',
         }));
       }
     }
@@ -234,10 +155,11 @@ export default function HandleListings() {
         form.append(key, value);
       }
     }
+
     setIsLoading(true);
     setError(null);
 
-    addNewListing(form)
+    updateListing(listing._id, form) // Aufruf der updateListing-Funktion mit Listing-ID und Formulardaten
       .then((response) => {
         setIsLoading(false);
         navigate('/account/listings');
@@ -249,10 +171,8 @@ export default function HandleListings() {
   }
 
   return (
-    <div>
-      <ListingsNav />
-      HandleListings
-      <div className={styles.formContainer}>
+    <div className={styles.overlay}>
+      <div className={`${styles.formContainer} ${styles.overlayContent}`}>
         <form className={styles.handleListings} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
             <label htmlFor='title'>Title</label>
@@ -289,17 +209,12 @@ export default function HandleListings() {
               value={formData.state}
               onChange={handleInputChange}
             >
-              {states.map((option, index) => {
-                return (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                );
-              })}
+              {states.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
-            {/* {formErrors.state && (
-              <p className={styles.error}>{formErrors.state}</p>
-            )} */}
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='city'>City</label>
@@ -328,7 +243,7 @@ export default function HandleListings() {
             )}
           </div>
           <div className={styles.inputContainer}>
-            <label htmlFor='longitude'>longitude</label>
+            <label htmlFor='longitude'>Longitude</label>
             <input
               type='text'
               name='longitude'
@@ -354,7 +269,7 @@ export default function HandleListings() {
             )}
           </div>
           <div className={styles.inputContainer}>
-            <label htmlFor='pricePerNight'>pricePerNight</label>
+            <label htmlFor='pricePerNight'>Price per Night</label>
             <input
               type='number'
               name='pricePerNight'
@@ -367,55 +282,29 @@ export default function HandleListings() {
             )}
           </div>
           <div className={styles.inputContainer}>
-            <label>Features</label>
-            {featureList.map((feature) => (
-              <div key={feature} className={styles.checkboxContainer}>
-                <label>
-                  <input
-                    type='checkbox'
-                    name='features'
-                    value={feature}
-                    checked={formData.features.includes(feature)}
-                    onChange={handleInputChange}
-                  />
-                  {feature}
-                </label>
+            <label htmlFor='features'>Features</label>
+            {featureList.map((feature, index) => (
+              <div key={index}>
+                <input
+                  type='checkbox'
+                  name='features'
+                  value={feature}
+                  checked={formData.features.includes(feature)}
+                  onChange={handleInputChange}
+                />
+                <label>{feature}</label>
               </div>
             ))}
           </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='titleImage'>Title Image</label>
-            <input
-              type='file'
-              name='titleImage'
-              id='titleImage'
-              accept='image/*'
-              onChange={handleInputChange}
-            />
-            {formErrors.titleImage && (
-              <p className={styles.error}>{formErrors.titleImage}</p>
-            )}
-          </div>
-
-          {/* File input for Other Images */}
-          <div className={styles.inputContainer}>
-            <label htmlFor='otherImages'>Other Images</label>
-            <input
-              type='file'
-              name='otherImages'
-              id='otherImages'
-              accept='image/*'
-              multiple
-              onChange={handleInputChange}
-            />
-            {formErrors.otherImages && (
-              <p className={styles.error}>{formErrors.otherImages}</p>
-            )}
-          </div>
           {error && <p className={styles.error}>{error}</p>}
-          <button type='submit' disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </button>
+          <div className={styles.inputContainer}>
+            <button type='submit' disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+          <p className={styles.closeLink} onClick={setShowUpdateForm}>
+            Close without Saving
+          </p>
         </form>
       </div>
     </div>

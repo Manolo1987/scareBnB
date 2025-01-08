@@ -16,7 +16,7 @@ import Profile from './components/Account/Profile/Profile.jsx';
 import Favourites from './components/Account/Favourites/Favourites.jsx';
 import Bookings from './components/Account/Bookings/Bookings.jsx';
 import Listings from './components/Account/Listings/Listings.jsx';
-import HandleListings from './components/Account/HandleListings/HandleListings.jsx';
+import CreateListing from './components/Account/CreateListing/CreateListing.jsx';
 import BookedListings from './components/Account/BookedListings/BookedListings.jsx';
 import AdminUserList from './components/Account/AdminUserList/AdminUserList.jsx';
 import AdminAccoList from './components/Account/AdminAccoList/AdminAccoList.jsx';
@@ -42,7 +42,7 @@ export default function App() {
                 <Route path='favourites' element={<Favourites />} />
                 <Route path='bookings' element={<Bookings />} />
                 <Route path='listings' element={<Listings />} />
-                <Route path='handleListings' element={<HandleListings />} />
+                <Route path='add-new-listing' element={<CreateListing />} />
                 <Route path='bookedListings' element={<BookedListings />} />
                 <Route path='listings' element={<Listings />} />
                 <Route path='adminUserList' element={<AdminUserList />} />

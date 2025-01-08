@@ -62,15 +62,14 @@ export default function AccommodationContextProvider({ children }) {
     console.log(formData);
     try {
       const response = await api.post('/accommodations', formData, {
-        //withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       console.log(response.data);
+      // success toast?
       return response.data;
-      // if success navigate to myListings?
     } catch (error) {
       console.log(error.response);
     }
