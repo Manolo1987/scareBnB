@@ -22,12 +22,14 @@ export default function AccomodationList() {
     <>
       <Search />
       <div>
-        {!stateFilter && <h1>All Accommodations</h1>}
-        {stateFilter && <h1>Accommodations in {stateFilter}</h1>}
+        {!stateFilter && <h2 className={styles.h2} >All Accommodations</h2>}
+        {stateFilter && <h2 className={styles.h2} >Accommodations in {stateFilter}</h2>}
 
         <div className={styles.controls}>
+          <div className={styles.filterAndSort}>
           <Filter />
           {selectedView === 'gallery-view' && <Sort />}
+          </div>
           <div className={styles.switchView_container}>
             <div className={styles.radio_container}>
               <input
