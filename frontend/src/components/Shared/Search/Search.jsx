@@ -14,14 +14,22 @@ export default function Search() {
   } = useAcco();
 
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } = useBooking();
+  
   const [selectedRegion, setSelectedRegion] = useState('');
 
   const handleCheckInChange = (e) => {
-    setCheckIn(new Date(e.target.value));
+    if (e.target.value === '') {
+      setCheckIn(new Date());
+    } else {
+      setCheckIn(new Date(e.target.value));
+    }
   };
 
   const handleCheckOutChange = (e) => {
-    setCheckOut(new Date(e.target.value));
+    const value = e.target.value;
+    const newDate = value ? new Date(value) : new Date();
+    newDate.setDate(newDate.getDate() + 1); // Setzt auf morgen
+    setCheckOut(newDate);
   };
 
   const handleGuestsChange = (e) => {
@@ -99,7 +107,7 @@ export default function Search() {
             ))}
           </select>
         </label>
-        <button type="submit">Search</button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
   );
