@@ -24,6 +24,7 @@ export const BookingContextProvider = ({ children }) => {
   const [myListings, setMyListings] = useState([]);
   const createBookingObject = () => ({
     accommodationId: currentAcco?._id || null,
+    accommodation: currentAcco?.title || null,
     numberOfGuests,
     checkIn,
     checkOut,
