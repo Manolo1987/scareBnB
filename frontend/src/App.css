@@ -1,14 +1,30 @@
 button {
-  font-size: 1rem;
-  color: #fff;
+  position: relative;
+  overflow: hidden;
+  color: var(--color-light);
   background-color: var(--color-dark);
   border-radius: 8px;
-  border: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease;
 
-  &:hover {
-    background-color: var(--color-secondary);
+  /* testing animation */
+
+  &:after {
+    background: white;
+    content: "";
+    height: 150px;
+    left: -80px;
+    opacity: 0.2;
+    position: absolute;
+    top: -50px;
+    transform: rotate(35deg);
+    transition: all 250ms ease-in-out;
+    width: 50px;
+  }
+
+  &:hover:after {
+    left: 120%;
+    transition: all 250ms ease-in-out;
   }
 }

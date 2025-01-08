@@ -3,18 +3,23 @@ import styles from './Search.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { useBooking } from '../../../context/bookingContext';
 
-
 export default function Search() {
   const { setStateFilter } = useAcco();
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
     useBooking();
-
   const handleCheckInChange = (e) => {
-    setCheckIn(new Date(e.target.value));
+    if (e.target.value === '') {
+      setCheckIn(new Date());
+    } else {
+      setCheckIn(new Date(e.target.value));
+    }
   };
 
   const handleCheckOutChange = (e) => {
-    setCheckOut(new Date(e.target.value));
+    const value = e.target.value;
+    const newDate = value ? new Date(value) : new Date();
+    newDate.setDate(newDate.getDate() + 1); // Setzt auf morgen
+    setCheckOut(newDate);
   };
 
   const handleGuestsChange = (e) => {
@@ -34,28 +39,26 @@ export default function Search() {
   return (
     <div className={styles.searchbar}>
       <form onSubmit={handleSubmit}>
-
-        <select
-          id="selection"
-          onChange={handleRegionChange}
-        >
-          <option value="">Choose your final destination</option>
-          <option value="Baden-Württemberg">Baden-Württemberg</option>
-          <option value="Bavaria">Bavaria</option>
-          <option value="Berlin">Berlin</option>
-          <option value="Brandenburg">Brandenburg</option>
-          <option value="Bremen">Bremen</option>
-          <option value="Hamburg">Hamburg</option>
-          <option value="Hesse">Hesse</option>
-          <option value="Mecklenburg-Western Pomerania">Mecklenburg-Western Pomerania</option>
-          <option value="Lower Saxony">Lower Saxony</option>
-          <option value="North Rhine-Westphalia">North Rhine-Westphalia</option>
-          <option value="Rhineland-Palatinate">Rhineland-Palatinate</option>
-          <option value="Saarland">Saarland</option>
-          <option value="Saxony">Saxony</option>
-          <option value="Saxony-Anhalt">Saxony-Anhalt</option>
-          <option value="Schleswig-Holstein">Schleswig-Holstein</option>
-          <option value="Thuringia">Thuringia</option>
+        <select id='selection' onChange={handleRegionChange}>
+          <option value=''>Choose your final destination</option>
+          <option value='Baden-Württemberg'>Baden-Württemberg</option>
+          <option value='Bavaria'>Bavaria</option>
+          <option value='Berlin'>Berlin</option>
+          <option value='Brandenburg'>Brandenburg</option>
+          <option value='Bremen'>Bremen</option>
+          <option value='Hamburg'>Hamburg</option>
+          <option value='Hesse'>Hesse</option>
+          <option value='Mecklenburg-Western Pomerania'>
+            Mecklenburg-Western Pomerania
+          </option>
+          <option value='Lower Saxony'>Lower Saxony</option>
+          <option value='North Rhine-Westphalia'>North Rhine-Westphalia</option>
+          <option value='Rhineland-Palatinate'>Rhineland-Palatinate</option>
+          <option value='Saarland'>Saarland</option>
+          <option value='Saxony'>Saxony</option>
+          <option value='Saxony-Anhalt'>Saxony-Anhalt</option>
+          <option value='Schleswig-Holstein'>Schleswig-Holstein</option>
+          <option value='Thuringia'>Thuringia</option>
         </select>
 
         <label>
@@ -92,8 +95,8 @@ export default function Search() {
           </select>
         </label>
 
-        <button type="submit">Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
   );
-};
+}
