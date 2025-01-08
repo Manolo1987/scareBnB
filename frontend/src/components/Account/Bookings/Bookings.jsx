@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './Bookings.module.css';
 import { useBooking } from '../../../context/bookingContext';
 import BookingCard from '../BookingCard/BookingCard';
 
 export default function Bookings() {
-  const navigate = useNavigate();
   const { myBookings, cancelBooking, getMyBookings } = useBooking();
   useEffect(() => {
     getMyBookings();
@@ -38,7 +36,7 @@ export default function Bookings() {
   };
 
   return (
-    <div className={styles.cardLink}>
+    <section className={styles.bookings}>
       {/* Zukünftige Buchungen */}
       <h2>Upcoming Bookings</h2>
       {upcomingBookings.length > 0 ? (
@@ -54,6 +52,6 @@ export default function Bookings() {
       ) : (
         <p>No past bookings found.</p>
       )}
-    </div>
+    </section>
   );
 }
