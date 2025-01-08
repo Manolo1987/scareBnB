@@ -75,6 +75,24 @@ export default function AccommodationContextProvider({ children }) {
     }
   }
 
+  async function updateListing(id, formData) {
+    console.log(formData);
+    try {
+      const response = await api.patch(`/accommodations/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data);
+      getMyListings();
+      // success toast?
+      return response.data;
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+
   async function deleteListing(id) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
@@ -155,6 +173,7 @@ export default function AccommodationContextProvider({ children }) {
         getSpecial,
         selectedView,
         setSelectedView,
+        updateListing,
       }}
     >
       {children}
