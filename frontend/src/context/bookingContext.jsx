@@ -65,7 +65,9 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 201) {
         toast.success('Booking successful!');
         setMyBookings((prev) => [...prev, response.data.newBooking]);
-        navigate('/account/bookings');
+        setTimeout(() => {
+          navigate('/account/bookings');
+        }, 5000);
       }
     } catch (error) {
       toast.error(error.response?.data?.msg || 'Booking failed.');
