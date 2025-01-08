@@ -32,7 +32,7 @@ export default function Search() {
     setSelectedRegion(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // pagination Reset bei neuer Suche
@@ -41,7 +41,7 @@ export default function Search() {
     setStateFilter(selectedRegion);
 
     // Fetch accommodations mit neuem filter
-    await getAllAccommodations();
+    getAllAccommodations(10);
 
     // Navigate mit search parametern
     const searchParams = new URLSearchParams({
@@ -52,11 +52,12 @@ export default function Search() {
     });
 
     navigate(`/accommodationlist?${searchParams.toString()}`);
+
   };
 
   return (
     <div className={styles.searchbar}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.searchbarForm}>
         <select
           id="selection"
           value={selectedRegion}
