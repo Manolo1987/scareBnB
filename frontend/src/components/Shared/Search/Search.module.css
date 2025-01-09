@@ -1,6 +1,7 @@
 .searchbar {
-  --width: 75vw;
+  --width: 1200px;
   --height: 50px;
+  min-width: 800px; /* Hier wird die minimale Breite festgelegt */
   border-radius: 8px;
   border: solid white 1px;
   background-color: #fe0300;
@@ -40,7 +41,9 @@
 
 @media (max-width: 768px) {
   .searchbar {
-    width: 80%;
+    width: 90vw; /* Changed from max-width: 20vw */
+    min-width: unset; /* entfernt min width */
+    left: 5vw; /* Center searchbar mit gleichen margins */
 
     .searchbarSelect {
       width: 100px;
@@ -64,3 +67,5 @@
     }
   }
 }
+
+

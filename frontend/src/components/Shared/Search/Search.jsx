@@ -113,7 +113,7 @@ export default function Search() {
               </option>
             ))}
           </select>
-        <button type='submit'><MagnifyingGlass size={16} /></button>
+        <button className='buttonEffect' type='submit'><MagnifyingGlass size={16} /></button>
       </form>
     </div>
   );
