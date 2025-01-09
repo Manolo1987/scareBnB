@@ -19,9 +19,12 @@
   height: 95vh;
   overflow: auto;
 }
-.updateListing {
-  overflow: auto;
+.overlayContent.noScroll {
+  overflow: hidden;
 }
+/* .updateListing {
+  overflow: auto;
+} */
 
 .titleImageContainer,
 .otherImagesContainer {

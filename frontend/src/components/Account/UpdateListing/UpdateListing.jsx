@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
 import { Trash, Pencil } from '@phosphor-icons/react';
+import UpdateImage from './UpdateImage.jsx';
 
 export default function UpdateListing({ listing, setShowUpdateForm }) {
-  const { updateListing } = useAcco();
+  const { updateListing, imagesToDelete } = useAcco();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showTitleImageInput, setShowTitleImageInput] = useState(false);
+  const [showOtherImagesInput, setShowOtherImagesInput] = useState(false);
 
   const [formData, setFormData] = useState({
     title: listing.title || '',
@@ -23,7 +25,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     bedrooms: listing.bedrooms || 1,
     pricePerNight: listing.pricePerNight || 0,
     features: listing.features || [],
-    titleImage: null, // Bilder werden vorerst ignoriert
+    titleImage: null,
     otherImages: [],
   });
 
@@ -38,6 +40,11 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     titleImage: '',
     otherImages: '',
   });
+
+  const remainingImages = Math.max(
+    0,
+    4 - (listing.images.length - imagesToDelete.length)
+  );
 
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
@@ -88,11 +95,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
         }
       } else if (name === 'otherImages') {
         const selectedFiles = Array.from(files);
-        if (selectedFiles.length > 4) {
+        if (selectedFiles.length > remainingImages) {
           setFormErrors((prevState) => ({
             ...prevState,
-            otherImages:
-              'You can upload up to 4 images, each no larger than 5MB.',
+            otherImages: `You can upload only 4 images, each no larger than 5MB.`,
           }));
 
           e.target.value = '';
@@ -250,9 +256,20 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
       });
   }
 
+  useEffect(() => {
+    if (remainingImages > 0) {
+      setShowOtherImagesInput(true);
+    } else {
+      setShowOtherImagesInput(false);
+    }
+  }, [remainingImages]);
+
   return (
     <div className={styles.overlay}>
-      <div className={`${styles.formContainer} ${styles.overlayContent}`}>
+      <div
+        className={`${styles.formContainer} ${styles.overlayContent}`}
+        id='overlayContent'
+      >
         <form className={styles.updateListing} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
             <label htmlFor='title'>Title</label>
@@ -422,17 +439,28 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             {listing.images.length > 0 && (
               <div className={styles.imageWrapper}>
                 {listing.images.map((img, index) => {
-                  return (
-                    <div key={index} className={styles.imageContainer}>
-                      <img
-                        src={img.secure_url}
-                        alt='image preview'
-                        className={styles.thumb}
-                      />
-                    </div>
-                  );
+                  return <UpdateImage img={img} key={index} />;
                 })}
               </div>
+            )}
+            {showOtherImagesInput && (
+              <>
+                <p className={styles.uploadMessage}>
+                  You can upload {remainingImages} more image
+                  {remainingImages > 1 ? 's' : ''}.
+                </p>
+                <input
+                  type='file'
+                  name='otherImages'
+                  id='otherImagesUpdate'
+                  accept='image/*'
+                  onChange={handleInputChange}
+                  multiple
+                />
+              </>
+            )}
+            {formErrors.otherImages && (
+              <p className={styles.error}>{formErrors.otherImages}</p>
             )}
           </div>
 
