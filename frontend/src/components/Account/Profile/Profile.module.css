@@ -12,6 +12,12 @@
     margin-bottom: 1.5rem;
   }
 
+  button {
+    display: block;
+    margin: 10px 0;
+    padding: 5px;
+  }
+
   .profileInfo {
     table {
       width: 100%;

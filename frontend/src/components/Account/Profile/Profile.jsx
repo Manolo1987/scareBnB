@@ -4,8 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
 
 export default function Profile() {
-  const { user, updateProfile, showPassword, togglePasswordVisibility } =
-    useAuth();
+  const {
+    user,
+    updateProfile,
+    deleteMyProfile,
+    showPassword,
+    togglePasswordVisibility,
+  } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +20,7 @@ export default function Profile() {
   }, [user, navigate]);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -130,12 +136,20 @@ export default function Profile() {
             </tbody>
           </table>
           {!isEditing && (
-            <button
-              className={styles.editProfileButton}
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </button>
+            <>
+              <button
+                className={styles.editProfileButton}
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Profile
+              </button>
+              <button
+                className={styles.deleteProfileButton}
+                onClick={() => setIsDeleting(true)}
+              >
+                Delete Profile
+              </button>
+            </>
           )}
         </div>
 
@@ -270,6 +284,30 @@ export default function Profile() {
                   Cancel
                 </button>
               </form>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.deleteProfile}>
+          {isDeleting && (
+            <div className={styles.deleteOverlay}>
+              <div className={styles.deleteContent}>
+                <p>Are you sure you want to delete your profile?</p>
+                <div className={styles.buttonsContainer}>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => deleteMyProfile()}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className={styles.cancelButton}
+                    onClick={() => setIsDeleting(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
