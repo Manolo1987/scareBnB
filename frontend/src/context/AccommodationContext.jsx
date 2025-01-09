@@ -23,6 +23,9 @@ export default function AccommodationContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   // map and gallery view in AccommodationList Component:
   const [selectedView, setSelectedView] = useState('gallery-view');
+  //for update Listing Component
+  const [imagesToDelete, setImagesToDelete] = useState([]);
+  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
 
   async function getAllAccommodations(limit) {
     // apply loading state here
@@ -172,6 +175,10 @@ export default function AccommodationContextProvider({ children }) {
         selectedView,
         setSelectedView,
         updateListing,
+        imagesToDelete,
+        setImagesToDelete,
+        showDeleteMessage,
+        setShowDeleteMessage,
       }}
     >
       {children}
