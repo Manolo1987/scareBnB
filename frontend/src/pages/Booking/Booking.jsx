@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Booking.module.css';
 import { useBooking } from '../../context/bookingContext';
 import { useAuth } from '../../context/UserAuthContext';
 import { toast } from 'react-toastify';
 
 export default function Booking() {
+  const navigate = useNavigate();
   const {
     currentBooking,
     createBooking,
@@ -31,7 +33,7 @@ export default function Booking() {
   };
 
   const handleBooking = () => {
-    if (paymentMethod === 'creditcard' && !isCreditCardValid()) {
+    if (paymentMethod === 'creditCard' && !isCreditCardValid()) {
       toast.error('Please enter valid credit card details');
       return;
     }
@@ -57,9 +59,9 @@ export default function Booking() {
           <input
             type='radio'
             name='paymentMethod'
-            value='creditcard'
-            checked={paymentMethod === 'creditcard'}
-            onChange={() => setPaymentMethod('creditcard')}
+            value='creditCard'
+            checked={paymentMethod === 'creditCard'}
+            onChange={() => setPaymentMethod('creditCard')}
           />
           Credit Card
         </label>
@@ -75,7 +77,7 @@ export default function Booking() {
         </label>
       </div>
 
-      {paymentMethod === 'creditcard' && (
+      {paymentMethod === 'creditCard' && (
         <form
           className={styles.creditCardForm}
           onSubmit={(e) => {
@@ -150,7 +152,7 @@ export default function Booking() {
 
       <button
         onClick={handleBooking}
-        disabled={paymentMethod === 'creditcard' && !isCreditCardValid()}
+        disabled={paymentMethod === 'creditCard' && !isCreditCardValid()}
       >
         Book Now
       </button>

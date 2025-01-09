@@ -62,6 +62,18 @@ export async function createBooking(req, res) {
   }
 }
 
+// getAllBookings from user
+export async function getMyBookings(req, res) {
+  try {
+    const bookings = await Booking.find({ guest: req.userId })
+      .populate('accommodation guest host')
+      .sort({ checkIn: -1 });
+    res.status(200).json({ msg: 'Bookings found', bookings: bookings });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+}
+
 //getAllBookings
 /* 
 this function is included in the userController. User bookings are available there via populate Methode
