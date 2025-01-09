@@ -88,7 +88,10 @@ export async function getOneAccommodation(req, res) {
     const { accoId } = req.params;
     //console.log(accoId);
     const acco = await Accommodation.findById(accoId)
-      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' },
+      })
       .populate('owner');
     if (!acco) {
       return res.status(404).json({ msg: 'Accommodation ID not found.' });
