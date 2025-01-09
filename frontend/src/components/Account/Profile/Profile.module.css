@@ -61,4 +61,33 @@
       }
     }
   }
+
+  .deleteOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.801);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .deleteContent {
+      background: rgb(121, 121, 121);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+
+      .buttonsContainer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-evenly;
+      }
+    }
+  }
 }
