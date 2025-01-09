@@ -22,6 +22,7 @@ import AdminUserList from './components/Account/AdminUserList/AdminUserList.jsx'
 import AdminAccoList from './components/Account/AdminAccoList/AdminAccoList.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from './components/Account/ProtectedRoute/ProtectedRoute.jsx';
 
 export default function App() {
   return (
@@ -37,7 +38,14 @@ export default function App() {
                 element={<Accommodation />}
               />
               <Route path='accommodationList' element={<AccommodationList />} />
-              <Route path='account' element={<Account />}>
+              <Route
+                path='account'
+                element={
+                  <ProtectedRoute>
+                    <Account />
+                  </ProtectedRoute>
+                }
+              >
                 <Route path='profile' element={<Profile />} />
                 <Route path='favourites' element={<Favourites />} />
                 <Route path='bookings' element={<Bookings />} />
@@ -48,7 +56,14 @@ export default function App() {
                 <Route path='adminUserList' element={<AdminUserList />} />
                 <Route path='adminAccoList' element={<AdminAccoList />} />
               </Route>
-              <Route path='booking' element={<Booking />} />
+              <Route
+                path='booking'
+                element={
+                  <ProtectedRoute>
+                    <Booking />
+                  </ProtectedRoute>
+                }
+              />
               <Route path='information' element={<Information />} />
             </Route>
             <Route path='*' element={<NotFound />} />
