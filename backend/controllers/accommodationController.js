@@ -237,23 +237,33 @@ export async function updateListing(req, res) {
 
     //delete old images here
 
-    // if (req.files) {
-    //   if (req.files['titleImage']) {
-    //     const titleImg = req.files['titleImage'][0];
-    //     updatedFields.titleImage = {
-    //       secure_url: titleImg.path,
-    //       public_id: titleImg.filename,
-    //     };
-    //   }
+    if (req.files) {
+      if (req.files['titleImage']) {
+        if (user.roles !== 'admin') {
+          const titleImgId = listing.titleImage.public_id;
+          await cloudinary.uploader.destroy(
+            titleImgId,
+            function (error, result) {
+              console.log(result);
+              console.error(error);
+            }
+          );
+        }
+        const titleImg = req.files['titleImage'][0];
+        updatedFields.titleImage = {
+          secure_url: titleImg.path,
+          public_id: titleImg.filename,
+        };
+      }
 
-    //   if (req.files['otherImages']) {
-    //     const images = req.files['otherImages'].map((img) => ({
-    //       secure_url: img.path,
-    //       public_id: img.filename,
-    //     }));
-    //     updatedFields.images = images;
-    //   }
-    // }
+      //   if (req.files['otherImages']) {
+      //     const images = req.files['otherImages'].map((img) => ({
+      //       secure_url: img.path,
+      //       public_id: img.filename,
+      //     }));
+      //     updatedFields.images = images;
+      //   }
+    }
 
     if (Object.keys(updatedFields).length > 0) {
       const updatedListing = await Accommodation.findByIdAndUpdate(

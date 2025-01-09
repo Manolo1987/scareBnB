@@ -1,0 +1,13 @@
+.listingCard {
+  position: relative;
+  display: flex;
+}
+.imgContainer {
+  max-width: 300px;
+}
+.cardImage {
+  width: 100%;
+}
+.listingsButton {
+  cursor: pointer;
+}

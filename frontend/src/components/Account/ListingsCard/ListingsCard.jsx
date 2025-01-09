@@ -21,9 +21,6 @@ export default function ListingsCard({ listing }) {
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
   };
-  // useEffect(() => {
-  //   console.log(listing);
-  // }, []);
 
   return (
     <>
@@ -35,19 +32,34 @@ export default function ListingsCard({ listing }) {
         className={styles.listingCardLink}
       >
         <div className={styles.listingCard}>
-          {/* add listing infos and styling here */}
-          {listing.title}
-          {listing.city}
-          {listing.rating.toFixed(1)}
-          {listing.bedroms}
-          {listing.pricePerNight}
-
-          <button className={styles.listingsButton} onClick={handleShowForm}>
-            <Pencil size={32} />
-          </button>
-          <button className={styles.listingsButton} onClick={handleDelete}>
-            <Trash size={32} />
-          </button>
+          <div className={styles.imgContainer}>
+            <img
+              src={listing.titleImage.secure_url}
+              alt={listing.title}
+              className={styles.cardImage}
+            />
+          </div>
+          <div className={styles.infoContainer}>
+            <span className={styles.cardTitle}>{listing.title}</span>
+            <span className={styles.cardCity}>{listing.city}</span>
+            <span className={styles.cardRating}>
+              {listing.rating.toFixed(1)}
+            </span>
+            <span className={styles.cardBedrooms}>
+              Bedrooms: {listing.bedrooms}
+            </span>
+            <span className={styles.cardPricePerNight}>
+              Price per Night: {listing.pricePerNight}
+            </span>
+          </div>
+          <div className={styles.cardButtonContainer}>
+            <button className={styles.listingsButton} onClick={handleShowForm}>
+              <Pencil size={32} />
+            </button>
+            <button className={styles.listingsButton} onClick={handleDelete}>
+              <Trash size={32} />
+            </button>
+          </div>
         </div>
       </Link>
       {showUpdateForm && (

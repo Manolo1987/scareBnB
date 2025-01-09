@@ -96,7 +96,6 @@ export default function HandleListings() {
 
           e.target.value = '';
         } else {
-          // Filter valid files (bis 5 MB und Bilddateien)
           const validFiles = selectedFiles.filter((file) =>
             validateFile(file, 5 * 1024 * 1024)
           );
@@ -194,10 +193,11 @@ export default function HandleListings() {
         }));
       }
     } else if (name === 'bedrooms') {
-      if (value.length > 0 && value < 1) {
+      const bedroomValue = parseInt(value, 10);
+      if (bedroomValue < 1 || bedroomValue > 5) {
         setFormErrors((prevState) => ({
           ...prevState,
-          bedrooms: 'Your accommodation must at least have 1 bedroom.',
+          bedrooms: 'The number of bedrooms must be between 1 and 5.',
         }));
       } else {
         setFormErrors((prevState) => ({
@@ -251,7 +251,6 @@ export default function HandleListings() {
   return (
     <div>
       <ListingsNav />
-      HandleListings
       <div className={styles.formContainer}>
         <form className={styles.handleListings} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
@@ -297,9 +296,6 @@ export default function HandleListings() {
                 );
               })}
             </select>
-            {/* {formErrors.state && (
-              <p className={styles.error}>{formErrors.state}</p>
-            )} */}
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='city'>City</label>
@@ -342,13 +338,20 @@ export default function HandleListings() {
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='bedrooms'>Bedrooms</label>
-            <input
-              type='number'
+            <select
               name='bedrooms'
               id='bedrooms'
               value={formData.bedrooms}
               onChange={handleInputChange}
-            />
+            >
+              {[...Array(5)].map((_, index) => {
+                return (
+                  <option key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </option>
+                );
+              })}
+            </select>
             {formErrors.bedrooms && (
               <p className={styles.error}>{formErrors.bedrooms}</p>
             )}
