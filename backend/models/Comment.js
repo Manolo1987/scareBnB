@@ -33,12 +33,17 @@ const commentSchema = new Schema(
       maxlength: 1000,
       validate: {
         validator: function (v) {
-          return /^[a-zA-Z0-9\s.,;:'"()!?&_\-\u00C0-\u017F\n\r]+$/.test(v);
+          return /^[a-zA-Z0-9\s.,;:'"()!?&€$@_\+\*\-/^°\u00C0-\u017F\n\r]+$/.test(
+            v
+          );
         },
         message: 'content contains invalid characters!',
       },
       set: function (v) {
-        return v.replace(/[^\w\s.,;:'"()!?&_\-\u00C0-\u017F\n\r]/g, '');
+        return v.replace(
+          /[^\w\s.,;:'"()!?&€$@_\+\*\-/^°\u00C0-\u017F\n\r]/g,
+          ''
+        );
       },
     },
   },
