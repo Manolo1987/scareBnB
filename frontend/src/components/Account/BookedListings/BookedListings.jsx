@@ -8,7 +8,7 @@ export default function BookedListings() {
   const { myBookedListings, getMyBookedListings } = useBooking();
   useEffect(() => {
     getMyBookedListings();
-  }, []);
+  }, [myBookedListings]);
   return (
     <div>
       <ListingsNav />

@@ -53,7 +53,7 @@ export const BookingContextProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       setMyBookings(user?.bookings || []);
-      setMyBookedListings(user?.listings || []);
+      //setMyBookedListings(user?.listings || []); //destroyed my working code for some reason, do we need that? (J)
     }
   }, [user]);
 

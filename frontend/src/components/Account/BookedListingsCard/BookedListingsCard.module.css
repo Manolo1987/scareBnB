@@ -1,0 +1,10 @@
+.bookedListingCard {
+  position: relative;
+  display: flex;
+}
+.imgContainer {
+  max-width: 300px;
+}
+.cardImage {
+  width: 100%;
+}
