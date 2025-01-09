@@ -182,6 +182,7 @@ export default function UserAuthContextProvider({ children }) {
 
       if (response.status === 200) {
         toast.success('User deleted, well done!');
+        await getAllUsers();
       }
     } catch (error) {
       console.error(error);

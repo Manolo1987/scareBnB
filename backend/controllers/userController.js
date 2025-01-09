@@ -227,7 +227,21 @@ export async function deleteUser(req, res) {
 // find all Users as admin
 export async function getAllUsers(req, res) {
   try {
-    const users = await User.find(); // add populate later
+    const users = await User.find()
+      .populate('favourites')
+      .populate('listings')
+      .populate({
+        path: 'bookings',
+        populate: [
+          { path: 'accommodation' },
+          { path: 'guest' },
+          { path: 'host' },
+        ],
+      })
+      .populate({
+        path: 'bookedListings',
+        populate: { path: 'accommodation' },
+      }); // add populate later
     if (users.length === 0) {
       return res.status(404).json({ msg: 'No users found' });
     }
