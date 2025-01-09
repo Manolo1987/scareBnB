@@ -1,5 +1,5 @@
 .searchbar {
-  --width: 1200px;
+  --width: 1000px;
   --height: 50px;
   min-width: 800px; /* Hier wird die minimale Breite festgelegt */
   border-radius: 8px;
