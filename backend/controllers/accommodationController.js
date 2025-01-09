@@ -88,7 +88,10 @@ export async function getOneAccommodation(req, res) {
     const { accoId } = req.params;
     //console.log(accoId);
     const acco = await Accommodation.findById(accoId)
-      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' },
+      })
       .populate('owner');
     if (!acco) {
       return res.status(404).json({ msg: 'Accommodation ID not found.' });
@@ -410,12 +413,20 @@ export async function postComment(req, res) {
     acco.comments.push(newComment._id);
     await acco.save();
 
+    const populatedAccom = await Accommodation.findById(accoId).populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+      },
+    });
+
     await User.updateOne(
       { _id: userId },
-      { $push: { comments: newComment._id } }
+      { $push: { comments: newComment._id } },
+      { new: true }
     );
 
-    res.status(200).json(newComment);
+    res.status(200).json(populatedAccom);
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error!' });
