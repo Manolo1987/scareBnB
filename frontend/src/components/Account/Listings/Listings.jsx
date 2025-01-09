@@ -17,7 +17,7 @@ export default function Listings() {
       {myListings?.length < 1 && (
         <div className={styles.messageContainer}>
           <p className={styles.message}>You don't have any listings yet.</p>
-          <Link to='/account/handleListings' className={styles.messageLink}>
+          <Link to='/account/add-new-listing' className={styles.messageLink}>
             Create your first Listing here.
           </Link>
         </div>

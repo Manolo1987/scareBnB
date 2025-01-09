@@ -4,12 +4,14 @@ import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
 import { featureList } from '../../../assets/data/featureList.js';
+import { Trash, Pencil } from '@phosphor-icons/react';
 
 export default function UpdateListing({ listing, setShowUpdateForm }) {
   const { updateListing } = useAcco();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showTitleImageInput, setShowTitleImageInput] = useState(false);
 
   const [formData, setFormData] = useState({
     title: listing.title || '',
@@ -95,7 +97,6 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
 
           e.target.value = '';
         } else {
-          // Filter valid files (bis 5 MB und Bilddateien)
           const validFiles = selectedFiles.filter((file) =>
             validateFile(file, 5 * 1024 * 1024)
           );
@@ -252,7 +253,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   return (
     <div className={styles.overlay}>
       <div className={`${styles.formContainer} ${styles.overlayContent}`}>
-        <form className={styles.handleListings} onSubmit={handleSubmit}>
+        <form className={styles.updateListing} onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
             <label htmlFor='title'>Title</label>
             <input
@@ -385,14 +386,66 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             ))}
           </div>
           {error && <p className={styles.error}>{error}</p>}
-          <div className={styles.inputContainer}>
-            <button type='submit' disabled={isLoading}>
-              {isLoading ? 'Saving...' : 'Save Changes'}
-            </button>
+
+          <div className={styles.titleImageContainer}>
+            <label htmlFor='titleImageUpdate'>Title Image:</label>
+            <div className={styles.imageContainer}>
+              <img
+                src={listing.titleImage.secure_url}
+                alt='title image'
+                className={styles.thumb}
+              />
+              <button
+                type='button'
+                className={styles.titleImageEditButton}
+                onClick={() => setShowTitleImageInput(true)}
+              >
+                <Pencil size={24} />
+              </button>
+            </div>
+            {showTitleImageInput && (
+              <input
+                type='file'
+                name='titleImage'
+                id='titleImageUpdate'
+                accept='image/*'
+                onChange={handleInputChange}
+              />
+            )}
+            {formErrors.titleImage && (
+              <p className={styles.error}>{formErrors.titleImage}</p>
+            )}
           </div>
-          <p className={styles.closeLink} onClick={setShowUpdateForm}>
-            Close without Saving
-          </p>
+          <div className={styles.otherImagesContainer}>
+            <label htmlFor='otherImagesUpdate'>Other Images:</label>
+
+            {listing.images.length > 0 && (
+              <div className={styles.imageWrapper}>
+                {listing.images.map((img, index) => {
+                  return (
+                    <div key={index} className={styles.imageContainer}>
+                      <img
+                        src={img.secure_url}
+                        alt='image preview'
+                        className={styles.thumb}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.updateListingFooter}>
+            <p className={styles.closeLink} onClick={setShowUpdateForm}>
+              Close without Saving
+            </p>
+            <div className={styles.inputContainer}>
+              <button type='submit' disabled={isLoading}>
+                {isLoading ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

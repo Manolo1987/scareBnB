@@ -96,7 +96,6 @@ export default function HandleListings() {
 
           e.target.value = '';
         } else {
-          // Filter valid files (bis 5 MB und Bilddateien)
           const validFiles = selectedFiles.filter((file) =>
             validateFile(file, 5 * 1024 * 1024)
           );
