@@ -17,10 +17,15 @@
   --font-typewriter: 'Special Elite', cursive;
   /* global colors */
   --color-prime: black;
-  --color-secondary: #660000;
-  --color-dark: #111;
-  --color-medium: gray;
-  --color-light: lightgray;
+  --color-secondary: crimson;
+  --color-dark: #1b1b1b;
+  --color-darkOpacity: #1b1b1ba7;
+  --color-mediumDark: #555555;
+  --color-mediumDarkOpacity: #55555565;
+  --color-medium: #888888;
+  --color-mediumOpacity: #88888838;
+  --color-mediumLight: #b3b3b3; 
+  --color-light: #d9d9d9;
   /* global gradients */
   --gradient-sides: linear-gradient(
       to right,

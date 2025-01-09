@@ -20,7 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2a2a2a;
+  background: var(--color-mediumOpacity);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
