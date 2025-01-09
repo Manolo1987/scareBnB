@@ -50,6 +50,7 @@ export default function UserAuthContextProvider({ children }) {
     if (isAuthenticated) {
       const fetchData = async () => {
         await fetchUserData();
+        await getAllUsers();
       };
       fetchData();
     }
