@@ -8,11 +8,6 @@
 .cardImage {
   width: 100%;
 }
-.cardButtonContainer {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
 .listingsButton {
   cursor: pointer;
 }

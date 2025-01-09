@@ -117,8 +117,6 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
       }));
     }
 
-    // Durchführung der gleichen Validierungen wie in HandleListings
-    // Beispiel für Title-Validierung
     if (name === 'title') {
       if (value.length > 50) {
         setFormErrors((prevState) => ({
@@ -134,6 +132,89 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
         setFormErrors((prevState) => ({
           ...prevState,
           title: '',
+        }));
+      }
+    } else if (name === 'description') {
+      if (value.length > 5000) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          description: 'Description must not be longer than 5000 characters.',
+        }));
+      } else if (value.length > 0 && !isValidTextFieldWithLineBreaks(value)) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          description: 'Description contains invalid characters.',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          description: '',
+        }));
+      }
+    } else if (name === 'city') {
+      if (value.length > 50) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          city: 'City must not be longer than 50 characters.',
+        }));
+      } else if (value.length > 0 && !isValidTextField(value)) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          city: 'City contains invalid characters.',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          city: '',
+        }));
+      }
+    } else if (name === 'latitude') {
+      if (value.length > 0 && !isValidCoordinate(value)) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          latitude: 'Latitude contains invalid characters.',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          latitude: '',
+        }));
+      }
+    } else if (name === 'longitude') {
+      if (value.length > 0 && !isValidCoordinate(value)) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          longitude: 'Longitude contains invalid characters.',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          longitude: '',
+        }));
+      }
+    } else if (name === 'bedrooms') {
+      const bedroomValue = parseInt(value, 10);
+      if (bedroomValue < 1 || bedroomValue > 5) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          bedrooms: 'The number of bedrooms must be between 1 and 5.',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          bedrooms: '',
+        }));
+      }
+    } else if (name === 'pricePerNight') {
+      if (value.length > 0 && value < 1) {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          pricePerNight: 'Please set a price for your accommodation',
+        }));
+      } else {
+        setFormErrors((prevState) => ({
+          ...prevState,
+          pricePerNight: '',
         }));
       }
     }
@@ -255,13 +336,20 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
           </div>
           <div className={styles.inputContainer}>
             <label htmlFor='bedrooms'>Bedrooms</label>
-            <input
-              type='number'
+            <select
               name='bedrooms'
               id='bedrooms'
               value={formData.bedrooms}
               onChange={handleInputChange}
-            />
+            >
+              {[...Array(5)].map((_, index) => {
+                return (
+                  <option key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </option>
+                );
+              })}
+            </select>
             {formErrors.bedrooms && (
               <p className={styles.error}>{formErrors.bedrooms}</p>
             )}
@@ -283,14 +371,16 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             <label htmlFor='features'>Features</label>
             {featureList.map((feature, index) => (
               <div key={index}>
-                <input
-                  type='checkbox'
-                  name='features'
-                  value={feature}
-                  checked={formData.features.includes(feature)}
-                  onChange={handleInputChange}
-                />
-                <label>{feature}</label>
+                <label>
+                  <input
+                    type='checkbox'
+                    name='features'
+                    value={feature}
+                    checked={formData.features.includes(feature)}
+                    onChange={handleInputChange}
+                  />
+                  {feature}
+                </label>
               </div>
             ))}
           </div>

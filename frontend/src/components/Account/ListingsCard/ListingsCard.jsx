@@ -21,9 +21,6 @@ export default function ListingsCard({ listing }) {
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
   };
-  // useEffect(() => {
-  //   console.log(listing);
-  // }, []);
 
   return (
     <>
@@ -49,9 +46,9 @@ export default function ListingsCard({ listing }) {
               {listing.rating.toFixed(1)}
             </span>
             <span className={styles.cardBedrooms}>
-              Bedrooms: {listing.bedroms}
+              Bedrooms: {listing.bedrooms}
             </span>
-            <span className={styles.cardBedrooms}>
+            <span className={styles.cardPricePerNight}>
               Price per Night: {listing.pricePerNight}
             </span>
           </div>
