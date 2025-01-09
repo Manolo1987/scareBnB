@@ -1,0 +1,18 @@
+.listingCard {
+  position: relative;
+  display: flex;
+}
+.imgContainer {
+  max-width: 300px;
+}
+.cardImage {
+  width: 100%;
+}
+.cardButtonContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.listingsButton {
+  cursor: pointer;
+}
