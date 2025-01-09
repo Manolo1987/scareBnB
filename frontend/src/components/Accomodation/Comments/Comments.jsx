@@ -11,10 +11,6 @@ export default function Comments() {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    console.log({ user });
-    console.log({ currentAcco });
-    console.log({ comments });
-
     if (currentAcco?.comments) {
       setComments(currentAcco.comments);
     }
@@ -54,9 +50,9 @@ export default function Comments() {
               <h4 className={styles.comment_title}>{comment?.title}</h4>
               <p className={styles.comment_content}>{comment?.content}</p>
               <small className={styles.comment_author}>
-                By: {user?.firstName}{' '}{user?.lastName}
+                By: {comment?.author?.firstName}{' '}{comment?.author?.lastName}
               </small>
-              {(comment?.author === user?._id || user?.roles === 'admin') && (
+              {(comment?.author?._id === user?._id || user?.roles === 'admin') && (
                 <button
                   onClick={() => handleCommentDelete(comment?._id)}
                   className={styles.deleteButton}

@@ -107,6 +107,7 @@ export default function AccommodationContextProvider({ children }) {
   async function postComment(id, comment) {
     try {
       const response = await api.post(`/accommodations/comment/${id}`, comment);
+      setCurrentAcco(response.data)
       return response.data; 
     } catch (error) {
       console.error('Error posting comment:', error);
