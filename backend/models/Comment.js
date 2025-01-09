@@ -10,7 +10,7 @@ const commentSchema = new Schema(
     },
     location: {
       type: Schema.Types.ObjectId,
-      ref: 'Accomodation',
+      ref: 'Accommodation',
       required: true,
     },
     title: {
