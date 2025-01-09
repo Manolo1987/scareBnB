@@ -7,6 +7,7 @@ import AccoInfo from '../../components/Accomodation/AccoInfo/AccoInfo.jsx';
 import AccoMap from '../../components/Accomodation/AccoMap/AccoMap.jsx';
 import BookingPreview from '../../components/Accomodation/BookingPreview/BookingPreview.jsx';
 import { useLocation } from 'react-router-dom';
+import Comments from '../../components/Accomodation/Comments/Comments.jsx';
 
 export default function Accommodation() {
   const location = useLocation();
@@ -39,6 +40,7 @@ export default function Accommodation() {
             lon={currentAcco?.longitude}
             title={currentAcco?.title}
           /> */}
+          <Comments />
           <BookingPreview />
         </>
       )}

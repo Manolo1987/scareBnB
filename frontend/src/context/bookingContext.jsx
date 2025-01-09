@@ -22,6 +22,7 @@ export const BookingContextProvider = ({ children }) => {
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [myBookings, setMyBookings] = useState([]);
   const [myBookedListings, setMyBookedListings] = useState([]);
+
   const createBookingObject = () => ({
     accommodationId: currentAcco?._id || null,
     accommodation: currentAcco?.title || null,
@@ -65,10 +66,25 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 201) {
         toast.success('Booking successful!');
         setMyBookings((prev) => [...prev, response.data.newBooking]);
-        navigate('/account/bookings');
+        setTimeout(() => {
+          navigate('/account/bookings');
+        }, 5000);
       }
     } catch (error) {
       toast.error(error.response?.data?.msg || 'Booking failed.');
+    }
+  };
+
+  const getMyBookings = async () => {
+    try {
+      const response = await api.get('/bookings/myBookings', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setMyBookings(response.data.bookings);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.msg || 'Server Error.');
     }
   };
 
@@ -99,7 +115,6 @@ export const BookingContextProvider = ({ children }) => {
             booking._id === bookingId ? response.data.booking : booking
           )
         );
-        navigate('/');
       }
     } catch (error) {
       console.error(error);
@@ -145,6 +160,7 @@ export const BookingContextProvider = ({ children }) => {
         bookingPreview,
         cancelBooking,
         giveFeedback,
+        getMyBookings,
       }}
     >
       {children}

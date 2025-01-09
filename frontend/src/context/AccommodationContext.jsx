@@ -62,14 +62,32 @@ export default function AccommodationContextProvider({ children }) {
     console.log(formData);
     try {
       const response = await api.post('/accommodations', formData, {
-        //withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       console.log(response.data);
-      // if success navigate to myListings?
+      // success toast?
+      return response.data;
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+
+  async function updateListing(id, formData) {
+    console.log(formData);
+    try {
+      const response = await api.patch(`/accommodations/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data);
+      getMyListings();
+      // success toast?
+      return response.data;
     } catch (error) {
       console.log(error.response);
     }
@@ -79,31 +97,30 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
       console.log(response.data.msg);
+      //sucess toast ?
+      getMyListings();
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function postComment(id) {
-    // send accommodation id as req.params
-    //send comment as body
+  async function postComment(id, comment) {
     try {
-      const response = await api.post(`/accommodations/comment/${id}`, {
-        title: 'cool',
-        content: 'sehr cool',
-      });
-      //console.log(response.data);
+      const response = await api.post(`/accommodations/comment/${id}`, comment);
+      return response.data; 
     } catch (error) {
-      console.log(error);
+      console.error('Error posting comment:', error);
+      return null; 
     }
   }
 
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
-      //console.log(response.data);
+      return response.data; 
     } catch (error) {
       console.error('Error deleting comment:', error);
+      return null;
     }
   }
 
@@ -153,6 +170,7 @@ export default function AccommodationContextProvider({ children }) {
         getSpecial,
         selectedView,
         setSelectedView,
+        updateListing,
       }}
     >
       {children}

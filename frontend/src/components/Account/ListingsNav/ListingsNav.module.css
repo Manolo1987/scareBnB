@@ -4,7 +4,7 @@
   align-items: center;
   height: 50px;
   /* background-color: #f5f5f5; */
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
 }
 
 .listingsNavList {
@@ -17,11 +17,15 @@
 .listingsNavLink {
   display: block;
   padding: 10px 20px;
-  /* color: #333; */
+  color: #fff;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .listingsNavLink:hover {
   background-color: #ff0000;
+}
+.activeLink {
+  text-decoration: underline;
+  text-underline-offset: 0.6rem;
 }
