@@ -43,7 +43,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
 
   const remainingImages = Math.max(
     0,
-    4 - (listing.images.length - imagesToDelete.length)
+    4 -
+      (listing.images.length -
+        imagesToDelete.length +
+        formData.otherImages.length)
   );
 
   function isValidTextField(v) {
