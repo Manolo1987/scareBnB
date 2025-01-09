@@ -102,3 +102,24 @@
 
   }
 }
+
+.pagination_button {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination_button:hover {
+  background-color: var(--color-prime);
+}
+
+.comment_divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+  width: 100%;
+}
