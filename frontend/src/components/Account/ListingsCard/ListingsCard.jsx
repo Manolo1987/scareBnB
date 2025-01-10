@@ -6,7 +6,7 @@ import { useAcco } from '../../../context/AccommodationContext.jsx';
 import UpdateListing from '../UpdateListing/UpdateListing.jsx';
 
 export default function ListingsCard({ listing }) {
-  const { deleteListing } = useAcco();
+  const { deleteListing, setImagesToDelete } = useAcco();
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -20,6 +20,7 @@ export default function ListingsCard({ listing }) {
   };
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
+    setImagesToDelete([]);
   };
 
   return (

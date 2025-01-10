@@ -25,7 +25,7 @@ export default function AccommodationContextProvider({ children }) {
   const [selectedView, setSelectedView] = useState('gallery-view');
   //for update Listing Component
   const [imagesToDelete, setImagesToDelete] = useState([]);
-  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
+  // const [showDeleteMessage, setShowDeleteMessage] = useState(false);
 
   async function getAllAccommodations(limit) {
     // apply loading state here
@@ -81,11 +81,15 @@ export default function AccommodationContextProvider({ children }) {
   async function updateListing(id, formData) {
     console.log(formData);
     try {
-      const response = await api.patch(`/accommodations/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await api.patch(
+        `/accommodations/${id}?imagesToDelete=${imagesToDelete}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
       console.log(response.data);
       getMyListings();
@@ -110,18 +114,18 @@ export default function AccommodationContextProvider({ children }) {
   async function postComment(id, comment) {
     try {
       const response = await api.post(`/accommodations/comment/${id}`, comment);
-      setCurrentAcco(response.data)
-      return response.data; 
+      setCurrentAcco(response.data);
+      return response.data;
     } catch (error) {
       console.error('Error posting comment:', error);
-      return null; 
+      return null;
     }
   }
 
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
-      return response.data; 
+      return response.data;
     } catch (error) {
       console.error('Error deleting comment:', error);
       return null;
@@ -177,8 +181,8 @@ export default function AccommodationContextProvider({ children }) {
         updateListing,
         imagesToDelete,
         setImagesToDelete,
-        showDeleteMessage,
-        setShowDeleteMessage,
+        // showDeleteMessage,
+        // setShowDeleteMessage,
       }}
     >
       {children}

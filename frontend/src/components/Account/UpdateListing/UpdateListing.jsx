@@ -41,14 +41,20 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     otherImages: '',
   });
 
-  const remainingImages = Math.max(
-    0,
-    4 -
-      (listing.images.length -
-        imagesToDelete.length +
-        formData.otherImages.length)
-  );
+  // const remainingImages = Math.max(
+  //   0,
+  //   4 -
+  //     (listing.images.length -
+  //       imagesToDelete.length +
+  //       formData.otherImages.length)
+  // );
 
+  // remainingImages Anzeige updaten wenn formData.otherImages sich ändert: (in der handleInputChange)
+  const remainingImages =
+    4 -
+    (listing.images.length -
+      imagesToDelete.length +
+      formData.otherImages.length);
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
   }
@@ -96,6 +102,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             titleImage: 'Please upload an image (max 5MB).',
           }));
         }
+        //differenzierte Fehlermeldung zurückgeben: zu viele files oder image size too big
       } else if (name === 'otherImages') {
         const selectedFiles = Array.from(files);
         if (selectedFiles.length > remainingImages) {
@@ -103,8 +110,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             ...prevState,
             otherImages: `You can upload only 4 images, each no larger than 5MB.`,
           }));
-
-          e.target.value = '';
+          //e.target.value = '';
         } else {
           const validFiles = selectedFiles.filter((file) =>
             validateFile(file, 5 * 1024 * 1024)
@@ -260,12 +266,20 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   }
 
   useEffect(() => {
-    if (remainingImages > 0) {
-      setShowOtherImagesInput(true);
-    } else {
+    // if (remainingImages > 0) {
+    //   setShowOtherImagesInput(true);
+    // } else {
+    //   setShowOtherImagesInput(false);
+    // }
+    if (
+      listing.images.length - imagesToDelete.length >= 4 &&
+      formData.otherImages.length < 1
+    ) {
       setShowOtherImagesInput(false);
+    } else {
+      setShowOtherImagesInput(true);
     }
-  }, [remainingImages]);
+  }, [imagesToDelete, remainingImages]);
 
   return (
     <div className={styles.overlay}>

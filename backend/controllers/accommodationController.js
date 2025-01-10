@@ -235,10 +235,34 @@ export async function updateListing(req, res) {
     if (features && features !== listing.features)
       updatedFields.features = features.split(',');
 
-    //delete old images here
+    //delete old images if user not admin
+    const { imagesToDelete } = req.query;
+    const imagesToDeleteArr =
+      imagesToDelete.length > 0 ? imagesToDelete.split(',') : [];
+
+    //console.log('imagesToDelete', imagesToDeleteArr);
+
+    if (imagesToDeleteArr.length > 0) {
+      if (user.roles !== 'admin') {
+        for (let img of imagesToDeleteArr) {
+          await cloudinary.uploader.destroy(img, function (error, result) {
+            console.log(result);
+            console.error(error);
+          });
+        }
+      }
+    }
+
+    const existingImages =
+      listing.images.filter(
+        (image) => !imagesToDeleteArr.includes(image.public_id)
+      ) || []; //exclude deleted images
+    //console.log('existing', existingImages);
+    updatedFields.images = [...existingImages];
 
     if (req.files) {
       if (req.files['titleImage']) {
+        //console.log('titleImage', req.files['titleImage']);
         if (user.roles !== 'admin') {
           const titleImgId = listing.titleImage.public_id;
           await cloudinary.uploader.destroy(
@@ -256,13 +280,16 @@ export async function updateListing(req, res) {
         };
       }
 
-      //   if (req.files['otherImages']) {
-      //     const images = req.files['otherImages'].map((img) => ({
-      //       secure_url: img.path,
-      //       public_id: img.filename,
-      //     }));
-      //     updatedFields.images = images;
-      //   }
+      if (req.files['otherImages']) {
+        //console.log('otherImages', req.files['otherImages']);
+
+        const newImages = req.files['otherImages'].map((img) => ({
+          secure_url: img.path,
+          public_id: img.filename,
+        }));
+        //console.log('new', newImages);
+        updatedFields.images = [...existingImages, ...newImages];
+      }
     }
 
     if (Object.keys(updatedFields).length > 0) {
