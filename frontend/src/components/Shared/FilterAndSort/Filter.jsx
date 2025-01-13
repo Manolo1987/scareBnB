@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import globalStyles from '../../../pages/AccommodationList/AccommodationList.module.css';
 import styles from './Filter.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import RatingFilter from './RatingFilter';
@@ -43,6 +44,7 @@ export default function Filter() {
           id='price'
           value={price}
           onChange={handlePriceChange}
+          className={globalStyles.controlsSelect}
         >
           <option value={'all'}>all</option>
           <option value='0-80'>0 - 80</option>
@@ -57,6 +59,7 @@ export default function Filter() {
           id='bedrooms'
           value={bedrooms}
           onChange={handleBedroomsChange}
+          className={globalStyles.controlsSelect}
         >
           <option value={'all'}>all</option>
           <option value='2'>2</option>
