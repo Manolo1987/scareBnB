@@ -34,7 +34,7 @@ export async function getAllAccommodations(req, res) {
     if (minRating) filter.rating = { $gte: minRating };
 
     if (!limit) {
-      const allAccos = await Accommodation.find(filter);
+      const allAccos = await Accommodation.find(filter).populate('owner');
       return res.status(200).json({
         accommodations: allAccos,
       });
@@ -46,6 +46,7 @@ export async function getAllAccommodations(req, res) {
     sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
 
     const allAccos = await Accommodation.find(filter)
+      .populate('owner')
       .skip((pageNum - 1) * limitNum)
       .limit(limitNum)
       .sort(sort);

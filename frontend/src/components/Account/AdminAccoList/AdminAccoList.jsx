@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Für Routing
 import styles from './AdminAccoList.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { useAuth } from '../../../context/UserAuthContext';
 import PaginationPage from '../../AccomodationList/PaginationPage/PaginationPage';
 import { Spinner } from '@phosphor-icons/react';
-import AccoCard from '../../Shared/AccoCard/AccoCard';
 
 export default function AdminAccoList() {
   const { user } = useAuth();
@@ -34,7 +34,7 @@ export default function AdminAccoList() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      setError(null); // error reset vor neuer anfrage
+      setError(null);
       try {
         await getAllAccommodations(limit);
       } catch (error) {
@@ -45,12 +45,10 @@ export default function AdminAccoList() {
       }
     };
 
-    // 100ms timeout um sicher zu gehen, dass alle states geupdatet sind
     const timeoutId = setTimeout(() => {
       loadData();
     }, 100);
 
-    // cleanup fürs timeout
     return () => clearTimeout(timeoutId);
   }, [
     stateFilter,
@@ -62,10 +60,12 @@ export default function AdminAccoList() {
     sortOrder,
     currentPage,
   ]);
+
   const handlePageChange = (page) => {
     console.log('Switching to page:', page);
     setCurrentPage(page);
   };
+
   const totalPages = allAccos.pagination?.totalCount
     ? Math.ceil(allAccos.pagination.totalCount / limit)
     : 1;
@@ -83,21 +83,62 @@ export default function AdminAccoList() {
         </div>
       ) : (
         <>
-          <div className={styles.accoList}>
-            {allAccos?.accommodations?.length > 0 ? (
-              allAccos.accommodations
-                .filter((acco) => acco.owner !== user._id) // Filterung
-                .map((acco, index) => (
-                  <div key={acco.id || index} className={styles.accoCard}>
-                    <AccoCard acco={acco} />
-                    <button onClick={() => deleteListing(acco._id)}>
-                      Delete
-                    </button>
-                  </div>
-                ))
-            ) : (
-              <p>No accommodations found</p>
-            )}
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Owner</th>
+                  <th>Title</th>
+                  <th>City</th>
+                  <th>Rating</th>
+                  <th>Price/Night</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allAccos.accommodations
+                  // ?.filter((acco) => acco.owner !== user._id)
+                  .map((acco) => (
+                    <tr key={acco._id}>
+                      <td>
+                        {acco.owner.firstName} {acco.owner.lastName}
+                      </td>
+                      <td>{acco.title}</td>
+                      <td>{acco.city}</td>
+                      <td>{acco.rating}</td>
+                      <td>{acco.pricePerNight}</td>
+                      <td>
+                        <div className={styles.actionButtons}>
+                          <Link
+                            to={`/accommodationList/${acco.title
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')}?id=${acco._id}`}
+                            state={{ id: acco._id }}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className={styles.viewButton}
+                          >
+                            View
+                          </Link>
+                          <button
+                            onClick={() => {
+                              const confirmDelete = window.confirm(
+                                `Are you sure you want to delete the accommodation "${acco.title}"?`
+                              );
+                              if (confirmDelete) {
+                                deleteListing(acco._id);
+                              }
+                            }}
+                            className={styles.deleteButton}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
           <PaginationPage
             currentPage={currentPage}
