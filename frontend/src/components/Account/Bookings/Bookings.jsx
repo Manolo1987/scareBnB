@@ -31,6 +31,7 @@ export default function Bookings() {
         checkInDate={checkInDate}
         checkOutDate={checkOutDate}
         cancelBooking={cancelBooking}
+        currentDate={currentDate}
       />
     );
   };
