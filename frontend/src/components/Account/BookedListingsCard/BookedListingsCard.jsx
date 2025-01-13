@@ -5,37 +5,65 @@ export default function BookedListingsCard({ listing }) {
   //console.log(listing);
   return (
     <div className={styles.bookedListingCard}>
-      <div className={styles.imgContainer}>
-        <img
-          src={listing.accommodation.titleImage.secure_url}
-          alt={listing.accommodation.title}
-          className={styles.cardImage}
-        />
+      <div className={styles.info_container}>
+        <div className={styles.img_container}>
+          <h3 className={styles.cardTitle}>
+            {listing.accommodation.title} ({listing.accommodation.city})
+          </h3>
+          <img
+            src={listing.accommodation.titleImage.secure_url}
+            alt={listing.accommodation.title}
+            className={styles.cardImage}
+          />
+        </div>
       </div>
-      <div className={styles.infoContainer}>
-        <span className={styles.cardTitle}>{listing.accommodation.title}</span>
-        <span className={styles.cardCity}>{listing.accommodation.city}</span>
-        <span className={styles.cardRating}>
-          {listing.accommodation.rating.toFixed(1)}
-        </span>
-        <span className={styles.cardBedrooms}>
+      <div className={styles.info_container}>
+        <p className={styles.cardRating}>
+          Rating: {listing.accommodation.rating.toFixed(1)}
+        </p>
+        <p className={styles.cardBedrooms}>
           Bedrooms: {listing.accommodation.bedrooms}
-        </span>
-        <span className={styles.cardPricePerNight}>
-          Price per Night: {listing.accommodation.pricePerNight}
-        </span>
+        </p>
+        <p className={styles.cardPricePerNight}>
+          Price per Night: {listing.accommodation.pricePerNight}€
+        </p>
       </div>
-      <div className={styles.cardBookingInfoContainer}>
-        <span className={styles.cardNumberOfGuests}>
+      <div className={styles.info_container}>
+        <p>
+          Guest: {listing.guest.firstName} {listing.guest.lastName}
+        </p>
+        <p className={styles.cardNumberOfGuests}>
           Number of Guests: {listing.numberOfGuests}
-        </span>
-        <span className={styles.cardCheckIn}>Check In: {listing.checkIn}</span>
-        <span className={styles.cardCheckOut}>
-          Check Out: {listing.checkOut}
-        </span>
-        <span className={styles.cardPaymentMethod}>
+        </p>
+        <p className={styles.cardCheckIn}>
+          Check In: {new Date(listing.checkIn).toLocaleDateString()}
+        </p>
+        <p className={styles.cardCheckOut}>
+          Check Out: {new Date(listing.checkOut).toLocaleDateString()}
+        </p>
+        <p className={styles.cardPaymentMethod}>
           Payment Method: {listing.paymentMethod}
-        </span>
+        </p>
+        <p className={styles.cardTotalPrice}>
+          Total Price: {listing.totalPrice}€
+        </p>
+        {listing.isCancelled && (
+          <div className={styles.info_container}>
+            <span
+              className={styles.cancelledSpan}
+              title='Your booking has been cancelled'
+            >
+              Booking cancelled by guest
+            </span>
+          </div>
+        )}
+        <a
+          href={`mailto:${listing.guest.email}`}
+          className={styles.contactLink}
+          title='Contact Host'
+        >
+          Contact Guest
+        </a>
       </div>
     </div>
   );
