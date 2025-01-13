@@ -1,5 +1,40 @@
 .accountContainer {
   display: flex;
   justify-content: center;
-  /* background: var(--gradient-sides); */
+}
+
+/* global styles for updateListing and createListing forms */
+
+.listingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: rgb(34, 34, 34);
+  padding: 1.6rem;
+  border-radius: 5px;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.formFooter {
+  gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.formFooter > .cancelButton,
+.formFooter > .saveButton {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  border: none;
+}
+.formFooter > .cancelButton {
+  background-color: black;
+  color: white;
+}
+.formFooter > .saveButton {
+  background-color: crimson;
+  color: white;
 }

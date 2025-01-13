@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import globalStyles from '../../../pages/Account/Account.module.css';
 import styles from './CreateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
@@ -11,6 +12,8 @@ export default function HandleListings() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const titleImageInputRef = useRef(null);
+  const otherImagesInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -248,12 +251,45 @@ export default function HandleListings() {
       });
   }
 
+  const handleClearForm = () => {
+    setFormData({
+      title: '',
+      description: '',
+      state: states[0],
+      city: '',
+      latitude: '',
+      longitude: '',
+      bedrooms: 1,
+      pricePerNight: 0,
+      features: [],
+      titleImage: null,
+      otherImages: [],
+    });
+    setFormErrors({
+      title: '',
+      description: '',
+      city: '',
+      latitude: '',
+      longitude: '',
+      bedrooms: '',
+      pricePerNight: '',
+      titleImage: '',
+      otherImages: '',
+    });
+    if (titleImageInputRef.current) {
+      titleImageInputRef.current.value = null;
+    }
+    if (otherImagesInputRef.current) {
+      otherImagesInputRef.current.value = null;
+    }
+  };
+
   return (
     <div>
       <ListingsNav />
       <div className={styles.formContainer}>
-        <form className={styles.handleListings} onSubmit={handleSubmit}>
-          <div className={styles.inputContainer}>
+        <form className={globalStyles.listingForm} onSubmit={handleSubmit}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='title'>Title</label>
             <input
               type='text'
@@ -266,7 +302,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.title}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='description'>Description</label>
             <textarea
               name='description'
@@ -280,7 +316,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.description}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='state'>State</label>
             <select
               name='state'
@@ -297,7 +333,7 @@ export default function HandleListings() {
               })}
             </select>
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='city'>City</label>
             <input
               type='text'
@@ -310,7 +346,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.city}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='latitude'>Latitude</label>
             <input
               type='text'
@@ -323,7 +359,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.latitude}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='longitude'>longitude</label>
             <input
               type='text'
@@ -336,7 +372,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.longitude}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='bedrooms'>Bedrooms</label>
             <select
               name='bedrooms'
@@ -356,7 +392,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.bedrooms}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='pricePerNight'>pricePerNight</label>
             <input
               type='number'
@@ -369,7 +405,7 @@ export default function HandleListings() {
               <p className={styles.error}>{formErrors.pricePerNight}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label>Features</label>
             {featureList.map((feature) => (
               <div key={feature} className={styles.checkboxContainer}>
@@ -386,7 +422,7 @@ export default function HandleListings() {
               </div>
             ))}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='titleImage'>Title Image</label>
             <input
               type='file'
@@ -394,14 +430,13 @@ export default function HandleListings() {
               id='titleImage'
               accept='image/*'
               onChange={handleInputChange}
+              ref={titleImageInputRef}
             />
             {formErrors.titleImage && (
               <p className={styles.error}>{formErrors.titleImage}</p>
             )}
           </div>
-
-          {/* File input for Other Images */}
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='otherImages'>Other Images</label>
             <input
               type='file'
@@ -410,15 +445,29 @@ export default function HandleListings() {
               accept='image/*'
               multiple
               onChange={handleInputChange}
+              ref={otherImagesInputRef}
             />
             {formErrors.otherImages && (
               <p className={styles.error}>{formErrors.otherImages}</p>
             )}
           </div>
           {error && <p className={styles.error}>{error}</p>}
-          <button type='submit' disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </button>
+          <div className={globalStyles.formFooter}>
+            <button
+              type='button'
+              className={globalStyles.cancelButton}
+              onClick={handleClearForm}
+            >
+              Clear Form
+            </button>
+            <button
+              type='submit'
+              className={globalStyles.saveButton}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Saving...' : 'Save'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
