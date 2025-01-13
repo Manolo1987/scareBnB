@@ -8,7 +8,7 @@
 .listingForm {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.4rem;
   background-color: rgb(34, 34, 34);
   padding: 1.6rem;
   border-radius: 5px;
@@ -16,7 +16,8 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.6rem;
+  position: relative;
 }
 @-moz-document url-prefix() {
   .inputContainer > input[type='number'] {
@@ -39,6 +40,12 @@
 .featureListItem {
   display: flex;
   gap: 0.4rem;
+}
+.inputError {
+  position: absolute;
+  bottom: -1.4rem;
+  font-size: 0.9rem;
+  color: rgb(231, 82, 112);
 }
 .formFooter {
   gap: 1rem;

@@ -299,7 +299,7 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.title && (
-              <p className={styles.error}>{formErrors.title}</p>
+              <p className={globalStyles.inputError}>{formErrors.title}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -313,7 +313,9 @@ export default function HandleListings() {
               cols='50'
             />
             {formErrors.description && (
-              <p className={styles.error}>{formErrors.description}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.description}
+              </p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -343,7 +345,7 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.city && (
-              <p className={styles.error}>{formErrors.city}</p>
+              <p className={globalStyles.inputError}>{formErrors.city}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -356,7 +358,7 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.latitude && (
-              <p className={styles.error}>{formErrors.latitude}</p>
+              <p className={globalStyles.inputError}>{formErrors.latitude}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -369,7 +371,7 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.longitude && (
-              <p className={styles.error}>{formErrors.longitude}</p>
+              <p className={globalStyles.inputError}>{formErrors.longitude}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -389,7 +391,7 @@ export default function HandleListings() {
               })}
             </select>
             {formErrors.bedrooms && (
-              <p className={styles.error}>{formErrors.bedrooms}</p>
+              <p className={globalStyles.inputError}>{formErrors.bedrooms}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -402,7 +404,9 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.pricePerNight && (
-              <p className={styles.error}>{formErrors.pricePerNight}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.pricePerNight}
+              </p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -433,7 +437,7 @@ export default function HandleListings() {
               ref={titleImageInputRef}
             />
             {formErrors.titleImage && (
-              <p className={styles.error}>{formErrors.titleImage}</p>
+              <p className={globalStyles.inputError}>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -448,7 +452,9 @@ export default function HandleListings() {
               ref={otherImagesInputRef}
             />
             {formErrors.otherImages && (
-              <p className={styles.error}>{formErrors.otherImages}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.otherImages}
+              </p>
             )}
           </div>
           {error && <p className={styles.error}>{error}</p>}

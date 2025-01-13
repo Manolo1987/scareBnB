@@ -291,7 +291,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.title && (
-              <p className={styles.error}>{formErrors.title}</p>
+              <p className={globalStyles.inputError}>{formErrors.title}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -305,7 +305,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               cols='50'
             />
             {formErrors.description && (
-              <p className={styles.error}>{formErrors.description}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.description}
+              </p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -333,7 +335,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.city && (
-              <p className={styles.error}>{formErrors.city}</p>
+              <p className={globalStyles.inputError}>{formErrors.city}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -346,7 +348,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.latitude && (
-              <p className={styles.error}>{formErrors.latitude}</p>
+              <p className={globalStyles.inputError}>{formErrors.latitude}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -359,7 +361,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.longitude && (
-              <p className={styles.error}>{formErrors.longitude}</p>
+              <p className={globalStyles.inputError}>{formErrors.longitude}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -379,7 +381,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               })}
             </select>
             {formErrors.bedrooms && (
-              <p className={styles.error}>{formErrors.bedrooms}</p>
+              <p className={globalStyles.inputError}>{formErrors.bedrooms}</p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -392,7 +394,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.pricePerNight && (
-              <p className={styles.error}>{formErrors.pricePerNight}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.pricePerNight}
+              </p>
             )}
           </div>
           <div className={globalStyles.inputContainer}>
@@ -412,7 +416,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               ))}
             </div>
           </div>
-          {error && <p className={styles.error}>{error}</p>}
+          {error && <p className={globalStyles.inputError}>{error}</p>}
 
           <div className={styles.titleImageContainer}>
             <label htmlFor='titleImageUpdate'>Title Image:</label>
@@ -440,7 +444,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               />
             )}
             {formErrors.titleImage && (
-              <p className={styles.error}>{formErrors.titleImage}</p>
+              <p className={globalStyles.inputError}>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={styles.otherImagesContainer}>
@@ -470,7 +474,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               </>
             )}
             {formErrors.otherImages && (
-              <p className={styles.error}>{formErrors.otherImages}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.otherImages}
+              </p>
             )}
           </div>
 
