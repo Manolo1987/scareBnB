@@ -97,7 +97,7 @@ export default function AdminAccoList() {
               </thead>
               <tbody>
                 {allAccos.accommodations
-                  // ?.filter((acco) => acco.owner !== user._id)
+                  ?.filter((acco) => acco.owner._id !== user._id)
                   .map((acco) => (
                     <tr key={acco._id}>
                       <td>
