@@ -164,9 +164,13 @@
 }
 .inputError {
   position: absolute;
-  bottom: -1.4rem;
+  top: 3.4rem;
   font-size: 0.9rem;
   color: rgb(231, 82, 112);
+}
+.inputContainer textarea ~ .inputError {
+  top: unset;
+  bottom: -1.5rem;
 }
 .inputRow {
   display: flex;
