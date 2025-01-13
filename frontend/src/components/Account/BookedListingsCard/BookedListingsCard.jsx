@@ -1,10 +1,11 @@
 import React from 'react';
+import globalStyles from '../../../pages/Account/Account.module.css';
 import styles from './BookedListingsCard.module.css';
 
 export default function BookedListingsCard({ listing }) {
   //console.log(listing);
   return (
-    <div className={styles.bookedListingCard}>
+    <div className={globalStyles.cardContainer}>
       <div className={styles.info_container}>
         <div className={styles.img_container}>
           <h3 className={styles.cardTitle}>
