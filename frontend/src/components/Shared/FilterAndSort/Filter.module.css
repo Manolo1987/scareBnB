@@ -1,5 +1,6 @@
 .filter_container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-right: auto;
   gap: 1rem;
