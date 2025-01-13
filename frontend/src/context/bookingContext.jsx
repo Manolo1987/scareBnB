@@ -122,9 +122,10 @@ export const BookingContextProvider = ({ children }) => {
   };
 
   const giveFeedback = async (bookingId, feedback) => {
+    console.log(bookingId, feedback);
+    
     try {
-      if (today > checkOut) {
-        const response = await api.put(
+      const response = await api.patch(
           `/bookings/giveFeedback/${bookingId}`,
           feedback
         );
@@ -133,7 +134,7 @@ export const BookingContextProvider = ({ children }) => {
           navigate('/');
         }
       }
-    } catch (error) {
+    catch (error) {
       console.error(error);
     }
   };

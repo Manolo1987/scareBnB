@@ -1,6 +1,6 @@
 // Booking.js
 import { model, Schema } from 'mongoose';
-import Accommodation from './Accommodation.js';
+import Accommodation from '../models/Accommodation.js';
 import { giveFeedback } from '../controllers/bookingController.js';
 
 const bookingSchema = new Schema({

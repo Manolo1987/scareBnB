@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './BookingCard.module.css';
 import { useBooking } from '../../../context/bookingContext';
+import Feedback from '../../Shared/Feedback/Feedback';
 
 export default function BookingCard({
   booking,
   checkInDate,
   checkOutDate,
   cancelBooking,
+  currentDate,
 }) {
   return (
     <div className={styles.bookingCardContainer}>
@@ -44,6 +46,7 @@ export default function BookingCard({
           </span>
         </div>
       )}
+      {!booking.giveFeedback && !booking.isCancelled && checkOutDate < currentDate && <Feedback bookingId={booking._id} />}
       {!booking.isCancelled && (
         <button
           onClick={() => cancelBooking(booking._id)}
