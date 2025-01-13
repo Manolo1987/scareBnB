@@ -407,9 +407,9 @@ export default function HandleListings() {
           </div>
           <div className={globalStyles.inputContainer}>
             <label>Features</label>
-            {featureList.map((feature) => (
-              <div key={feature} className={styles.checkboxContainer}>
-                <label>
+            <div className={globalStyles.featureList}>
+              {featureList.map((feature) => (
+                <label key={feature} className={globalStyles.featureListItem}>
                   <input
                     type='checkbox'
                     name='features'
@@ -419,8 +419,8 @@ export default function HandleListings() {
                   />
                   {feature}
                 </label>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <div className={globalStyles.inputContainer}>
             <label htmlFor='titleImage'>Title Image</label>

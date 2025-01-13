@@ -18,6 +18,28 @@
   flex-direction: column;
   gap: 0.4rem;
 }
+@-moz-document url-prefix() {
+  .inputContainer > input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0;
+  }
+}
+.inputContainer > input[type='number']::-webkit-inner-spin-button,
+.inputContainer > input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+@media (min-width: 600px) {
+  .featureList {
+    column-count: 2;
+    column-gap: 1.6rem;
+  }
+}
+.featureListItem {
+  display: flex;
+  gap: 0.4rem;
+}
 .formFooter {
   gap: 1rem;
   display: flex;

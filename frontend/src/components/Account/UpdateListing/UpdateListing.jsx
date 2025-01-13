@@ -397,9 +397,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
           </div>
           <div className={globalStyles.inputContainer}>
             <label htmlFor='features'>Features</label>
-            {featureList.map((feature, index) => (
-              <div key={index}>
-                <label>
+            <div className={globalStyles.featureList}>
+              {featureList.map((feature, index) => (
+                <label key={feature} className={globalStyles.featureListItem}>
                   <input
                     type='checkbox'
                     name='features'
@@ -409,8 +409,8 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                   />
                   {feature}
                 </label>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           {error && <p className={styles.error}>{error}</p>}
 
