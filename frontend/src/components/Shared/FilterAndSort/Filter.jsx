@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Filter.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
+import RatingFilter from './RatingFilter';
 
 export default function Filter() {
   //possible price range: 50 - 120 (seeded data)
@@ -31,13 +32,6 @@ export default function Filter() {
       setBedrooms('');
     } else {
       setBedrooms(e.target.value);
-    }
-  };
-  const handleRatingChange = (e) => {
-    if (e.target.value === 'all') {
-      setMinRating('');
-    } else {
-      setMinRating(e.target.value);
     }
   };
   return (
@@ -71,21 +65,7 @@ export default function Filter() {
           <option value='5'>5</option>
         </select>
       </div>
-      <div className={styles.filter_item}>
-        <label htmlFor='bedrooms'>Rating:</label>
-        <select
-          name='rating'
-          id='rating'
-          value={minRating}
-          onChange={handleRatingChange}
-        >
-          <option value={'all'}>all</option>
-          <option value='2'>min 2</option>
-          <option value='3'>min 3</option>
-          <option value='4'>min 4</option>
-          <option value='5'> 5</option>
-        </select>
-      </div>
+      <RatingFilter minRating={minRating} setMinRating={setMinRating} />
     </div>
   );
 }
