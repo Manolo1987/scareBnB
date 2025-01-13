@@ -1,14 +1,19 @@
-.accountContainer {
+/* .accountContainer {
   display: flex;
   justify-content: center;
-}
+} */
 
 /* global styles for updateListing and createListing forms */
-
+.formWrapper {
+  max-width: 600px;
+  margin: 1rem auto 2rem;
+}
 .listingForm {
+  width: 100%;
+  --gap: 2.4rem;
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
+  gap: var(--gap);
   background-color: rgb(34, 34, 34);
   padding: 1.6rem;
   border-radius: 5px;
@@ -46,6 +51,21 @@
   bottom: -1.4rem;
   font-size: 0.9rem;
   color: rgb(231, 82, 112);
+}
+.inputRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+@media screen and (min-width: 481px) {
+  .inputRow {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .inputRow > .inputContainer {
+    flex: 50% 0 1;
+  }
 }
 .formFooter {
   gap: 1rem;
