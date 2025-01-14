@@ -14,6 +14,8 @@ import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { regionBounds } from '../../../assets/data/regionBounds.js';
+import markerIcon from '../../../assets/images/icons/map-pin-32.png';
+import markerRetinaIcon from '../../../assets/images/icons/map-pin-64.png';
 
 const MapZoomHandler = () => {
   const map = useMap();
@@ -50,6 +52,17 @@ export default function OverviewMap() {
   } = useAcco();
 
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
+
+  const customIcon = new L.Icon({
+    iconUrl: `${markerIcon}`,
+    iconRetinaUrl: `${markerRetinaIcon}`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+    //   shadowUrl: 'path/to/your/shadow.png',
+    // shadowSize: [44, 44],
+    // shadowAnchor: [16, 44]
+  });
 
   useEffect(() => {
     getAllAccommodations();
@@ -99,7 +112,11 @@ export default function OverviewMap() {
           accommodations.map((acco, index) => {
             if (acco.latitude && acco.longitude) {
               return (
-                <Marker key={index} position={[acco.latitude, acco.longitude]}>
+                <Marker
+                  key={index}
+                  position={[acco.latitude, acco.longitude]}
+                  icon={customIcon}
+                >
                   <Popup>
                     <Link to={`/accommodation`} className={styles.cardLink}>
                       <div className={styles.accoCardContainer}>
