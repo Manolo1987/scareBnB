@@ -15,8 +15,5 @@
 
 .overlay-content {
   position: relative;
-  background-color: rgb(60, 60, 60);
-  padding: 1rem;
-  max-width: 300px;
   z-index: 10001;
 }
