@@ -33,7 +33,9 @@ export const BookingContextProvider = ({ children }) => {
   });
   const [currentBooking, setCurrentBooking] = useState(createBookingObject);
   const createBookingPreview = () => ({
-    accommodation: currentAcco?.title || null,
+    accommodationTitle: currentAcco?.title || null,
+    accommodationId: currentAcco?._id || null,
+    accommodationTitleImage: currentAcco?.titleImage.secure_url || null,
     numberOfGuests,
     checkIn,
     checkOut,

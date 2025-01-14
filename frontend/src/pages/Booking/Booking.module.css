@@ -1,0 +1,174 @@
+/* Booking.module.css */
+.BookingCard {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: var(--color-prime);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: var(--color-light);
+}
+
+.BookingCard h1,
+.BookingCard h2,
+.creditCardHeader h3 {
+  color: #7d23f3;
+}
+
+.BookingCard h1 {
+  text-align: center;
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: var(--color-dark);
+}
+.img_container {
+  width: 20%;
+  height: 200px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.infoContainer p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.paymentMethod {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--color-dark);
+}
+
+.paymentMethod h3 {
+  margin-bottom: 10px;
+  color: #7d23f3;
+}
+
+.paymentMethod label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.paymentMethod input[type='radio'] {
+  margin-right: 10px;
+}
+
+.creditCardForm {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--color-dark);
+  max-width: 100%;
+  margin: 0 auto; /* Zentriert das Formular */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.creditCardForm h3 {
+  margin-bottom: 20px;
+  color: #7d23f3;
+  text-align: center;
+  font-size: 18px;
+}
+
+.creditCardForm label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #ffffff; /* Textfarbe */
+  width: 50%;
+  margin: 0 auto;
+}
+
+.creditCardForm input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: border 0.3s ease;
+}
+
+.creditCardForm input:focus {
+  border: 1px solid #7d23f3;
+  outline: none;
+  box-shadow: 0 0 4px rgba(125, 35, 243, 0.4);
+}
+
+.errorMessage {
+  color: #ff4d4d; /* Rot für ungültig */
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.validMessage {
+  color: #4caf50; /* Grün für gültig */
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.bankDetails {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--color-dark);
+}
+
+.bankDetails h3 {
+  margin-bottom: 10px;
+  color: var(--color-secondary);
+}
+
+.bankDetails p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.bookButton {
+  margin: 20px auto;
+  display: block;
+  padding: 10px;
+  width: 40%;
+  background-color: #10ac10;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bookButton:hover {
+  background-color: #0e8a0e;
+}
+
+.bookButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
