@@ -12,7 +12,7 @@ export default function BookingCard({
   currentDate,
 }) {
   return (
-    <div className={styles.bookingCardContainer}>
+    <div className={`cardContainer ${styles.BookingCard}`}>
       <div className={styles.info_container}>
         <div className={styles.img_container}>
           {booking &&
@@ -62,19 +62,21 @@ export default function BookingCard({
         !booking.isCancelled &&
         checkOutDate < currentDate && <Feedback bookingId={booking._id} />}
       {!booking.isCancelled && checkOutDate > currentDate && (
-        <button
-          onClick={() => cancelBooking(booking._id)}
-          className={styles.cancelButton}
-        >
-          Cancel Booking
-        </button>
+        <div className={styles.info_container}>
+          <button
+            onClick={() => cancelBooking(booking._id)}
+            className={styles.cancelButton}
+          >
+            Cancel Booking
+          </button>
+        </div>
       )}
       <a
         href={`mailto:${booking.host.email}`}
         className={styles.contactLink}
         title='Contact Host'
       >
-        Contact
+        Contact your host
       </a>
     </div>
   );
