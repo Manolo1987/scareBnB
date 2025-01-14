@@ -59,7 +59,7 @@
   --wrapWidth: 600px;
   --wrapMargin: 1rem auto 2rem;
 }
-/* wrapper for listings-content */
+/* wrapper for listings-content and profile-contant */
 .listingsWrapper {
   max-width: var(--wrapWidth);
   margin: var(--wrapMargin);
@@ -81,7 +81,7 @@
   max-width: var(--wrapWidth);
   margin: var(--wrapMargin);
 }
-.listingForm {
+.accountForm {
   width: 100%;
   --gap: 2.4rem;
   display: flex;
