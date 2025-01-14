@@ -280,7 +280,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   return (
     <div className={styles.overlay}>
       <div className={`${styles.formWrapper} ${styles.overlayContent}`}>
-        <form className='listingForm' onSubmit={handleSubmit}>
+        <form className='accountForm' onSubmit={handleSubmit}>
           <div className='inputContainer'>
             <label htmlFor='title'>Title</label>
             <input

@@ -29,3 +29,15 @@
 .deletedImage {
   max-width: 100%;
 }
+.deleteMessageContainer {
+  background-color: rgb(60, 60, 60);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.deleteMessage {
+  line-height: 2rem;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../../../App.css';
 import styles from './Profile.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
@@ -99,9 +100,11 @@ export default function Profile() {
   };
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.myProfile}>
-        <h2>My Profile</h2>
+    <>
+      <div className='listingsWrapper'>
+        <div className='headingEffectContainer'>
+          <h1 className='headingEffect'>My Profile</h1>
+        </div>
         <div className={styles.profileInfo}>
           <table>
             <tbody>
@@ -153,82 +156,75 @@ export default function Profile() {
           )}
         </div>
 
-        <div className={styles.editProfile}>
-          {isEditing && (
-            <div className={styles.editForm}>
-              <form onSubmit={handleSubmit}>
-                <label>
-                  First Name:
-                  <input
-                    type='text'
-                    name='firstName'
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.firstName && (
-                    <p className={styles.error}>{errors.firstName}</p>
-                  )}
-                </label>
+        {isEditing && (
+          <div className='formWrapper'>
+            <form onSubmit={handleSubmit} className='accountForm'>
+              <div className='inputContainer'>
+                <label>First Name:</label>
+                <input
+                  type='text'
+                  name='firstName'
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.firstName && (
+                  <p className={styles.error}>{errors.firstName}</p>
+                )}
+              </div>
+              <div className='inputContainer'>
+                <label>Last Name:</label>
+                <input
+                  type='text'
+                  name='lastName'
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.lastName && (
+                  <p className={styles.error}>{errors.lastName}</p>
+                )}
+              </div>
+              <div className='inputContainer'>
+                <label>Birthday:</label>
+                <input
+                  type='date'
+                  name='dateOfBirth'
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.dateOfBirth && (
+                  <p className={styles.error}>{errors.dateOfBirth}</p>
+                )}
+              </div>
+              <div className='inputContainer'>
+                <label>Phone:</label>
+                <input
+                  type='tel'
+                  name='phone'
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+              </div>
 
-                <label>
-                  Last Name:
-                  <input
-                    type='text'
-                    name='lastName'
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.lastName && (
-                    <p className={styles.error}>{errors.lastName}</p>
-                  )}
-                </label>
+              <div className='inputContainer'>
+                <label>Email:</label>
+                <input
+                  type='email'
+                  name='email'
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.email && <p className={styles.error}>{errors.email}</p>}
+              </div>
 
-                <label>
-                  Phone:
-                  <input
-                    type='tel'
-                    name='phone'
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.phone && (
-                    <p className={styles.error}>{errors.phone}</p>
-                  )}
-                </label>
-
-                <label>
-                  Birthday:
-                  <input
-                    type='date'
-                    name='dateOfBirth'
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.dateOfBirth && (
-                    <p className={styles.error}>{errors.dateOfBirth}</p>
-                  )}
-                </label>
-
-                <label>
-                  Email:
-                  <input
-                    type='email'
-                    name='email'
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  {errors.email && (
-                    <p className={styles.error}>{errors.email}</p>
-                  )}
-                </label>
-
-                <label>
-                  Password:
+              <div className='inputContainer'>
+                <label>Password:</label>
+                <div className={styles.passwordWrapper}>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name='password'
@@ -245,13 +241,15 @@ export default function Profile() {
                   >
                     {showPassword ? '👻' : '👁️'}
                   </span>
-                  {errors.password && (
-                    <p className={styles.error}>{errors.password}</p>
-                  )}
-                </label>
+                </div>
+                {errors.password && (
+                  <p className={styles.error}>{errors.password}</p>
+                )}
+              </div>
 
-                <label>
-                  Confirm Password:
+              <div className='inputContainer'>
+                <label>Confirm Password:</label>
+                <div className={styles.passwordWrapper}>
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
                     name='confirmPassword'
@@ -268,50 +266,49 @@ export default function Profile() {
                   >
                     {showConfirmPassword ? '👻' : '👁️'}
                   </span>
-                  {errors.confirmPassword && (
-                    <p className={styles.error}>{errors.confirmPassword}</p>
-                  )}
-                </label>
+                </div>
+                {errors.confirmPassword && (
+                  <p className={styles.error}>{errors.confirmPassword}</p>
+                )}
+              </div>
 
-                <button className={styles.saveButton} type='submit'>
-                  Save
-                </button>
+              <div className='formFooter'>
                 <button
-                  className={styles.cancelButton}
+                  className='cancelButton'
                   type='button'
                   onClick={() => setIsEditing(false)}
                 >
                   Cancel
                 </button>
-              </form>
-            </div>
-          )}
-        </div>
-
-        <div className={styles.deleteProfile}>
-          {isDeleting && (
-            <div className={styles.deleteOverlay}>
-              <div className={styles.deleteContent}>
-                <p>Are you sure you want to delete your profile?</p>
-                <div className={styles.buttonsContainer}>
-                  <button
-                    className={styles.deleteButton}
-                    onClick={() => deleteMyProfile()}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className={styles.cancelButton}
-                    onClick={() => setIsDeleting(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
+                <button className='saveButton' type='submit'>
+                  Save
+                </button>
               </div>
-            </div>
-          )}
-        </div>
+            </form>
+          </div>
+        )}
       </div>
-    </div>
+
+      {isDeleting && (
+        <div className={styles.deleteOverlay}>
+          <div className={styles.deleteContent}>
+            <p className={styles.deleteMessage}>
+              Are you sure you want to delete your profile?
+            </p>
+            <div className='formFooter'>
+              <button
+                className='cancelButton'
+                onClick={() => setIsDeleting(false)}
+              >
+                Cancel
+              </button>
+              <button className='saveButton' onClick={() => deleteMyProfile()}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -55,27 +55,25 @@ export default function UpdateImage({ img }) {
 
       <Overlay isOpen={isOverlayOpen} onClose={toggleOverlay}>
         <div className={styles.deleteMessageContainer}>
-          <div className={styles.deleteMessageInner}>
-            <p className={styles.deleteMessage}>
-              Do you really want to delete this image?
-            </p>
-            <img src={img.secure_url} alt='' className={styles.deletedImage} />
-            <div className={styles.messageFooter}>
-              <button
-                type='button'
-                className={styles.cancelButton}
-                onClick={() => setIsOverlayOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type='button'
-                className={styles.deleteButton}
-                onClick={handleDeleteImage}
-              >
-                Delete
-              </button>
-            </div>
+          <p className={styles.deleteMessage}>
+            Do you really want to delete this image?
+          </p>
+          <img src={img.secure_url} alt='' className={styles.deletedImage} />
+          <div className='formFooter'>
+            <button
+              type='button'
+              className='cancelButton'
+              onClick={() => setIsOverlayOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type='button'
+              className='saveButton'
+              onClick={handleDeleteImage}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </Overlay>

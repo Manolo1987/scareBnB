@@ -291,7 +291,7 @@ export default function HandleListings() {
         <div className='headingEffectContainer'>
           <h1 className='headingEffect'>Create a new listing</h1>
         </div>
-        <form className='listingForm' onSubmit={handleSubmit}>
+        <form className='accountForm' onSubmit={handleSubmit}>
           <div className='inputContainer'>
             <label htmlFor='title'>Title</label>
             <input
