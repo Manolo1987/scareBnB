@@ -23,18 +23,69 @@ export default function Booking() {
     cvv: '',
   });
 
-  const isCreditCardValid = () => {
-    const { cardNumber, expiryDate, cvv } = creditCardDetails;
-    return (
-      cardNumber.length === 16 &&
-      /^[0-1][0-9]\/[0-9]{2}$/.test(expiryDate) && // MM/YY format check
-      cvv.length === 3
-    );
+  const [validationErrors, setValidationErrors] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+  });
+
+  const validateCardNumber = (value) => {
+    if (!/^\d*$/.test(value)) {
+      return 'Card number must contain only numbers.';
+    }
+    if (value.length < 16) {
+      return 'Card number must be 16 digits.';
+    }
+    if (value.length > 16) {
+      return 'Card number cannot exceed 16 digits.';
+    }
+    return 'Valid card number.';
+  };
+
+  const validateExpiryDate = (value) => {
+    if (!/^\d{2}\/\d{2}$/.test(value)) {
+      return 'Expiry date must be in MM/YY format.';
+    }
+    const [month, year] = value.split('/').map(Number);
+    if (month < 1 || month > 12) {
+      return 'Invalid month in expiry date.';
+    }
+    return 'Valid expiry date.';
+  };
+
+  const validateCVV = (value) => {
+    if (!/^\d{3}$/.test(value)) {
+      return 'CVV must be exactly 3 digits.';
+    }
+    return 'Valid CVV.';
+  };
+
+  const handleInputChange = (field, value) => {
+    setCreditCardDetails((prev) => ({ ...prev, [field]: value }));
+
+    let errorMessage = '';
+    if (field === 'cardNumber') {
+      errorMessage = validateCardNumber(value);
+    } else if (field === 'expiryDate') {
+      errorMessage = validateExpiryDate(value);
+    } else if (field === 'cvv') {
+      errorMessage = validateCVV(value);
+    }
+
+    setValidationErrors((prev) => ({ ...prev, [field]: errorMessage }));
   };
 
   const handleBooking = () => {
-    if (paymentMethod === 'creditCard' && !isCreditCardValid()) {
-      toast.error('Please enter valid credit card details');
+    if (
+      paymentMethod === 'creditCard' &&
+      Object.values(validationErrors).some(
+        (error) =>
+          error !== 'Valid card number.' &&
+          error !== 'Valid expiry date.' &&
+          error !== 'Valid CVV.'
+      )
+    ) {
+      toast.error('Please fix the errors before proceeding.');
       return;
     }
     createBooking();
@@ -81,57 +132,51 @@ export default function Booking() {
       </div>
 
       <div className={styles.paymentMethod}>
-        <h3>Select Payment Method</h3>
-        <label>
-          <input
-            type='radio'
-            name='paymentMethod'
-            value='creditCard'
-            checked={paymentMethod === 'creditCard'}
-            onChange={() => setPaymentMethod('creditCard')}
-          />
-          Credit Card
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='paymentMethod'
-            value='banktransfer'
-            checked={paymentMethod === 'banktransfer'}
-            onChange={() => setPaymentMethod('banktransfer')}
-          />
-          Bank Transfer
-        </label>
+        <div className={styles.paymentMethodInfo}>
+          <h3>Select Payment Method</h3>
+          <label>
+            <input
+              type='radio'
+              name='paymentMethod'
+              value='creditCard'
+              checked={paymentMethod === 'creditCard'}
+              onChange={() => setPaymentMethod('creditCard')}
+            />
+            Credit Card
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='paymentMethod'
+              value='banktransfer'
+              checked={paymentMethod === 'banktransfer'}
+              onChange={() => setPaymentMethod('banktransfer')}
+            />
+            Bank Transfer
+          </label>
+        </div>
       </div>
 
       {paymentMethod === 'creditCard' && (
-        <form
-          className={styles.creditCardForm}
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (isCreditCardValid()) {
-              toast.success('Credit card details are valid');
-            } else {
-              toast.error('Please enter valid credit card details');
-            }
-          }}
-        >
-          <h3 className={styles.creditCardHeader} styles={{ color: '#7d23f3' }}>
-            Enter Credit Card Details
-          </h3>
+        <form className={styles.creditCardForm}>
+          <h3>Enter Credit Card Details</h3>
           <label>
             Card Number
             <input
               type='text'
               maxLength='16'
               value={creditCardDetails.cardNumber}
-              onChange={(e) =>
-                setCreditCardDetails({
-                  ...creditCardDetails,
-                  cardNumber: e.target.value,
-                })
-              }
+              onChange={(e) => handleInputChange('cardNumber', e.target.value)}
             />
+            <p
+              className={
+                validationErrors.cardNumber === 'Valid card number.'
+                  ? styles.validMessage
+                  : styles.errorMessage
+              }
+            >
+              {validationErrors.cardNumber}
+            </p>
           </label>
           <label>
             Expiry Date (MM/YY)
@@ -139,13 +184,17 @@ export default function Booking() {
               type='text'
               maxLength='5'
               value={creditCardDetails.expiryDate}
-              onChange={(e) =>
-                setCreditCardDetails({
-                  ...creditCardDetails,
-                  expiryDate: e.target.value,
-                })
-              }
+              onChange={(e) => handleInputChange('expiryDate', e.target.value)}
             />
+            <p
+              className={
+                validationErrors.expiryDate === 'Valid expiry date.'
+                  ? styles.validMessage
+                  : styles.errorMessage
+              }
+            >
+              {validationErrors.expiryDate}
+            </p>
           </label>
           <label>
             CVV
@@ -153,17 +202,18 @@ export default function Booking() {
               type='text'
               maxLength='3'
               value={creditCardDetails.cvv}
-              onChange={(e) =>
-                setCreditCardDetails({
-                  ...creditCardDetails,
-                  cvv: e.target.value,
-                })
-              }
+              onChange={(e) => handleInputChange('cvv', e.target.value)}
             />
+            <p
+              className={
+                validationErrors.cvv === 'Valid CVV.'
+                  ? styles.validMessage
+                  : styles.errorMessage
+              }
+            >
+              {validationErrors.cvv}
+            </p>
           </label>
-          <button type='submit' className={styles.submitButtonCreditcard}>
-            Submit
-          </button>
         </form>
       )}
 
@@ -182,9 +232,11 @@ export default function Booking() {
       )}
 
       <button
-        className={styles.bookButton}
         onClick={handleBooking}
-        disabled={paymentMethod === 'creditCard' && !isCreditCardValid()}
+        disabled={Object.values(validationErrors).some(
+          (error) => error && !error.includes('Valid')
+        )}
+        className={styles.bookButton}
       >
         Book Now
       </button>
