@@ -1,11 +1,12 @@
 import React from 'react';
-import globalStyles from '../../../pages/Account/Account.module.css';
+import '../../../App.css';
 import styles from './BookedListingsCard.module.css';
 
 export default function BookedListingsCard({ listing }) {
   //console.log(listing);
   return (
-    <div className={globalStyles.cardContainer}>
+    <div className='cardContainer'>
+      {/* hier eventuell globale styles anwenden */}
       <div className={styles.info_container}>
         <div className={styles.img_container}>
           <h3 className={styles.cardTitle}>

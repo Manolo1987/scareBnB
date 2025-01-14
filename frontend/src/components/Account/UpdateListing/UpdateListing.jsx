@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import globalStyles from '../../../pages/Account/Account.module.css';
+import '../../../App.css';
 import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
@@ -280,8 +280,8 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   return (
     <div className={styles.overlay}>
       <div className={`${styles.formWrapper} ${styles.overlayContent}`}>
-        <form className={globalStyles.listingForm} onSubmit={handleSubmit}>
-          <div className={globalStyles.inputContainer}>
+        <form className='listingForm' onSubmit={handleSubmit}>
+          <div className='inputContainer'>
             <label htmlFor='title'>Title</label>
             <input
               type='text'
@@ -291,10 +291,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.title && (
-              <p className={globalStyles.inputError}>{formErrors.title}</p>
+              <p className='inputError'>{formErrors.title}</p>
             )}
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label htmlFor='description'>Description</label>
             <textarea
               name='description'
@@ -305,13 +305,11 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               cols='50'
             />
             {formErrors.description && (
-              <p className={globalStyles.inputError}>
-                {formErrors.description}
-              </p>
+              <p className='inputError'>{formErrors.description}</p>
             )}
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='state'>State</label>
               <select
                 name='state'
@@ -326,7 +324,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 ))}
               </select>
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='city'>City</label>
               <input
                 type='text'
@@ -336,12 +334,12 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 onChange={handleInputChange}
               />
               {formErrors.city && (
-                <p className={globalStyles.inputError}>{formErrors.city}</p>
+                <p className='inputError'>{formErrors.city}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='latitude'>Latitude</label>
               <input
                 type='text'
@@ -351,10 +349,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 onChange={handleInputChange}
               />
               {formErrors.latitude && (
-                <p className={globalStyles.inputError}>{formErrors.latitude}</p>
+                <p className='inputError'>{formErrors.latitude}</p>
               )}
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='longitude'>Longitude</label>
               <input
                 type='text'
@@ -364,14 +362,12 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 onChange={handleInputChange}
               />
               {formErrors.longitude && (
-                <p className={globalStyles.inputError}>
-                  {formErrors.longitude}
-                </p>
+                <p className='inputError'>{formErrors.longitude}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='bedrooms'>Bedrooms</label>
               <select
                 name='bedrooms'
@@ -388,10 +384,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 })}
               </select>
               {formErrors.bedrooms && (
-                <p className={globalStyles.inputError}>{formErrors.bedrooms}</p>
+                <p className='inputError'>{formErrors.bedrooms}</p>
               )}
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='pricePerNight'>Price per Night</label>
               <input
                 type='number'
@@ -401,17 +397,15 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 onChange={handleInputChange}
               />
               {formErrors.pricePerNight && (
-                <p className={globalStyles.inputError}>
-                  {formErrors.pricePerNight}
-                </p>
+                <p className='inputError'>{formErrors.pricePerNight}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label htmlFor='features'>Features</label>
-            <div className={globalStyles.featureList}>
+            <div className='featureList'>
               {featureList.map((feature, index) => (
-                <label key={feature} className={globalStyles.featureListItem}>
+                <label key={feature} className='featureListItem'>
                   <input
                     type='checkbox'
                     name='features'
@@ -424,7 +418,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               ))}
             </div>
           </div>
-          {error && <p className={globalStyles.inputError}>{error}</p>}
+          {error && <p className='inputError'>{error}</p>}
 
           <div className={styles.titleImageContainer}>
             <label htmlFor='titleImageUpdate'>Title Image:</label>
@@ -452,7 +446,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               />
             )}
             {formErrors.titleImage && (
-              <p className={globalStyles.inputError}>{formErrors.titleImage}</p>
+              <p className='inputError'>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={styles.otherImagesContainer}>
@@ -482,25 +476,19 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               </>
             )}
             {formErrors.otherImages && (
-              <p className={globalStyles.inputError}>
-                {formErrors.otherImages}
-              </p>
+              <p className='inputError'>{formErrors.otherImages}</p>
             )}
           </div>
 
-          <div className={globalStyles.formFooter}>
+          <div className='formFooter'>
             <button
               type='button'
-              className={globalStyles.cancelButton}
+              className='cancelButton'
               onClick={setShowUpdateForm}
             >
               Close without Saving
             </button>
-            <button
-              type='submit'
-              className={globalStyles.saveButton}
-              disabled={isLoading}
-            >
+            <button type='submit' className='saveButton' disabled={isLoading}>
               {isLoading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>

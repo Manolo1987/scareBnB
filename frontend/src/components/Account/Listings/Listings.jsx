@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import globalStyles from '../../../pages/Account/Account.module.css';
+import '../../../App.css';
 import styles from './Listings.module.css';
 import ListingsCard from '../ListingsCard/ListingsCard.jsx';
 import ListingsNav from '../ListingsNav/ListingsNav.jsx';
@@ -15,14 +15,14 @@ export default function Listings() {
   return (
     <>
       <ListingsNav />
-      <div className={globalStyles.listingsWrapper}>
-        <div className={globalStyles.headingEffectContainer}>
-          <h1 className={globalStyles.headingEffect}>My Listings</h1>
+      <div className='listingsWrapper'>
+        <div className='headingEffectContainer'>
+          <h1 className='headingEffect'>My Listings</h1>
         </div>
         {myListings?.length < 1 && (
-          <div className={styles.messageContainer}>
-            <p className={styles.message}>You don't have any listings yet.</p>
-            <Link to='/account/add-new-listing' className={styles.messageLink}>
+          <div className='messageContainer'>
+            <p className='message'>You don't have any listings yet.</p>
+            <Link to='/account/add-new-listing' className='messageLink'>
               Create your first Listing here.
             </Link>
           </div>

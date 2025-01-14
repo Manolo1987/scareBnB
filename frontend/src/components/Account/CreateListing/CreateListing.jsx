@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import globalStyles from '../../../pages/Account/Account.module.css';
+import '../../../App.css';
 import styles from './CreateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
@@ -287,12 +287,12 @@ export default function HandleListings() {
   return (
     <>
       <ListingsNav />
-      <div className={globalStyles.formWrapper}>
-        <div className={globalStyles.headingEffectContainer}>
-          <h1 className={globalStyles.headingEffect}>Create a new listing</h1>
+      <div className='formWrapper'>
+        <div className='headingEffectContainer'>
+          <h1 className='headingEffect'>Create a new listing</h1>
         </div>
-        <form className={globalStyles.listingForm} onSubmit={handleSubmit}>
-          <div className={globalStyles.inputContainer}>
+        <form className='listingForm' onSubmit={handleSubmit}>
+          <div className='inputContainer'>
             <label htmlFor='title'>Title</label>
             <input
               type='text'
@@ -302,10 +302,10 @@ export default function HandleListings() {
               onChange={handleInputChange}
             />
             {formErrors.title && (
-              <p className={globalStyles.inputError}>{formErrors.title}</p>
+              <p className='inputError'>{formErrors.title}</p>
             )}
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label htmlFor='description'>Description</label>
             <textarea
               name='description'
@@ -316,13 +316,11 @@ export default function HandleListings() {
               cols='50'
             />
             {formErrors.description && (
-              <p className={globalStyles.inputError}>
-                {formErrors.description}
-              </p>
+              <p className='inputError'>{formErrors.description}</p>
             )}
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='state'>State</label>
               <select
                 name='state'
@@ -339,7 +337,7 @@ export default function HandleListings() {
                 })}
               </select>
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='city'>City</label>
               <input
                 type='text'
@@ -349,12 +347,12 @@ export default function HandleListings() {
                 onChange={handleInputChange}
               />
               {formErrors.city && (
-                <p className={globalStyles.inputError}>{formErrors.city}</p>
+                <p className='inputError'>{formErrors.city}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='latitude'>Latitude</label>
               <input
                 type='text'
@@ -364,10 +362,10 @@ export default function HandleListings() {
                 onChange={handleInputChange}
               />
               {formErrors.latitude && (
-                <p className={globalStyles.inputError}>{formErrors.latitude}</p>
+                <p className='inputError'>{formErrors.latitude}</p>
               )}
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='longitude'>Longitude</label>
               <input
                 type='text'
@@ -377,14 +375,12 @@ export default function HandleListings() {
                 onChange={handleInputChange}
               />
               {formErrors.longitude && (
-                <p className={globalStyles.inputError}>
-                  {formErrors.longitude}
-                </p>
+                <p className='inputError'>{formErrors.longitude}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputRow}>
-            <div className={globalStyles.inputContainer}>
+          <div className='inputRow'>
+            <div className='inputContainer'>
               <label htmlFor='bedrooms'>Bedrooms</label>
               <select
                 name='bedrooms'
@@ -401,10 +397,10 @@ export default function HandleListings() {
                 })}
               </select>
               {formErrors.bedrooms && (
-                <p className={globalStyles.inputError}>{formErrors.bedrooms}</p>
+                <p className='inputError'>{formErrors.bedrooms}</p>
               )}
             </div>
-            <div className={globalStyles.inputContainer}>
+            <div className='inputContainer'>
               <label htmlFor='pricePerNight'>pricePerNight</label>
               <input
                 type='number'
@@ -414,17 +410,15 @@ export default function HandleListings() {
                 onChange={handleInputChange}
               />
               {formErrors.pricePerNight && (
-                <p className={globalStyles.inputError}>
-                  {formErrors.pricePerNight}
-                </p>
+                <p className='inputError'>{formErrors.pricePerNight}</p>
               )}
             </div>
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label>Features</label>
-            <div className={globalStyles.featureList}>
+            <div className='featureList'>
               {featureList.map((feature) => (
-                <label key={feature} className={globalStyles.featureListItem}>
+                <label key={feature} className='featureListItem'>
                   <input
                     type='checkbox'
                     name='features'
@@ -437,7 +431,7 @@ export default function HandleListings() {
               ))}
             </div>
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label htmlFor='titleImage'>Title Image</label>
             <input
               type='file'
@@ -448,10 +442,10 @@ export default function HandleListings() {
               ref={titleImageInputRef}
             />
             {formErrors.titleImage && (
-              <p className={globalStyles.inputError}>{formErrors.titleImage}</p>
+              <p className='inputError'>{formErrors.titleImage}</p>
             )}
           </div>
-          <div className={globalStyles.inputContainer}>
+          <div className='inputContainer'>
             <label htmlFor='otherImages'>Other Images</label>
             <input
               type='file'
@@ -463,25 +457,19 @@ export default function HandleListings() {
               ref={otherImagesInputRef}
             />
             {formErrors.otherImages && (
-              <p className={globalStyles.inputError}>
-                {formErrors.otherImages}
-              </p>
+              <p className='inputError'>{formErrors.otherImages}</p>
             )}
           </div>
-          {error && <p className={styles.error}>{error}</p>}
-          <div className={globalStyles.formFooter}>
+          {error && <p className='error'>{error}</p>}
+          <div className='formFooter'>
             <button
               type='button'
-              className={globalStyles.cancelButton}
+              className='cancelButton'
               onClick={handleClearForm}
             >
               Clear Form
             </button>
-            <button
-              type='submit'
-              className={globalStyles.saveButton}
-              disabled={isLoading}
-            >
+            <button type='submit' className='saveButton' disabled={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>
