@@ -213,6 +213,9 @@
     max-width: 100%;
   }
 }
+.imgContainer.col {
+  max-width: 100%;
+}
 .infoContainer {
   color: var(--color-light);
   padding: 1rem;
@@ -247,10 +250,42 @@
   align-items: center;
   gap: 0.2rem;
 }
+.cardRatingEnd {
+  align-self: flex-end;
+}
 .ghost {
   width: 16px;
 }
 /* .cardBedrooms, .cardPricePerNight */
+.cardAvailability {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* override leaflet styles */
+.leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper {
+  /* flex-direction: column; */
+  background: #222 !important;
+  max-width: 300px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 250px;
+  max-width: 300px;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0;
+  flex-direction: column;
+}
+
+.leaflet-popup-tip-container .leaflet-popup-tip {
+  background: #222 !important;
+  border: 1px solid #444;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
 
 /* --------------------------------------------------animation frames */
 

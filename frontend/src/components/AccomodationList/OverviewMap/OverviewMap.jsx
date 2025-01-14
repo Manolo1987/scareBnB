@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import '../../../App.css';
 import styles from './OverviewMap.module.css';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
@@ -16,6 +17,7 @@ import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { regionBounds } from '../../../assets/data/regionBounds.js';
 import markerIcon from '../../../assets/images/icons/map-pin-32.png';
 import markerRetinaIcon from '../../../assets/images/icons/map-pin-64.png';
+import { Ghost, LockKey, DoorOpen } from '@phosphor-icons/react';
 
 const MapZoomHandler = () => {
   const map = useMap();
@@ -135,26 +137,57 @@ export default function OverviewMap() {
                   icon={customIcon}
                 >
                   <Popup>
-                    <Link to={`/accommodation`} className={styles.cardLink}>
-                      <div className={styles.accoCardContainer}>
-                        <div className={styles.info_container}>
-                          <h4>{acco.title}</h4>
-                          <span>{acco.city}</span>
+                    <Link
+                      to={`/accommodationList/${acco.title
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')}?id=${acco._id}`}
+                      className='cardLink'
+                    >
+                      <div className='infoContainer'>
+                        <div className='infoHeader'>
+                          <h4 className='cardTitle'>{acco.title}</h4>
+                          <span className='cardCity'>{acco.city}</span>
                         </div>
-                        <div className={styles.img_container}>
-                          <img
-                            src={acco.titleImage.secure_url}
-                            alt='location-preview'
-                          />
-                        </div>
-                        <div className={styles.info_container}>
-                          <p className={styles.rating}>🕸️ {acco.rating}</p>
-                          <p>Bedrooms: {acco.bedrooms} </p>
-                          <p>Price per Night: {acco.pricePerNight}€</p>
-                          <p>
-                            Availability:{' '}
-                            {acco.isBooked ? 'Close 🔒' : 'Open 🚪'}
-                          </p>
+                      </div>
+                      <div className='imgContainer col'>
+                        <img
+                          src={acco.titleImage.secure_url}
+                          alt='location-preview'
+                          className='cardImage'
+                        />
+                      </div>
+                      <div className='infoContainer'>
+                        <div className='infoBody'>
+                          <span
+                            className='cardRating cardRatingEnd'
+                            title={`Rating: ${acco.rating.toFixed(1)} spooks`}
+                          >
+                            <Ghost
+                              className='ghost'
+                              weight='fill'
+                              size={24}
+                              color='white'
+                            />
+                            {acco.rating.toFixed(1)}
+                          </span>
+                          <span className='cardBedrooms'>
+                            Bedrooms: {acco.bedrooms}
+                          </span>
+                          <span className='cardPricePerNight'>
+                            Price per Night: {acco.pricePerNight} €
+                          </span>
+                          <span className='cardAvailability'>
+                            <span>Availability: </span>
+                            {acco.isBooked ? (
+                              <>
+                                Close <LockKey size={20} color='white' />
+                              </>
+                            ) : (
+                              <>
+                                Open <DoorOpen size={20} color='white' />
+                              </>
+                            )}
+                          </span>
                         </div>
                       </div>
                     </Link>
