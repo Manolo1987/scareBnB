@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import globalStyles from '../../../pages/Account/Account.module.css';
+import '../../../App.css';
 import styles from './ListingsCard.module.css';
 import { Link } from 'react-router-dom';
 import { Trash, Pencil, Ghost } from '@phosphor-icons/react';
@@ -31,38 +31,36 @@ export default function ListingsCard({ listing }) {
           .toLowerCase()
           .replace(/\s+/g, '-')}?id=${listing._id}`}
         state={{ id: listing._id }}
-        className={globalStyles.cardLink}
+        className='cardLink'
       >
-        <div className={globalStyles.cardContainer}>
-          <div className={globalStyles.imgContainer}>
+        <div className='cardContainer'>
+          <div className='imgContainer'>
             <img
               src={listing.titleImage.secure_url}
               alt={listing.title}
-              className={globalStyles.cardImage}
+              className='cardImage'
             />
           </div>
-          <div className={globalStyles.infoContainer}>
-            <div className={globalStyles.infoHeader}>
-              <span className={globalStyles.cardTitle}>{listing.title}</span>
-              <span className={globalStyles.cardCity}>{listing.city}</span>
+          <div className='infoContainer'>
+            <div className='infoHeader'>
+              <span className='cardTitle'>{listing.title}</span>
+              <span className='cardCity'>{listing.city}</span>
             </div>
-            <div className={globalStyles.infoBody}>
+            <div className='infoBody'>
               <span
-                className={globalStyles.cardRating}
+                className='cardRating'
                 title={`Rating: ${listing.rating.toFixed(1)} spooks`}
               >
                 <Ghost
-                  className={globalStyles.ghost}
+                  className='ghost'
                   weight='fill'
                   size={24}
                   color='white'
                 />
                 {listing.rating.toFixed(1)}
               </span>
-              <span className={styles.cardBedrooms}>
-                Bedrooms: {listing.bedrooms}
-              </span>
-              <span className={styles.cardPricePerNight}>
+              <span className='cardBedrooms'>Bedrooms: {listing.bedrooms}</span>
+              <span className='cardPricePerNight'>
                 Price per Night: {listing.pricePerNight} €
               </span>
             </div>
