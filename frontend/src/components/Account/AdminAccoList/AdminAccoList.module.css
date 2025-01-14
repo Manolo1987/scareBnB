@@ -1,3 +1,12 @@
+.accoListContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
 .tableContainer {
   max-width: 100%;
   overflow-x: auto; /* Ermöglicht horizontales Scrollen bei kleinen Bildschirmen */
