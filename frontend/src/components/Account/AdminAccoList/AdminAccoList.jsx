@@ -25,7 +25,7 @@ export default function AdminAccoList() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const limit = 21;
+  const limit = 1000;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -61,17 +61,11 @@ export default function AdminAccoList() {
     currentPage,
   ]);
 
-  const handlePageChange = (page) => {
-    console.log('Switching to page:', page);
-    setCurrentPage(page);
-  };
-
-  const totalPages = allAccos.pagination?.totalCount
-    ? Math.ceil(allAccos.pagination.totalCount / limit)
-    : 1;
-
   return (
-    <div>
+    <section className={styles.accoListContainer}>
+      <h2>User Accommodations</h2>
+
+      <p>Here you can view and delete accommodations from our users</p>
       {loading ? (
         <div className={styles.loadingContainer}>
           <Spinner size={32} className={styles.spinner} />
@@ -140,13 +134,8 @@ export default function AdminAccoList() {
               </tbody>
             </table>
           </div>
-          <PaginationPage
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
         </>
       )}
-    </div>
+    </section>
   );
 }
