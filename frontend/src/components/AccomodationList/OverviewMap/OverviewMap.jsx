@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './OverviewMap.module.css';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
@@ -52,6 +52,7 @@ export default function OverviewMap() {
   } = useAcco();
 
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
+  const [loading, setLoading] = useState(true);
 
   const customIcon = new L.Icon({
     iconUrl: `${markerIcon}`,
@@ -63,10 +64,17 @@ export default function OverviewMap() {
     // shadowSize: [44, 44],
     // shadowAnchor: [16, 44]
   });
+  const mapRef = useRef();
 
   useEffect(() => {
     getAllAccommodations();
   }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
+
+  useEffect(() => {
+    if (allAccos && allAccos.accommodations) {
+      setLoading(false);
+    }
+  }, [allAccos]);
 
   const accommodations = allAccos?.accommodations || [];
 
@@ -78,9 +86,16 @@ export default function OverviewMap() {
     }
   }, [stateFilter]);
 
-  // if (accommodations.length === 0) {
-  //   return <div>Loading accommodations...</div>; //loader
-  // }
+  useEffect(() => {
+    if (mapRef.current && stateBounds && stateBounds.length === 2) {
+      const map = mapRef.current;
+      map.flyToBounds(stateBounds, { padding: [50, 50], duration: 1 });
+    }
+  }, [stateBounds]);
+
+  if (loading) {
+    return <div>Loading accommodations...</div>; //loader
+  }
 
   return (
     <div className={styles.map_outerContainer}>
@@ -92,15 +107,16 @@ export default function OverviewMap() {
         zoomControl={false}
         minZoom={3}
         maxZoom={16}
-        maxBounds={[
-          [-85.06, -180],
-          [85.06, 180],
-        ]}
+        // maxBounds={[
+        //   [-85.06, -180],
+        //   [85.06, 180],
+        // ]}
         scrollWheelZoom={false}
         gestureHandling={true}
-        // whenCreated={(map) => {
-        //   map.flyToBounds(bounds);
-        // }}
+        ref={mapRef}
+        whenCreated={(map) => {
+          mapRef.current = map;
+        }}
       >
         <TileLayer
           attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
@@ -108,13 +124,14 @@ export default function OverviewMap() {
         />
         <ZoomControl position='bottomright' />
         {/* <ChangeView /> */}
-        {accommodations.length > 0 &&
+        {!loading &&
+          accommodations.length > 0 &&
           accommodations.map((acco, index) => {
             if (acco.latitude && acco.longitude) {
               return (
                 <Marker
                   key={index}
-                  position={[acco.latitude, acco.longitude]}
+                  position={[acco?.latitude, acco?.longitude]}
                   icon={customIcon}
                 >
                   <Popup>
