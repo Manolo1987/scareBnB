@@ -45,8 +45,6 @@ export default function BookingCard({
         </p>
         <p>Check In: {checkInDate.toLocaleDateString()}</p>
         <p>Check Out: {checkOutDate.toLocaleDateString()}</p>
-        <p>Total nights: {booking.totalNights}</p>
-        <p>Price per Night: {booking.accommodation.pricePerNight}€</p>
         <p>Total: {booking.totalPrice}€</p>
       </div>
       {booking.isCancelled && (
