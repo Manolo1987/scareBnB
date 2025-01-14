@@ -29,7 +29,7 @@ export default function AdminUserList() {
           </thead>
           <tbody>
             {user?.roles === 'admin' &&
-              allUsers.map((listedUser) => (
+              allUsers?.map((listedUser) => (
                 <tr key={listedUser._id}>
                   <td>
                     {listedUser.firstName} {listedUser.lastName}
