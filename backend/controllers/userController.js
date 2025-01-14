@@ -106,7 +106,7 @@ export async function login(req, res) {
         sameSite: 'none',
         secure: false, // false in development, true in production
         path: '/',
-        maxAge: 60 * 60 * 1000, // 1h
+        maxAge: 5 * 60 * 60 * 1000, // 1h
       })
       .json({
         msg: 'Login successful',
