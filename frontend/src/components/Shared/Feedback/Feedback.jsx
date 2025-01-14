@@ -21,16 +21,18 @@ export default function Feedback({ bookingId }) {
 
 
   return (
-    <div>
-      <h3>Feedback</h3>
+    <div className={styles.feedbackContainer}>
+      <h2>Feedback</h2>
       <div className={styles.emojiContainer}>
         {emojis.map((emoji, index) => (
-          <button key={index} onClick={() => setSelectedValue(index + 1)}>
+          <button key={index} onClick={() => setSelectedValue(index + 1)} className={styles.feedbackEmoji}>
+            <p>
             {emoji}
+            </p>
           </button>
         ))}
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} className='buttonEffect'>Submit</button>
     </div>
   )
 }
