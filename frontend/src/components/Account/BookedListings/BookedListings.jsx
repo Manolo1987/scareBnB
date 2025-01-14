@@ -14,6 +14,9 @@ export default function BookedListings() {
     <>
       <ListingsNav />
       <div className={globalStyles.listingsWrapper}>
+        <div className={globalStyles.headingEffectContainer}>
+          <h1 className={globalStyles.headingEffect}>My Booked Listings</h1>
+        </div>
         {myBookedListings?.length < 1 && (
           <div className={globalStyles.messageContainer}>
             <p className={styles.message}>
@@ -23,7 +26,6 @@ export default function BookedListings() {
         )}
         {myBookedListings?.length > 0 && (
           <div className={styles.myBookedlistings_list}>
-            <h1>My Booked Listings</h1>
             <ul>
               {myBookedListings?.map((listing, index) => {
                 return (

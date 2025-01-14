@@ -288,6 +288,9 @@ export default function HandleListings() {
     <>
       <ListingsNav />
       <div className={globalStyles.formWrapper}>
+        <div className={globalStyles.headingEffectContainer}>
+          <h1 className={globalStyles.headingEffect}>Create a new listing</h1>
+        </div>
         <form className={globalStyles.listingForm} onSubmit={handleSubmit}>
           <div className={globalStyles.inputContainer}>
             <label htmlFor='title'>Title</label>

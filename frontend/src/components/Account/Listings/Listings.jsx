@@ -16,6 +16,9 @@ export default function Listings() {
     <>
       <ListingsNav />
       <div className={globalStyles.listingsWrapper}>
+        <div className={globalStyles.headingEffectContainer}>
+          <h1 className={globalStyles.headingEffect}>My Listings</h1>
+        </div>
         {myListings?.length < 1 && (
           <div className={styles.messageContainer}>
             <p className={styles.message}>You don't have any listings yet.</p>
@@ -26,7 +29,6 @@ export default function Listings() {
         )}
         {myListings?.length > 0 && (
           <div className={styles.mylistings_list}>
-            <h1>My Listings</h1>
             <ul>
               {myListings?.map((listing, index) => {
                 return (
