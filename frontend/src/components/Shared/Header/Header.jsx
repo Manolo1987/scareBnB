@@ -5,6 +5,7 @@ import Register from '../Register/Register';
 import AccountDropdownMenu from '../../Account/AccountDropdownMenu/AccountDropdownMenu';
 import { useAuth } from '../../../context/UserAuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import logo from "../../../assets/images/LOGO_scarebnb_V1_160px.png"
 
 export default function Header() {
   const { isAuthenticated } = useAuth();
@@ -17,12 +18,16 @@ export default function Header() {
         <div className={styles.icon_container}>
           <Link to='/'>
             <img
-              src='https://st4.depositphotos.com/14009552/23169/i/450/depositphotos_231693396-stock-photo-paint-home-vector-logo.jpg'
+              src={logo}
               alt='website_icon'
             />
           </Link>
         </div>
-        {!isHomepage && <h1 className={styles.h1}>Scarebnb</h1>}
+        {!isHomepage && (
+          <Link to='/'>
+            <h1 className={styles.h1}>Scarebnb</h1>
+          </Link>
+        )}
         <div className={styles.account}>
           {isAuthenticated ? (
             <>
@@ -41,11 +46,13 @@ export default function Header() {
       </section>
       {isHomepage && (
         <div className={styles.title}>
-          <h1 className={styles.h1}>Scarebnb</h1>
+          <Link to='/'>
+            <h1 className={styles.h1}>Scarebnb</h1>
+          </Link>
           <p>Ready getting spooked!?</p>
         </div>
       )}
-      <div className={styles.headerBorder} ></div>
+      <div className={styles.headerBorder}></div>
     </header>
   );
 }
