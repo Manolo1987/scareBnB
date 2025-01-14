@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import globalStyles from '../../../pages/Account/Account.module.css';
 import styles from './UpdateListing.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { states } from '../../../assets/data/statesList.js';
@@ -266,11 +267,6 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   }
 
   useEffect(() => {
-    // if (remainingImages > 0) {
-    //   setShowOtherImagesInput(true);
-    // } else {
-    //   setShowOtherImagesInput(false);
-    // }
     if (
       listing.images.length - imagesToDelete.length >= 4 &&
       formData.otherImages.length < 1
@@ -283,12 +279,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
 
   return (
     <div className={styles.overlay}>
-      <div
-        className={`${styles.formContainer} ${styles.overlayContent}`}
-        id='overlayContent'
-      >
-        <form className={styles.updateListing} onSubmit={handleSubmit}>
-          <div className={styles.inputContainer}>
+      <div className={`${styles.formWrapper} ${styles.overlayContent}`}>
+        <form className={globalStyles.listingForm} onSubmit={handleSubmit}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='title'>Title</label>
             <input
               type='text'
@@ -298,10 +291,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               onChange={handleInputChange}
             />
             {formErrors.title && (
-              <p className={styles.error}>{formErrors.title}</p>
+              <p className={globalStyles.inputError}>{formErrors.title}</p>
             )}
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='description'>Description</label>
             <textarea
               name='description'
@@ -312,101 +305,113 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               cols='50'
             />
             {formErrors.description && (
-              <p className={styles.error}>{formErrors.description}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.description}
+              </p>
             )}
           </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='state'>State</label>
-            <select
-              name='state'
-              id='state'
-              value={formData.state}
-              onChange={handleInputChange}
-            >
-              {states.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='city'>City</label>
-            <input
-              type='text'
-              name='city'
-              id='city'
-              value={formData.city}
-              onChange={handleInputChange}
-            />
-            {formErrors.city && (
-              <p className={styles.error}>{formErrors.city}</p>
-            )}
-          </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='latitude'>Latitude</label>
-            <input
-              type='text'
-              name='latitude'
-              id='latitude'
-              value={formData.latitude}
-              onChange={handleInputChange}
-            />
-            {formErrors.latitude && (
-              <p className={styles.error}>{formErrors.latitude}</p>
-            )}
-          </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='longitude'>Longitude</label>
-            <input
-              type='text'
-              name='longitude'
-              id='longitude'
-              value={formData.longitude}
-              onChange={handleInputChange}
-            />
-            {formErrors.longitude && (
-              <p className={styles.error}>{formErrors.longitude}</p>
-            )}
-          </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='bedrooms'>Bedrooms</label>
-            <select
-              name='bedrooms'
-              id='bedrooms'
-              value={formData.bedrooms}
-              onChange={handleInputChange}
-            >
-              {[...Array(5)].map((_, index) => {
-                return (
-                  <option key={index + 1} value={index + 1}>
-                    {index + 1}
+          <div className={globalStyles.inputRow}>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='state'>State</label>
+              <select
+                name='state'
+                id='state'
+                value={formData.state}
+                onChange={handleInputChange}
+              >
+                {states.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
                   </option>
-                );
-              })}
-            </select>
-            {formErrors.bedrooms && (
-              <p className={styles.error}>{formErrors.bedrooms}</p>
-            )}
+                ))}
+              </select>
+            </div>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='city'>City</label>
+              <input
+                type='text'
+                name='city'
+                id='city'
+                value={formData.city}
+                onChange={handleInputChange}
+              />
+              {formErrors.city && (
+                <p className={globalStyles.inputError}>{formErrors.city}</p>
+              )}
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <label htmlFor='pricePerNight'>Price per Night</label>
-            <input
-              type='number'
-              name='pricePerNight'
-              id='pricePerNight'
-              value={formData.pricePerNight}
-              onChange={handleInputChange}
-            />
-            {formErrors.pricePerNight && (
-              <p className={styles.error}>{formErrors.pricePerNight}</p>
-            )}
+          <div className={globalStyles.inputRow}>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='latitude'>Latitude</label>
+              <input
+                type='text'
+                name='latitude'
+                id='latitude'
+                value={formData.latitude}
+                onChange={handleInputChange}
+              />
+              {formErrors.latitude && (
+                <p className={globalStyles.inputError}>{formErrors.latitude}</p>
+              )}
+            </div>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='longitude'>Longitude</label>
+              <input
+                type='text'
+                name='longitude'
+                id='longitude'
+                value={formData.longitude}
+                onChange={handleInputChange}
+              />
+              {formErrors.longitude && (
+                <p className={globalStyles.inputError}>
+                  {formErrors.longitude}
+                </p>
+              )}
+            </div>
           </div>
-          <div className={styles.inputContainer}>
+          <div className={globalStyles.inputRow}>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='bedrooms'>Bedrooms</label>
+              <select
+                name='bedrooms'
+                id='bedrooms'
+                value={formData.bedrooms}
+                onChange={handleInputChange}
+              >
+                {[...Array(5)].map((_, index) => {
+                  return (
+                    <option key={index + 1} value={index + 1}>
+                      {index + 1}
+                    </option>
+                  );
+                })}
+              </select>
+              {formErrors.bedrooms && (
+                <p className={globalStyles.inputError}>{formErrors.bedrooms}</p>
+              )}
+            </div>
+            <div className={globalStyles.inputContainer}>
+              <label htmlFor='pricePerNight'>Price per Night</label>
+              <input
+                type='number'
+                name='pricePerNight'
+                id='pricePerNight'
+                value={formData.pricePerNight}
+                onChange={handleInputChange}
+              />
+              {formErrors.pricePerNight && (
+                <p className={globalStyles.inputError}>
+                  {formErrors.pricePerNight}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className={globalStyles.inputContainer}>
             <label htmlFor='features'>Features</label>
-            {featureList.map((feature, index) => (
-              <div key={index}>
-                <label>
+            <div className={globalStyles.featureList}>
+              {featureList.map((feature, index) => (
+                <label key={feature} className={globalStyles.featureListItem}>
                   <input
                     type='checkbox'
                     name='features'
@@ -416,10 +421,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                   />
                   {feature}
                 </label>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-          {error && <p className={styles.error}>{error}</p>}
+          {error && <p className={globalStyles.inputError}>{error}</p>}
 
           <div className={styles.titleImageContainer}>
             <label htmlFor='titleImageUpdate'>Title Image:</label>
@@ -447,7 +452,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               />
             )}
             {formErrors.titleImage && (
-              <p className={styles.error}>{formErrors.titleImage}</p>
+              <p className={globalStyles.inputError}>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={styles.otherImagesContainer}>
@@ -477,19 +482,27 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               </>
             )}
             {formErrors.otherImages && (
-              <p className={styles.error}>{formErrors.otherImages}</p>
+              <p className={globalStyles.inputError}>
+                {formErrors.otherImages}
+              </p>
             )}
           </div>
 
-          <div className={styles.updateListingFooter}>
-            <p className={styles.closeLink} onClick={setShowUpdateForm}>
+          <div className={globalStyles.formFooter}>
+            <button
+              type='button'
+              className={globalStyles.cancelButton}
+              onClick={setShowUpdateForm}
+            >
               Close without Saving
-            </p>
-            <div className={styles.inputContainer}>
-              <button type='submit' disabled={isLoading}>
-                {isLoading ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
+            </button>
+            <button
+              type='submit'
+              className={globalStyles.saveButton}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Saving...' : 'Save Changes'}
+            </button>
           </div>
         </form>
       </div>

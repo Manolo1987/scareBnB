@@ -1,13 +1,30 @@
-.listingCard {
-  position: relative;
+.cardButtonContainer {
   display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  align-self: start;
 }
-.imgContainer {
-  max-width: 300px;
+@media (max-width: 600px) {
+  .cardButtonContainer {
+    align-self: end;
+  }
 }
-.cardImage {
-  width: 100%;
-}
+
 .listingsButton {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border: 1px solid var(--color-medium);
+  border-radius: 8px;
+  width: 2rem;
+  aspect-ratio: 1;
+  .buttonIcon {
+    color: var(--color-light);
+    width: 1.2rem;
+  }
+  &:hover {
+    background-color: crimson;
+  }
 }

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styles from './UpdateImage.module.css';
 import { Trash, ArrowCounterClockwise } from '@phosphor-icons/react';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
+import Overlay from './Overlay';
 
 export default function UpdateImage({ img }) {
-  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
   const { imagesToDelete, setImagesToDelete } = useAcco();
 
-  const handleCancelDelete = () => {
-    setShowDeleteMessage(false);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+
+  const toggleOverlay = () => {
+    setIsOverlayOpen(!isOverlayOpen);
   };
 
   const handleDeleteImage = () => {
@@ -16,11 +18,8 @@ export default function UpdateImage({ img }) {
       ...prevImagesToDelete,
       img.public_id,
     ]);
-    setShowDeleteMessage(false);
-  };
 
-  const handleTrashClick = () => {
-    setShowDeleteMessage(true);
+    setIsOverlayOpen(false);
   };
   const handleRecoverImage = () => {
     setImagesToDelete((prevImagesToDelete) =>
@@ -48,13 +47,13 @@ export default function UpdateImage({ img }) {
         <button
           type='button'
           className={styles.imageDeleteButton}
-          onClick={handleTrashClick}
+          onClick={toggleOverlay}
         >
           <Trash size={24} />
         </button>
       )}
 
-      {showDeleteMessage && (
+      <Overlay isOpen={isOverlayOpen} onClose={toggleOverlay}>
         <div className={styles.deleteMessageContainer}>
           <div className={styles.deleteMessageInner}>
             <p className={styles.deleteMessage}>
@@ -65,7 +64,7 @@ export default function UpdateImage({ img }) {
               <button
                 type='button'
                 className={styles.cancelButton}
-                onClick={handleCancelDelete}
+                onClick={() => setIsOverlayOpen(false)}
               >
                 Cancel
               </button>
@@ -79,7 +78,7 @@ export default function UpdateImage({ img }) {
             </div>
           </div>
         </div>
-      )}
+      </Overlay>
     </div>
   );
 }
