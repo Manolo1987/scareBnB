@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './BookingCard.module.css';
 import { useBooking } from '../../../context/bookingContext';
 import Feedback from '../../Shared/Feedback/Feedback';
+import { Link } from 'react-router-dom';
 
 export default function BookingCard({
   booking,
@@ -17,10 +18,20 @@ export default function BookingCard({
           {booking &&
             booking.accommodation &&
             booking.accommodation.titleImage && (
-              <img
-                src={booking.accommodation.titleImage.secure_url}
-                alt='location-preview'
-              />
+              <Link
+                to={`/accommodationList/${booking.accommodation.title
+                  .toLowerCase()
+                  .replace(/\s+/g, '-')}?id=${booking.accommodation._id}`}
+                state={{ id: booking.accommodation._id }}
+                target='_blank'
+                rel='noopener noreferrer'
+                className={styles.viewButton}
+              >
+                <img
+                  src={booking.accommodation.titleImage.secure_url}
+                  alt='location-preview'
+                />
+              </Link>
             )}
         </div>
       </div>
@@ -46,8 +57,11 @@ export default function BookingCard({
           </span>
         </div>
       )}
-      {!booking.giveFeedback && !booking.isCancelled && checkOutDate < currentDate && <Feedback bookingId={booking._id} />}
-      {!booking.isCancelled && (
+      {booking.giveFeedback && <p>Feedback already given ✅</p>}
+      {!booking.giveFeedback &&
+        !booking.isCancelled &&
+        checkOutDate < currentDate && <Feedback bookingId={booking._id} />}
+      {!booking.isCancelled && checkOutDate > currentDate && (
         <button
           onClick={() => cancelBooking(booking._id)}
           className={styles.cancelButton}
