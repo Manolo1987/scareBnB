@@ -1,5 +1,5 @@
 .feedbackEmoji {
-    margin-bottom: 6%;
+    margin-bottom: 10%;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -9,4 +9,12 @@
 
 .feedbackEmoji:hover {
     transform: scale(1.2);
+}
+
+.feedbackContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
 }
