@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Booking.module.css';
 import { useBooking } from '../../context/bookingContext';
 import { useAuth } from '../../context/UserAuthContext';
@@ -41,20 +41,47 @@ export default function Booking() {
   };
 
   return (
-    <section className={styles.bookingWrapper}>
+    <section className={`${styles.BookingCard}`}>
       <h1>
         Booking for {user.firstName} {user.lastName}
       </h1>
-      <p>You'll book: {bookingPreview.accommodation}</p>
-      <p>Price per Night: {bookingPreview.pricePerNight}</p>
-      <p>Guests: {currentBooking.numberOfGuests}</p>
-      <p>CheckIn: {currentBooking.checkIn.toISOString().split('T')[0]}</p>
-      <p>CheckOut: {currentBooking.checkOut.toISOString().split('T')[0]}</p>
-      <p>Nights: {bookingPreview.nights}</p>
-      <p>Total Price: {bookingPreview.totalPrice}</p>
+
+      <div className={styles.infoContainer}>
+        <div className={styles.img_container}>
+          {bookingPreview && (
+            <Link
+              to={`/accommodationList/${bookingPreview.accommodationTitle
+                .toLowerCase()
+                .replace(/\s+/g, '-')}?id=${bookingPreview.accommodationId}`}
+              state={{ id: bookingPreview.accommodationId }}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.viewButton}
+            >
+              <img
+                src={bookingPreview.accommodationTitleImage}
+                alt='location-preview'
+              />
+            </Link>
+          )}
+        </div>
+        <div>
+          <h3>{bookingPreview.accommodationTitle}</h3>
+          <p>Price per Night: {bookingPreview.pricePerNight}€</p>
+          <p>Guests: {currentBooking.numberOfGuests}</p>
+          <p>
+            CheckIn: {new Date(currentBooking.checkIn).toLocaleDateString()}
+          </p>
+          <p>
+            CheckOut: {new Date(currentBooking.checkOut).toLocaleDateString()}
+          </p>
+          <p>Total Nights: {bookingPreview.nights}</p>
+          <p>Total Price: {bookingPreview.totalPrice}€</p>
+        </div>
+      </div>
 
       <div className={styles.paymentMethod}>
-        <h2>Select Payment Method</h2>
+        <h3>Select Payment Method</h3>
         <label>
           <input
             type='radio'
@@ -89,7 +116,9 @@ export default function Booking() {
             }
           }}
         >
-          <h3>Enter Credit Card Details</h3>
+          <h3 className={styles.creditCardHeader} styles={{ color: '#7d23f3' }}>
+            Enter Credit Card Details
+          </h3>
           <label>
             Card Number
             <input
@@ -132,17 +161,19 @@ export default function Booking() {
               }
             />
           </label>
-          <button type='submit'>Submit</button>
+          <button type='submit' className={styles.submitButtonCreditcard}>
+            Submit
+          </button>
         </form>
       )}
 
       {paymentMethod === 'banktransfer' && (
         <div className={styles.bankDetails}>
-          <h2>
+          <h3>
             Your payment must be received within 3 business days, otherwise, we
             will cancel the booking
-          </h2>
-          <h3>Bank Transfer Details</h3>
+          </h3>
+          <h4>Bank Transfer Details</h4>
           <p>Account Name: ScareBnB</p>
           <p>IBAN: DE89 3704 0044 0532 0130 00</p>
           <p>BIC: COBADEFFXXX</p>
@@ -151,6 +182,7 @@ export default function Booking() {
       )}
 
       <button
+        className={styles.bookButton}
         onClick={handleBooking}
         disabled={paymentMethod === 'creditCard' && !isCreditCardValid()}
       >
