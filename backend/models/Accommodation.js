@@ -101,7 +101,7 @@ const accommodationSchema = new Schema(
     },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     isBooked: { type: Boolean, required: true, default: false },
-    feedback: [{ type: Number, min: 1, max: 5, default: 1 }],
+    feedback: [{ type: Number, min: 1, max: 5, default: [] }],
     rating: { type: Number, default: 0 },
     titleImage: {
       secure_url: { type: String, required: true },
