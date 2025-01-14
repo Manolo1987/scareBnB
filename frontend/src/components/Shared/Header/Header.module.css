@@ -28,6 +28,7 @@ header {
 
         &:hover {
           transform: scale(1.2);
+          box-shadow: 0px 0px 10px white;
         }
         
         img {
@@ -73,6 +74,12 @@ header {
   letter-spacing: 1.2rem;
   color: var(--color-prime);
   text-shadow: 0px 0px 10px white;
+  transition: all 0.6s ease;
+
+  &:hover {
+  text-shadow: 0px 0px 10px white, 0px 0px 10px white;
+
+  }
 }
 
 .bigHeader {

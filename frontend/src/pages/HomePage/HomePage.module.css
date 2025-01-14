@@ -7,8 +7,6 @@
     inset 8px 0 16px rgba(0, 0, 0, 0.6);
 
   .intro_textArea {
-    width: 90%;
-    max-width: 50%;
     text-align: center;
     color: var(--color-light);
     margin-top: 2rem;
@@ -43,6 +41,10 @@
     }
   }
   .highlight_section {
+    .highlight_header {
+      padding: 0 2rem;
+    }
+
     .acco_highlights {
       display: flex;
       flex-wrap: wrap;
@@ -77,8 +79,34 @@
       display: flex;
       justify-content: space-between;
       color: var(--color-medium);
-      padding-bottom: 2rem;
+      padding: 0 2rem 2rem 2rem;
     }
+  }
+}
+
+@media (min-width: 701px) {
+  .intro_textArea {
+    width: 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 700px) {
+  .intro_textArea {
+    width: 90%;
+    max-width: 90%;
+  }
+
+  .highlight_header {
+    text-align: center;
+  }
+
+  .highlight_bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
   }
 }
 

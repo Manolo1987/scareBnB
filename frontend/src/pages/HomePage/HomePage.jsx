@@ -51,7 +51,7 @@ export default function HomePage() {
           </div>
         </section>
         <section className={styles.highlight_section}>
-          <h3>Our Most Haunted Stays</h3>
+          <h3 className={styles.highlight_header}>Our Most Haunted Stays</h3>
           <div className={styles.acco_highlights}>
             {specialAccos?.map((acco, index) => (
               <div
