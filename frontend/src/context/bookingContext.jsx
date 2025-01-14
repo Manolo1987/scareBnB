@@ -123,18 +123,16 @@ export const BookingContextProvider = ({ children }) => {
 
   const giveFeedback = async (bookingId, feedback) => {
     console.log(bookingId, feedback);
-    
+
     try {
-      const response = await api.patch(
-          `/bookings/giveFeedback/${bookingId}`,
-          feedback
-        );
-        if (response.status === 200) {
-          toast.success('Feedback given successfully');
-          navigate('/');
-        }
+      const response = await api.patch(`/bookings/giveFeedback/${bookingId}`, {
+        feedback,
+      });
+      if (response.status === 200) {
+        toast.success('Feedback given successfully');
+        navigate('/');
       }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
