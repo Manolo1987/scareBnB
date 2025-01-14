@@ -5,7 +5,7 @@ import Register from '../Register/Register';
 import AccountDropdownMenu from '../../Account/AccountDropdownMenu/AccountDropdownMenu';
 import { useAuth } from '../../../context/UserAuthContext';
 import { Link, useLocation } from 'react-router-dom';
-import logo from "../../../assets/images/LOGO_scarebnb_V1_160px.png"
+import logo from '../../../assets/images/LOGO_scarebnb_V1_160px.png';
 
 export default function Header() {
   const { isAuthenticated } = useAuth();
@@ -17,10 +17,7 @@ export default function Header() {
       <section className={styles.top_banner}>
         <div className={styles.icon_container}>
           <Link to='/'>
-            <img
-              src={logo}
-              alt='website_icon'
-            />
+            <img src={logo} alt='website_icon' />
           </Link>
         </div>
         {!isHomepage && (
@@ -28,20 +25,8 @@ export default function Header() {
             <h1 className={styles.h1}>Scarebnb</h1>
           </Link>
         )}
-        <div className={styles.account}>
-          {isAuthenticated ? (
-            <>
-              <AccountDropdownMenu />
-              {/* <div className={styles.icon_container}>
-                <img src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' alt='avatar_icon' />
-              </div> */}
-            </>
-          ) : (
-            <>
-              <Login />
-              <Register />
-            </>
-          )}
+        <div className={styles.account_container}>
+          <AccountDropdownMenu />
         </div>
       </section>
       {isHomepage && (

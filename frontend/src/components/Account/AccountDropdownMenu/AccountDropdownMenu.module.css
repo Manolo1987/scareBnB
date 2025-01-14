@@ -3,22 +3,7 @@
   display: inline-block;
 }
 
-.dropdownButton {
-  background-color: #ff0000;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.dropdownButton:hover {
-  background-color: #b30000;
-}
-
-.dropdownMenu {
+.dropdown_menu {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -39,7 +24,7 @@
   list-style: none;
 }
 
-.dropdown:hover .dropdownMenu {
+.dropdown:hover .dropdown_menu {
   opacity: 1;
   transform: scaleY(1);
 }
@@ -48,7 +33,7 @@
   all: unset;
 }
 
-.dropdownLink {
+.dropdown_link {
   display: block;
   padding: 10px 15px;
   color: #333;
@@ -57,11 +42,37 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdownLink:hover {
+.dropdown_link:hover {
   background-color: #f5f5f5;
   color: #ff0000;
 }
 
-.dropdownLink:active {
+.dropdown_link:active {
   background-color: #e0e0e0;
+}
+
+.dropdown_icon {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 0px 0px 10px white;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
