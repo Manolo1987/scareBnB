@@ -10,7 +10,7 @@ const BookingContext = createContext();
 export const useBooking = () => useContext(BookingContext);
 
 export const BookingContextProvider = ({ children }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, setShowLogin } = useAuth();
   const { currentAcco } = useAcco();
   const navigate = useNavigate();
   const today = new Date();
@@ -33,7 +33,9 @@ export const BookingContextProvider = ({ children }) => {
   });
   const [currentBooking, setCurrentBooking] = useState(createBookingObject);
   const createBookingPreview = () => ({
-    accommodation: currentAcco?.title || null,
+    accommodationTitle: currentAcco?.title || null,
+    accommodationId: currentAcco?._id || null,
+    accommodationTitleImage: currentAcco?.titleImage.secure_url || null,
     numberOfGuests,
     checkIn,
     checkOut,
@@ -53,7 +55,6 @@ export const BookingContextProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       setMyBookings(user?.bookings || []);
-      //setMyBookedListings(user?.listings || []); //destroyed my working code for some reason, do we need that? (J)
     }
   }, [user]);
 
@@ -70,6 +71,9 @@ export const BookingContextProvider = ({ children }) => {
           navigate('/account/bookings');
         }, 5000);
       }
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
     } catch (error) {
       toast.error(error.response?.data?.msg || 'Booking failed.');
     }
@@ -83,6 +87,9 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 200) {
         setMyBookings(response.data.bookings);
       }
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
     } catch (error) {
       toast.error(error.response?.data?.msg || 'Server Error.');
     }
@@ -95,6 +102,9 @@ export const BookingContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         setMyBookedListings(response.data.bookings);
+      }
+      if (response.status === 403) {
+        setShowLogin(true);
       }
     } catch (error) {
       console.error(error);
@@ -116,6 +126,9 @@ export const BookingContextProvider = ({ children }) => {
           )
         );
       }
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -131,6 +144,9 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 200) {
         toast.success('Feedback given successfully');
         navigate('/');
+      }
+      if (response.status === 403) {
+        setShowLogin(true);
       }
     } catch (error) {
       console.error(error);

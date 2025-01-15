@@ -4,6 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import styles from './AccoMap.module.css';
+import markerIcon from '../../../assets/images/icons/map-pin-fill-Kontur_32px.png';
+import markerRetinaIcon from '../../../assets/images/icons/map-pin-fill-Kontur_64px.png';
+import markerShadow from '../../../assets/images/icons/map-pin-fill-Schatten_32px.png';
 
 const MapZoomHandler = () => {
   const map = useMap();
@@ -29,6 +32,17 @@ const MapZoomHandler = () => {
 const AccoMap = ({ lat, lon, title }) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const customIcon = new L.Icon({
+    iconUrl: `${markerIcon}`,
+    iconRetinaUrl: `${markerRetinaIcon}`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+    shadowUrl: `${markerShadow}`,
+    shadowSize: [32, 32],
+    shadowAnchor: [16, 32],
+  });
+
   useEffect(() => {
     if (lat && lon) {
       setIsLoading(false);
@@ -53,7 +67,7 @@ const AccoMap = ({ lat, lon, title }) => {
           attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
           url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
         />
-        <Marker position={[lat, lon]}>
+        <Marker position={[lat, lon]} icon={customIcon}>
           <Popup isOpen={true}>{title}</Popup>
         </Marker>
       </MapContainer>

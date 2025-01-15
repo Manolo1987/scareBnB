@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import '../../../App.css';
 import styles from './OverviewMap.module.css';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,10 @@ import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { regionBounds } from '../../../assets/data/regionBounds.js';
+import markerIcon from '../../../assets/images/icons/map-pin-fill-Kontur_32px.png';
+import markerRetinaIcon from '../../../assets/images/icons/map-pin-fill-Kontur_64px.png';
+import markerShadow from '../../../assets/images/icons/map-pin-fill-Schatten_32px.png';
+import { Ghost, LockKey, DoorOpen } from '@phosphor-icons/react';
 
 const MapZoomHandler = () => {
   const map = useMap();
@@ -51,6 +56,18 @@ export default function OverviewMap() {
 
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
 
+  const customIcon = new L.Icon({
+    iconUrl: `${markerIcon}`,
+    iconRetinaUrl: `${markerRetinaIcon}`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+    shadowUrl: `${markerShadow}`,
+    shadowSize: [32, 32],
+    shadowAnchor: [16, 32],
+  });
+  const mapRef = useRef();
+
   useEffect(() => {
     getAllAccommodations();
   }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
@@ -65,9 +82,12 @@ export default function OverviewMap() {
     }
   }, [stateFilter]);
 
-  // if (accommodations.length === 0) {
-  //   return <div>Loading accommodations...</div>; //loader
-  // }
+  useEffect(() => {
+    if (mapRef.current && stateBounds && stateBounds.length === 2) {
+      const map = mapRef.current;
+      map.flyToBounds(stateBounds, { padding: [0, 0], duration: 1 });
+    }
+  }, [stateBounds]);
 
   return (
     <div className={styles.map_outerContainer}>
@@ -79,15 +99,16 @@ export default function OverviewMap() {
         zoomControl={false}
         minZoom={3}
         maxZoom={16}
-        maxBounds={[
-          [-85.06, -180],
-          [85.06, 180],
-        ]}
+        // maxBounds={[
+        //   [-85.06, -180],
+        //   [85.06, 180],
+        // ]}
         scrollWheelZoom={false}
         gestureHandling={true}
-        // whenCreated={(map) => {
-        //   map.flyToBounds(bounds);
-        // }}
+        ref={mapRef}
+        whenCreated={(map) => {
+          mapRef.current = map;
+        }}
       >
         <TileLayer
           attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
@@ -99,28 +120,63 @@ export default function OverviewMap() {
           accommodations.map((acco, index) => {
             if (acco.latitude && acco.longitude) {
               return (
-                <Marker key={index} position={[acco.latitude, acco.longitude]}>
+                <Marker
+                  key={index}
+                  position={[acco?.latitude, acco?.longitude]}
+                  icon={customIcon}
+                >
                   <Popup>
-                    <Link to={`/accommodation`} className={styles.cardLink}>
-                      <div className={styles.accoCardContainer}>
-                        <div className={styles.info_container}>
-                          <h4>{acco.title}</h4>
-                          <span>{acco.city}</span>
+                    <Link
+                      to={`/accommodationList/${acco.title
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')}?id=${acco._id}`}
+                      className='cardLink'
+                    >
+                      <div className='infoContainer'>
+                        <div className='infoHeader'>
+                          <h4 className='cardTitle'>{acco.title}</h4>
+                          <span className='cardCity'>{acco.city}</span>
                         </div>
-                        <div className={styles.img_container}>
-                          <img
-                            src={acco.titleImage.secure_url}
-                            alt='location-preview'
-                          />
-                        </div>
-                        <div className={styles.info_container}>
-                          <p className={styles.rating}>🕸️ {acco.rating}</p>
-                          <p>Bedrooms: {acco.bedrooms} </p>
-                          <p>Price per Night: {acco.pricePerNight}€</p>
-                          <p>
-                            Availability:{' '}
-                            {acco.isBooked ? 'Close 🔒' : 'Open 🚪'}
-                          </p>
+                      </div>
+                      <div className='imgContainer col'>
+                        <img
+                          src={acco.titleImage.secure_url}
+                          alt='location-preview'
+                          className='cardImage'
+                        />
+                      </div>
+                      <div className='infoContainer'>
+                        <div className='infoBody'>
+                          <span
+                            className='cardRating cardRatingEnd'
+                            title={`Rating: ${acco.rating.toFixed(1)} spooks`}
+                          >
+                            <Ghost
+                              className='ghost'
+                              weight='fill'
+                              size={24}
+                              color='white'
+                            />
+                            {acco.rating.toFixed(1)}
+                          </span>
+                          <span className='cardBedrooms'>
+                            Bedrooms: {acco.bedrooms}
+                          </span>
+                          <span className='cardPricePerNight'>
+                            Price per Night: {acco.pricePerNight} €
+                          </span>
+                          <span className='cardAvailability'>
+                            <span>Availability: </span>
+                            {acco.isBooked ? (
+                              <>
+                                Close <LockKey size={20} color='white' />
+                              </>
+                            ) : (
+                              <>
+                                Open <DoorOpen size={20} color='white' />
+                              </>
+                            )}
+                          </span>
                         </div>
                       </div>
                     </Link>

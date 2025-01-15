@@ -168,6 +168,11 @@ button.viewButton:hover {
   background-color: #0056b3;
 }
 
+.cancelled {
+  background-color: red;
+  padding: 0.4rem 0.8rem;
+  color: white;
+}
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .table th,

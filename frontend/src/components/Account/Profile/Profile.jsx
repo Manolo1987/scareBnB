@@ -50,17 +50,65 @@ export default function Profile() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validierungslogik basierend auf deinem Mongoose-Schema
+    let error = '';
+    if (name === 'firstName' || name === 'lastName') {
+      if (!/^[a-zA-Z\s.,;:'"_\-\u00C0-\u00FFäöüÄÖÜß]+$/.test(value)) {
+        error = `${name} contains invalid characters!`;
+      } else if (value.length < 3 || value.length > 30) {
+        error = `${name} must be between 3 and 30 characters long.`;
+      }
+    }
+
+    if (name === 'email') {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+        error = 'Invalid email!';
+      }
+    }
+
+    if (name === 'phone') {
+      if (!/^[0-9]+$/.test(value)) {
+        error = 'Phone number must only contain numbers!';
+      }
+    }
+
+    if (name === 'password') {
+      if (
+        !/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/.test(
+          value
+        )
+      ) {
+        error =
+          'Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character!';
+      }
+    }
+
+    if (name === 'dateOfBirth') {
+      const today = new Date();
+      const maxPastDate = new Date(
+        today.getFullYear() - 101,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      if (new Date(value) > today) {
+        error = 'The date of birth cannot be in the future!';
+      } else if (new Date(value) < maxPastDate) {
+        error =
+          'The date of birth cannot be more than 101 years in the past! (You are not a ghost)';
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
 
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
-    }
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
 
   const getChangedValues = () => {
@@ -141,13 +189,13 @@ export default function Profile() {
           {!isEditing && (
             <>
               <button
-                className={styles.editProfileButton}
+                className='buttonEffect'
                 onClick={() => setIsEditing(true)}
               >
                 Edit Profile
               </button>
               <button
-                className={styles.deleteProfileButton}
+                className={styles.deleteButton}
                 onClick={() => setIsDeleting(true)}
               >
                 Delete Profile
@@ -169,7 +217,7 @@ export default function Profile() {
                   required
                 />
                 {errors.firstName && (
-                  <p className={styles.error}>{errors.firstName}</p>
+                  <p className='inputError'>{errors.firstName}</p>
                 )}
               </div>
               <div className='inputContainer'>
@@ -182,7 +230,7 @@ export default function Profile() {
                   required
                 />
                 {errors.lastName && (
-                  <p className={styles.error}>{errors.lastName}</p>
+                  <p className='inputError'>{errors.lastName}</p>
                 )}
               </div>
               <div className='inputContainer'>
@@ -195,7 +243,7 @@ export default function Profile() {
                   required
                 />
                 {errors.dateOfBirth && (
-                  <p className={styles.error}>{errors.dateOfBirth}</p>
+                  <p className='inputError'>{errors.dateOfBirth}</p>
                 )}
               </div>
               <div className='inputContainer'>
@@ -207,7 +255,7 @@ export default function Profile() {
                   onChange={handleChange}
                   required
                 />
-                {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+                {errors.phone && <p className='inputError'>{errors.phone}</p>}
               </div>
 
               <div className='inputContainer'>
@@ -219,7 +267,7 @@ export default function Profile() {
                   onChange={handleChange}
                   required
                 />
-                {errors.email && <p className={styles.error}>{errors.email}</p>}
+                {errors.email && <p className='inputError'>{errors.email}</p>}
               </div>
 
               <div className='inputContainer'>
@@ -243,7 +291,7 @@ export default function Profile() {
                   </span>
                 </div>
                 {errors.password && (
-                  <p className={styles.error}>{errors.password}</p>
+                  <p className='inputError'>{errors.password}</p>
                 )}
               </div>
 
@@ -268,7 +316,7 @@ export default function Profile() {
                   </span>
                 </div>
                 {errors.confirmPassword && (
-                  <p className={styles.error}>{errors.confirmPassword}</p>
+                  <p className='inputError'>{errors.confirmPassword}</p>
                 )}
               </div>
 

@@ -297,7 +297,7 @@ export async function updateListing(req, res) {
       const updatedListing = await Accommodation.findByIdAndUpdate(
         listingId,
         updatedFields,
-        { new: true }
+        { new: true, runValidators: true }
       );
 
       res.status(200).json(updatedListing);
