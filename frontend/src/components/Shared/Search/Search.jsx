@@ -12,6 +12,7 @@ export default function Search() {
 
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
     useBooking();
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
   const [selectedRegion, setSelectedRegion] = useState('');
 
@@ -83,6 +84,7 @@ export default function Search() {
           onChange={handleCheckInChange}
           className={styles.searchbarInput}
           id='checkIn'
+          min={today}
         />
         <label className={styles.searchbarLabel}>CheckOut:</label>
         <input
@@ -90,6 +92,7 @@ export default function Search() {
           value={bookingPreview.checkOut.toISOString().split('T')[0]}
           onChange={handleCheckOutChange}
           className={styles.searchbarInput}
+          min={bookingPreview.checkOut.toISOString().split('T')[0]}
         />
         <label className={styles.searchbarLabel}>Guests:</label>
         <select

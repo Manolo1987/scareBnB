@@ -11,6 +11,10 @@ export default function BookingPreview() {
   const { isAuthenticated, showLogin, setShowLogin } = useAuth();
   const navigate = useNavigate();
 
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const handleCheckInChange = (e) => {
     if (e.target.value === '') {
       setCheckIn(new Date());
@@ -51,6 +55,7 @@ export default function BookingPreview() {
             required
             value={bookingPreview.checkIn.toISOString().split('T')[0]} // Format YYYY-MM-DD
             onChange={handleCheckInChange}
+            min={today}
           />
         </label>
 
@@ -62,6 +67,7 @@ export default function BookingPreview() {
             required
             value={bookingPreview.checkOut.toISOString().split('T')[0]} // Format YYYY-MM-DD
             onChange={handleCheckOutChange}
+            min={bookingPreview.checkOut.toISOString().split('T')[0]}
           />
         </label>
 
