@@ -440,7 +440,9 @@ export default function HandleListings() {
             </div>
           </div>
           <div className='inputContainer'>
-            <label>Features</label>
+            <label>
+              Features <span className={styles.optionalLabel}>(optional)</span>
+            </label>
             <div className='featureList'>
               {featureList.map((feature) => (
                 <label key={feature} className='featureListItem'>
@@ -471,7 +473,10 @@ export default function HandleListings() {
             )}
           </div>
           <div className='inputContainer'>
-            <label htmlFor='otherImages'>Other Images</label>
+            <label htmlFor='otherImages'>
+              Other Images{' '}
+              <span className={styles.optionalLabel}>(optional)</span>
+            </label>
             <input
               type='file'
               name='otherImages'

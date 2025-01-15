@@ -446,7 +446,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
           {error && <p className='inputError'>{error}</p>}
 
           <div className={styles.titleImageContainer}>
-            <label htmlFor='titleImageUpdate'>Title Image:</label>
+            <label htmlFor='titleImageUpdate'>Title Image</label>
             <div className={styles.imageContainer}>
               <img
                 src={listing.titleImage.secure_url}
@@ -475,7 +475,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             )}
           </div>
           <div className={styles.otherImagesContainer}>
-            <label htmlFor='otherImagesUpdate'>Other Images:</label>
+            <label htmlFor='otherImagesUpdate'>Other Images</label>
 
             {listing.images.length > 0 && (
               <div className={styles.imageWrapper}>
