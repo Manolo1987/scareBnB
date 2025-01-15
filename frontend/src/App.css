@@ -291,6 +291,11 @@
   background-color: #212121;
   color: rgb(182, 182, 182);
 }
+.leaflet-control-container .leaflet-control-zoom a:hover,
+.leaflet-control-container .leaflet-control-zoom a:focus {
+  background-color: #212121;
+  color: white;
+}
 .leaflet-control-container .leaflet-bottom.leaflet-right .leaflet-control-zoom {
   border: 2px solid rgb(81, 81, 81);
 }
@@ -304,6 +309,10 @@
 }
 .leaflet-control-container .leaflet-control-attribution a {
   color: rgb(182, 182, 182);
+}
+.leaflet-control-container .leaflet-control-attribution a:hover {
+  text-decoration: none;
+  color: white;
 }
 /* --------------------------------------------------animation frames */
 
