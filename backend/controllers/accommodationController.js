@@ -238,6 +238,7 @@ export async function updateListing(req, res) {
 
     //delete old images if user not admin
     const { imagesToDelete } = req.query;
+    //console.log(imagesToDelete);
     const imagesToDeleteArr =
       imagesToDelete.length > 0 ? imagesToDelete.split(',') : [];
 

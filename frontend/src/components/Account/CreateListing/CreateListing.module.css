@@ -1,0 +1,9 @@
+.formError {
+  font-size: 0.9rem;
+  color: rgb(231, 82, 112);
+}
+.optionalLabel {
+  color: rgb(118, 118, 118);
+  font-style: italic;
+  font-size: 0.8rem;
+}

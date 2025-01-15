@@ -28,17 +28,15 @@ export default function Listings() {
           </div>
         )}
         {myListings?.length > 0 && (
-          <div className={styles.mylistings_list}>
-            <ul>
-              {myListings?.map((listing, index) => {
-                return (
-                  <li key={index}>
-                    <ListingsCard listing={listing} />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <ul className={styles.mylistings_list}>
+            {myListings?.map((listing, index) => {
+              return (
+                <li key={index}>
+                  <ListingsCard listing={listing} />
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
     </>

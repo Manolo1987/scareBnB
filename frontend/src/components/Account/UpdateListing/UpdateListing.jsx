@@ -15,6 +15,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   const [error, setError] = useState(null);
   const [showTitleImageInput, setShowTitleImageInput] = useState(false);
   const [showOtherImagesInput, setShowOtherImagesInput] = useState(false);
+  const [remainingImages, setRemainingImages] = useState(0);
 
   const [formData, setFormData] = useState({
     title: listing.title || '',
@@ -42,20 +43,37 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     otherImages: '',
   });
 
-  // const remainingImages = Math.max(
-  //   0,
-  //   4 -
-  //     (listing.images.length -
-  //       imagesToDelete.length +
-  //       formData.otherImages.length)
-  // );
+  const isFormValid = () => {
+    return Object.values(formErrors).every((error) => error === '');
+  };
 
-  // remainingImages Anzeige updaten wenn formData.otherImages sich ändert: (in der handleInputChange)
-  const remainingImages =
-    4 -
-    (listing.images.length -
-      imagesToDelete.length +
-      formData.otherImages.length);
+  useEffect(() => {
+    setRemainingImages(
+      Math.max(
+        0,
+        4 -
+          (listing.images.length -
+            imagesToDelete.length +
+            formData.otherImages.length)
+      )
+    );
+    //update FormErrors für otherimages here
+    if (
+      formData.otherImages.length >
+      4 - (listing.images.length - imagesToDelete.length)
+    ) {
+      setFormErrors((prevState) => ({
+        ...prevState,
+        otherImages: `You can upload only 4 images, each no larger than 5MB.`,
+      }));
+    } else {
+      setFormErrors((prevState) => ({
+        ...prevState,
+        otherImages: '',
+      }));
+    }
+  }, [formData.otherImages, imagesToDelete]);
+
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
   }
@@ -106,26 +124,28 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
         //differenzierte Fehlermeldung zurückgeben: zu viele files oder image size too big
       } else if (name === 'otherImages') {
         const selectedFiles = Array.from(files);
-        if (selectedFiles.length > remainingImages) {
-          setFormErrors((prevState) => ({
-            ...prevState,
-            otherImages: `You can upload only 4 images, each no larger than 5MB.`,
-          }));
-          //e.target.value = '';
-        } else {
-          const validFiles = selectedFiles.filter((file) =>
-            validateFile(file, 5 * 1024 * 1024)
-          );
+        // if (
+        //   selectedFiles.length >
+        //   4 - (listing.images.length - imagesToDelete.length)
+        // ) {
+        //   setFormErrors((prevState) => ({
+        //     ...prevState,
+        //     otherImages: `You can upload only 4 images, each no larger than 5MB.`,
+        //   }));
+        // } else {
+        const validFiles = selectedFiles.filter((file) =>
+          validateFile(file, 5 * 1024 * 1024)
+        );
 
-          setFormData((prevState) => ({
-            ...prevState,
-            otherImages: validFiles,
-          }));
-          setFormErrors((prevState) => ({
-            ...prevState,
-            otherImages: '',
-          }));
-        }
+        setFormData((prevState) => ({
+          ...prevState,
+          otherImages: validFiles,
+        }));
+        setFormErrors((prevState) => ({
+          ...prevState,
+          otherImages: '',
+        }));
+        // }
       }
     } else {
       setFormData((prevState) => ({
@@ -223,10 +243,12 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
         }));
       }
     } else if (name === 'pricePerNight') {
-      if (value.length > 0 && value < 1) {
+      const isValidPrice = /^[1-9]\d*$/.test(value);
+      if (value.length > 0 && !isValidPrice) {
         setFormErrors((prevState) => ({
           ...prevState,
-          pricePerNight: 'Please set a price for your accommodation',
+          pricePerNight:
+            'Please enter a valid positive whole number for the price',
         }));
       } else {
         setFormErrors((prevState) => ({
@@ -239,6 +261,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isFormValid()) {
+      return;
+    }
     const form = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       if (key === 'titleImage' && value) {
@@ -390,7 +415,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             <div className='inputContainer'>
               <label htmlFor='pricePerNight'>Price per Night</label>
               <input
-                type='number'
+                type='text'
                 name='pricePerNight'
                 id='pricePerNight'
                 value={formData.pricePerNight}
@@ -421,7 +446,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
           {error && <p className='inputError'>{error}</p>}
 
           <div className={styles.titleImageContainer}>
-            <label htmlFor='titleImageUpdate'>Title Image:</label>
+            <label htmlFor='titleImageUpdate'>Title Image</label>
             <div className={styles.imageContainer}>
               <img
                 src={listing.titleImage.secure_url}
@@ -433,7 +458,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 className={styles.titleImageEditButton}
                 onClick={() => setShowTitleImageInput(true)}
               >
-                <Pencil size={24} />
+                <Pencil size={24} className={styles.buttonIcon} />
               </button>
             </div>
             {showTitleImageInput && (
@@ -446,11 +471,11 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               />
             )}
             {formErrors.titleImage && (
-              <p className='inputError'>{formErrors.titleImage}</p>
+              <p className={styles.fileInputError}>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={styles.otherImagesContainer}>
-            <label htmlFor='otherImagesUpdate'>Other Images:</label>
+            <label htmlFor='otherImagesUpdate'>Other Images</label>
 
             {listing.images.length > 0 && (
               <div className={styles.imageWrapper}>
@@ -476,7 +501,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               </>
             )}
             {formErrors.otherImages && (
-              <p className='inputError'>{formErrors.otherImages}</p>
+              <p className={styles.fileInputError}>{formErrors.otherImages}</p>
             )}
           </div>
 
@@ -488,7 +513,11 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             >
               Close without Saving
             </button>
-            <button type='submit' className='saveButton' disabled={isLoading}>
+            <button
+              type='submit'
+              className='saveButton'
+              disabled={!isFormValid() || isLoading}
+            >
               {isLoading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>

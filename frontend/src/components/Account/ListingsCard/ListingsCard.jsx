@@ -5,10 +5,17 @@ import { Link } from 'react-router-dom';
 import { Trash, Pencil, Ghost } from '@phosphor-icons/react';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import UpdateListing from '../UpdateListing/UpdateListing.jsx';
+import Overlay from '../UpdateListing/Overlay.jsx';
 
 export default function ListingsCard({ listing }) {
   const { deleteListing, setImagesToDelete } = useAcco();
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
+
+  const toggleDeleteMessage = () => {
+    setShowDeleteMessage(!showDeleteMessage);
+  };
+
   const handleDelete = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -33,7 +40,7 @@ export default function ListingsCard({ listing }) {
         state={{ id: listing._id }}
         className='cardLink'
       >
-        <div className='cardContainer'>
+        <div className={`cardContainer ${styles.cardContainer_special}`}>
           <div className='imgContainer'>
             <img
               src={listing.titleImage.secure_url}
@@ -69,7 +76,14 @@ export default function ListingsCard({ listing }) {
             <button className={styles.listingsButton} onClick={handleShowForm}>
               <Pencil size={32} className={styles.buttonIcon} />
             </button>
-            <button className={styles.listingsButton} onClick={handleDelete}>
+            <button
+              className={styles.listingsButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setShowDeleteMessage(true);
+              }}
+            >
               <Trash size={32} className={styles.buttonIcon} />
             </button>
           </div>
@@ -81,6 +95,31 @@ export default function ListingsCard({ listing }) {
           setShowUpdateForm={handleCloseUpdateForm}
         />
       )}
+      {
+        <Overlay isOpen={showDeleteMessage} onClose={toggleDeleteMessage}>
+          <div className={styles.deleteMessageContainer}>
+            <p className={styles.deleteMessage}>
+              Do you really want to delete this accommodation?
+            </p>
+            <div className='formFooter'>
+              <button
+                type='button'
+                className='cancelButton'
+                onClick={() => setShowDeleteMessage(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type='button'
+                className='saveButton'
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </Overlay>
+      }
     </>
   );
 }

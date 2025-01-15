@@ -32,7 +32,6 @@ export default function HandleListings() {
   const [formErrors, setFormErrors] = useState({
     title: '',
     description: '',
-    //state: '',
     city: '',
     latitude: '',
     longitude: '',
@@ -41,6 +40,9 @@ export default function HandleListings() {
     titleImage: '',
     otherImages: '',
   });
+  const isFormValid = () => {
+    return Object.values(formErrors).every((error) => error === '');
+  };
 
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
@@ -209,10 +211,12 @@ export default function HandleListings() {
         }));
       }
     } else if (name === 'pricePerNight') {
-      if (value.length > 0 && value < 1) {
+      const isValidPrice = /^[1-9]\d*$/.test(value);
+      if (value.length > 0 && !isValidPrice) {
         setFormErrors((prevState) => ({
           ...prevState,
-          pricePerNight: 'Please set a price for your accommodation',
+          pricePerNight:
+            'Please enter a valid positive whole number for the price',
         }));
       } else {
         setFormErrors((prevState) => ({
@@ -225,6 +229,26 @@ export default function HandleListings() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isFormValid()) {
+      return;
+    }
+    if (
+      !(
+        formData.title &&
+        formData.description &&
+        formData.city &&
+        formData.latitude &&
+        formData.longitude &&
+        formData.bedrooms &&
+        formData.pricePerNight &&
+        formData.titleImage
+      )
+    ) {
+      setError('Please fill out all required fields.');
+      return;
+    } else {
+      setError('');
+    }
     const form = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       if (key === 'titleImage' && value) {
@@ -282,6 +306,7 @@ export default function HandleListings() {
     if (otherImagesInputRef.current) {
       otherImagesInputRef.current.value = null;
     }
+    setError('');
   };
 
   return (
@@ -403,7 +428,7 @@ export default function HandleListings() {
             <div className='inputContainer'>
               <label htmlFor='pricePerNight'>pricePerNight</label>
               <input
-                type='number'
+                type='text'
                 name='pricePerNight'
                 id='pricePerNight'
                 value={formData.pricePerNight}
@@ -415,7 +440,9 @@ export default function HandleListings() {
             </div>
           </div>
           <div className='inputContainer'>
-            <label>Features</label>
+            <label>
+              Features <span className={styles.optionalLabel}>(optional)</span>
+            </label>
             <div className='featureList'>
               {featureList.map((feature) => (
                 <label key={feature} className='featureListItem'>
@@ -446,7 +473,10 @@ export default function HandleListings() {
             )}
           </div>
           <div className='inputContainer'>
-            <label htmlFor='otherImages'>Other Images</label>
+            <label htmlFor='otherImages'>
+              Other Images{' '}
+              <span className={styles.optionalLabel}>(optional)</span>
+            </label>
             <input
               type='file'
               name='otherImages'
@@ -460,7 +490,7 @@ export default function HandleListings() {
               <p className='inputError'>{formErrors.otherImages}</p>
             )}
           </div>
-          {error && <p className='error'>{error}</p>}
+          {error && <p className={styles.formError}>{error}</p>}
           <div className='formFooter'>
             <button
               type='button'
@@ -469,7 +499,11 @@ export default function HandleListings() {
             >
               Clear Form
             </button>
-            <button type='submit' className='saveButton' disabled={isLoading}>
+            <button
+              type='submit'
+              className='saveButton'
+              disabled={!isFormValid() || isLoading}
+            >
               {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>

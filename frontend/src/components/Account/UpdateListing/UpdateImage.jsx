@@ -37,19 +37,19 @@ export default function UpdateImage({ img }) {
           <span>deleted</span>
           <button
             type='button'
-            className={styles.imageRecoverButton}
+            className={`${styles.imageRecoverButton} ${styles.imageButton}`}
             onClick={handleRecoverImage}
           >
-            <ArrowCounterClockwise size={24} />
+            <ArrowCounterClockwise size={24} className={styles.buttonIcon} />
           </button>
         </div>
       ) : (
         <button
           type='button'
-          className={styles.imageDeleteButton}
+          className={`${styles.imageDeleteButton} ${styles.imageButton}`}
           onClick={toggleOverlay}
         >
-          <Trash size={24} />
+          <Trash size={24} className={styles.buttonIcon} />
         </button>
       )}
 
