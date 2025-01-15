@@ -40,7 +40,7 @@ export default function ListingsCard({ listing }) {
         state={{ id: listing._id }}
         className='cardLink'
       >
-        <div className='cardContainer'>
+        <div className={`cardContainer ${styles.cardContainer_special}`}>
           <div className='imgContainer'>
             <img
               src={listing.titleImage.secure_url}

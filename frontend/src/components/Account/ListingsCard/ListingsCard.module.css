@@ -1,4 +1,11 @@
+.cardContainer_special {
+  position: relative;
+}
+
 .cardButtonContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   gap: 0.2rem;
   padding: 0.2rem;
@@ -15,18 +22,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
-  border: 1px solid var(--color-medium);
-  border-radius: 8px;
+  background-color: transparent;
+  border: none;
   width: 2rem;
   aspect-ratio: 1;
   .buttonIcon {
     color: var(--color-light);
     width: 1.2rem;
   }
-  &:hover {
-    background-color: crimson;
-  }
+  /* &:hover .buttonIcon {
+    color: crimson;
+  } */
+}
+.buttonIcon {
+  color: white;
 }
 .deleteMessageContainer {
   background-color: rgb(60, 60, 60);

@@ -458,7 +458,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 className={styles.titleImageEditButton}
                 onClick={() => setShowTitleImageInput(true)}
               >
-                <Pencil size={24} />
+                <Pencil size={24} className={styles.buttonIcon} />
               </button>
             </div>
             {showTitleImageInput && (
