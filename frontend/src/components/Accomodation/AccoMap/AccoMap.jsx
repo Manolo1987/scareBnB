@@ -4,8 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import styles from './AccoMap.module.css';
-import markerIcon from '../../../assets/images/icons/map-pin-32.png';
-import markerRetinaIcon from '../../../assets/images/icons/map-pin-64.png';
+import markerIcon from '../../../assets/images/icons/map-pin-fill-Kontur_32px.png';
+import markerRetinaIcon from '../../../assets/images/icons/map-pin-fill-Kontur_64px.png';
+import markerShadow from '../../../assets/images/icons/map-pin-fill-Schatten_32px.png';
 
 const MapZoomHandler = () => {
   const map = useMap();
@@ -37,9 +38,9 @@ const AccoMap = ({ lat, lon, title }) => {
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
-    //   shadowUrl: 'path/to/your/shadow.png',
-    // shadowSize: [44, 44],
-    // shadowAnchor: [16, 44]
+    shadowUrl: `${markerShadow}`,
+    shadowSize: [32, 32],
+    shadowAnchor: [16, 32],
   });
 
   useEffect(() => {

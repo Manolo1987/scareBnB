@@ -92,7 +92,7 @@ export default function OverviewMap() {
   useEffect(() => {
     if (mapRef.current && stateBounds && stateBounds.length === 2) {
       const map = mapRef.current;
-      map.flyToBounds(stateBounds, { padding: [50, 50], duration: 1 });
+      map.flyToBounds(stateBounds, { padding: [0, 0], duration: 1 });
     }
   }, [stateBounds]);
 
