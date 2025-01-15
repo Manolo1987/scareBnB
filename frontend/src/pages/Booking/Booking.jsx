@@ -94,40 +94,40 @@ export default function Booking() {
   return (
     <section className={`${styles.BookingCard}`}>
       <h1>
-        Booking for {user.firstName} {user.lastName}
+        Booking for {user?.firstName} {user?.lastName}
       </h1>
 
       <div className={styles.infoContainer}>
         <div className={styles.img_container}>
           {bookingPreview && (
             <Link
-              to={`/accommodationList/${bookingPreview.accommodationTitle
-                .toLowerCase()
-                .replace(/\s+/g, '-')}?id=${bookingPreview.accommodationId}`}
-              state={{ id: bookingPreview.accommodationId }}
+              to={`/accommodationList/${bookingPreview?.accommodationTitle
+                ?.toLowerCase()
+                ?.replace(/\s+/g, '-')}?id=${bookingPreview?.accommodationId}`}
+              state={{ id: bookingPreview?.accommodationId }}
               target='_blank'
               rel='noopener noreferrer'
               className={styles.viewButton}
             >
               <img
-                src={bookingPreview.accommodationTitleImage}
+                src={bookingPreview?.accommodationTitleImage}
                 alt='location-preview'
               />
             </Link>
           )}
         </div>
         <div>
-          <h3>{bookingPreview.accommodationTitle}</h3>
-          <p>Price per Night: {bookingPreview.pricePerNight}€</p>
+          <h3>{bookingPreview?.accommodationTitle}</h3>
+          <p>Price per Night: {bookingPreview?.pricePerNight}€</p>
           <p>Guests: {currentBooking.numberOfGuests}</p>
           <p>
-            CheckIn: {new Date(currentBooking.checkIn).toLocaleDateString()}
+            CheckIn: {new Date(currentBooking?.checkIn).toLocaleDateString()}
           </p>
           <p>
-            CheckOut: {new Date(currentBooking.checkOut).toLocaleDateString()}
+            CheckOut: {new Date(currentBooking?.checkOut).toLocaleDateString()}
           </p>
-          <p>Total Nights: {bookingPreview.nights}</p>
-          <p>Total Price: {bookingPreview.totalPrice}€</p>
+          <p>Total Nights: {bookingPreview?.nights}</p>
+          <p>Total Price: {bookingPreview?.totalPrice}€</p>
         </div>
       </div>
 
