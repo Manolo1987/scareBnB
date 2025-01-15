@@ -76,6 +76,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   };
 
   const handleInputChange = (e) => {
+    console.log('remaining', remainingImages);
+    console.log('listing', listing.images.length);
+    console.log('toDelete', imagesToDelete.length);
+    console.log('formData', formData.otherImages.length);
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
       setFormData((prevState) => {
@@ -446,7 +450,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               />
             )}
             {formErrors.titleImage && (
-              <p className='inputError'>{formErrors.titleImage}</p>
+              <p className={styles.fileInputError}>{formErrors.titleImage}</p>
             )}
           </div>
           <div className={styles.otherImagesContainer}>
@@ -476,7 +480,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               </>
             )}
             {formErrors.otherImages && (
-              <p className='inputError'>{formErrors.otherImages}</p>
+              <p className={styles.fileInputError}>{formErrors.otherImages}</p>
             )}
           </div>
 
