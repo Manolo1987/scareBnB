@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './AccountDropdownMenu.module.css';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
-import Login from '../../Shared/Login/Login.jsx';
-import Register from '../../Shared/Register/Register.jsx';
-import menu from '../../../assets/images/avatar.png';
+import { UserCircleCheck, UserCircle } from '@phosphor-icons/react';
 
 export default function AccountDropdownMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, setShowLogin, setShowRegister } =
+    useAuth();
   const isAdmin = user?.roles === 'admin';
 
   const toggleMenu = () => {
@@ -20,9 +19,18 @@ export default function AccountDropdownMenu() {
   };
 
   return (
-    <div className={styles.dropdown}>
-      <div className={styles.dropdown_icon} onClick={toggleMenu}>
-        <img src={menu} alt='avatar_icon' />
+    <div className={styles.dropdown} >
+      <div
+        className={
+          isAuthenticated ? styles.dropdown_icon_red : styles.dropdown_icon
+        }
+        onClick={toggleMenu}
+      >
+        {isAuthenticated ? (
+          <UserCircleCheck size={50} color='white' weight='fill' />
+        ) : (
+          <UserCircle size={50} color='grey' />
+        )}
       </div>
       {isOpen && (
         <ul className={styles.dropdown_menu}>
@@ -80,7 +88,7 @@ export default function AccountDropdownMenu() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className={`${styles.dropdown_link} ${styles.logout}`}
+                  className={`${styles.logout}`}
                 >
                   Logout
                 </button>
@@ -88,11 +96,17 @@ export default function AccountDropdownMenu() {
             </>
           ) : (
             <>
-              <li>
-                <Login />
+              <li
+                className={styles.dropdown_link}
+                onClick={() => setShowLogin(true)}
+              >
+                Login
               </li>
-              <li>
-                <Register />
+              <li
+                className={styles.dropdown_link}
+                onClick={() => setShowRegister(true)}
+              >
+                Register
               </li>
             </>
           )}
