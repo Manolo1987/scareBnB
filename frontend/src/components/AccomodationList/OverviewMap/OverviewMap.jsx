@@ -15,9 +15,8 @@ import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.js';
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { regionBounds } from '../../../assets/data/regionBounds.js';
-// import markerIcon from '../../../assets/images/icons/map-pin-32.png';
 import markerIcon from '../../../assets/images/icons/map-pin-fill-Kontur_32px.png';
-// import markerRetinaIcon from '../../../assets/images/icons/map-pin-64.png';
+import markerRetinaIcon from '../../../assets/images/icons/map-pin-fill-Kontur_64px.png';
 import markerShadow from '../../../assets/images/icons/map-pin-fill-Schatten_32px.png';
 import { Ghost, LockKey, DoorOpen } from '@phosphor-icons/react';
 
@@ -60,7 +59,7 @@ export default function OverviewMap() {
 
   const customIcon = new L.Icon({
     iconUrl: `${markerIcon}`,
-    // iconRetinaUrl: `${markerRetinaIcon}`,
+    iconRetinaUrl: `${markerRetinaIcon}`,
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
