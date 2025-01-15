@@ -1,11 +1,13 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import api from '../utils/api';
+import { useAuth } from './UserAuthContext';
 
 export const AccommodationContext = createContext();
 
 export const useAcco = () => useContext(AccommodationContext);
 
 export default function AccommodationContextProvider({ children }) {
+  const { setShowLogin } = useAuth();
   const [allAccos, setAllAccos] = useState([]);
   const [specialAccos, setSpecialAccos] = useState([]);
   const [currentAcco, setCurrentAcco] = useState(null);
@@ -55,6 +57,9 @@ export default function AccommodationContextProvider({ children }) {
         withCredentials: true,
       });
       setMyListings(response.data);
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       //console.log(response);
     } catch (error) {
       console.log(error);
@@ -69,7 +74,9 @@ export default function AccommodationContextProvider({ children }) {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       console.log(response.data);
       // success toast?
       return response.data;
@@ -90,7 +97,9 @@ export default function AccommodationContextProvider({ children }) {
           },
         }
       );
-
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       console.log(response.data);
       getMyListings();
       // success toast?
@@ -104,6 +113,9 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
       console.log(response.data.msg);
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       //sucess toast ?
       getMyListings();
     } catch (error) {
@@ -114,6 +126,9 @@ export default function AccommodationContextProvider({ children }) {
   async function postComment(id, comment) {
     try {
       const response = await api.post(`/accommodations/comment/${id}`, comment);
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       setCurrentAcco(response.data);
       return response.data;
     } catch (error) {
@@ -125,6 +140,9 @@ export default function AccommodationContextProvider({ children }) {
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
+      if (response.status === 403) {
+        setShowLogin(true);
+      }
       return response.data;
     } catch (error) {
       console.error('Error deleting comment:', error);
