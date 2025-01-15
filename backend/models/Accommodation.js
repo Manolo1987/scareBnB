@@ -106,6 +106,7 @@ const accommodationSchema = new Schema(
     titleImage: {
       secure_url: { type: String, required: true },
       public_id: { type: String, required: true },
+      required: true,
     },
     images: {
       type: [
