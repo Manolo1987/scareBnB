@@ -8,14 +8,11 @@ import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export default function Search() {
   const navigate = useNavigate();
-  const {
-    setStateFilter,
-    getAllAccommodations,
-    setCurrentPage,
-  } = useAcco();
+  const { setStateFilter, getAllAccommodations, setCurrentPage } = useAcco();
 
-  const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } = useBooking();
-  
+  const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
+    useBooking();
+
   const [selectedRegion, setSelectedRegion] = useState('');
 
   const handleCheckInChange = (e) => {
@@ -50,70 +47,65 @@ export default function Search() {
     setStateFilter(selectedRegion);
 
     // Fetch accommodations mit neuem filter
-    getAllAccommodations(10);
+    // getAllAccommodations(10);
 
     // Navigate mit search parametern
     const searchParams = new URLSearchParams({
       state: selectedRegion,
       checkIn: bookingPreview.checkIn.toISOString().split('T')[0],
       checkOut: bookingPreview.checkOut.toISOString().split('T')[0],
-      guests: bookingPreview.numberOfGuests
+      guests: bookingPreview.numberOfGuests,
     });
 
     navigate(`/accommodationlist?${searchParams.toString()}`);
-
   };
 
   return (
     <div className={styles.searchbar}>
       <form onSubmit={handleSubmit} className={styles.searchbarForm}>
         <select
-          id="selection"
+          id='selection'
           value={selectedRegion}
           onChange={handleRegionChange}
           className={styles.searchbarSelect}
         >
-          <option value="">Choose your final destination</option>
+          <option value=''>Choose your final destination</option>
           {states.map((state) => (
             <option key={state} value={state}>
               {state}
             </option>
           ))}
         </select>
-        <label className={styles.searchbarLabel} >
-          CheckIn:
-        </label>
-          <input
-            type="date"
-            value={bookingPreview.checkIn.toISOString().split('T')[0]}
-            onChange={handleCheckInChange}
-            className={styles.searchbarInput}
-            id='checkIn'
-          />
-        <label className={styles.searchbarLabel} >
-          CheckOut:
-        </label>
-          <input
-            type="date"
-            value={bookingPreview.checkOut.toISOString().split('T')[0]}
-            onChange={handleCheckOutChange}
-            className={styles.searchbarInput}
-            />
-        <label className={styles.searchbarLabel} >
-          Guests:
-        </label>
-          <select
-            value={bookingPreview.numberOfGuests}
+        <label className={styles.searchbarLabel}>CheckIn:</label>
+        <input
+          type='date'
+          value={bookingPreview.checkIn.toISOString().split('T')[0]}
+          onChange={handleCheckInChange}
+          className={styles.searchbarInput}
+          id='checkIn'
+        />
+        <label className={styles.searchbarLabel}>CheckOut:</label>
+        <input
+          type='date'
+          value={bookingPreview.checkOut.toISOString().split('T')[0]}
+          onChange={handleCheckOutChange}
+          className={styles.searchbarInput}
+        />
+        <label className={styles.searchbarLabel}>Guests:</label>
+        <select
+          value={bookingPreview.numberOfGuests}
           onChange={handleGuestsChange}
           className={styles.searchbarSelect}
-          >
-            {[...Array(5)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1} {i + 1 === 1 ? 'Guest' : 'Guests'}
-              </option>
-            ))}
-          </select>
-        <button className='buttonEffect' type='submit'><MagnifyingGlass size={16} /></button>
+        >
+          {[...Array(5)].map((_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1} {i + 1 === 1 ? 'Guest' : 'Guests'}
+            </option>
+          ))}
+        </select>
+        <button className='buttonEffect' type='submit'>
+          <MagnifyingGlass size={16} />
+        </button>
       </form>
     </div>
   );

@@ -55,7 +55,7 @@ export default function OverviewMap() {
   } = useAcco();
 
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
 
   const customIcon = new L.Icon({
     iconUrl: `${markerIcon}`,
@@ -73,11 +73,11 @@ export default function OverviewMap() {
     getAllAccommodations();
   }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
 
-  useEffect(() => {
-    if (allAccos && allAccos.accommodations) {
-      setLoading(false);
-    }
-  }, [allAccos]);
+  // useEffect(() => {
+  //   if (allAccos && allAccos.accommodations) {
+  //     setLoading(false);
+  //   }
+  // }, [allAccos]);
 
   const accommodations = allAccos?.accommodations || [];
 
@@ -95,10 +95,6 @@ export default function OverviewMap() {
       map.flyToBounds(stateBounds, { padding: [0, 0], duration: 1 });
     }
   }, [stateBounds]);
-
-  if (loading) {
-    return <div>Loading accommodations...</div>; //loader
-  }
 
   return (
     <div className={styles.map_outerContainer}>
@@ -127,8 +123,7 @@ export default function OverviewMap() {
         />
         <ZoomControl position='bottomright' />
         {/* <ChangeView /> */}
-        {!loading &&
-          accommodations.length > 0 &&
+        {accommodations.length > 0 &&
           accommodations.map((acco, index) => {
             if (acco.latitude && acco.longitude) {
               return (
