@@ -47,7 +47,49 @@ export default function AdminUserList() {
                       'de-DE'
                     )}
                   </td>
-                  <td>{listedUser.bookings.length}</td>
+                  <td>
+                    <details>
+                      <summary>Bookings ({listedUser.bookings.length})</summary>
+                      <ul>
+                        {listedUser.bookings.map((booking) => (
+                          <div key={booking._id} className={styles.userComment}>
+                            <p>
+                              Accommodation:{' '}
+                              <Link
+                                to={`/accommodationList/${booking.accommodation.title
+                                  .toLowerCase()
+                                  .replace(/\s+/g, '-')}?id=${
+                                  booking.accommodation._id
+                                }`}
+                                state={{ id: booking.accommodation._id }}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                              >
+                                {booking.accommodation.title}
+                              </Link>
+                            </p>
+                            <p>
+                              Check-In:{' '}
+                              {new Date(booking.checkIn).toLocaleDateString(
+                                'de-DE'
+                              )}
+                            </p>
+                            <p>
+                              Check-Out:{' '}
+                              {new Date(booking.checkOut).toLocaleDateString(
+                                'de-DE'
+                              )}
+                            </p>
+                            {booking.isCancelled && (
+                              <span className={styles.cancelled}>
+                                Cancelled
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </ul>
+                    </details>
+                  </td>
                   <td>
                     <details>
                       <summary>Listings ({listedUser.listings.length})</summary>
