@@ -88,13 +88,6 @@ export default function Register() {
 
   return (
     <>
-      <button
-        className={`buttonEffect ${styles.register_button}`}
-        onClick={() => setShowRegister(true)}
-      >
-        Register
-      </button>
-
       {/* Register Overlay */}
       {showRegister && (
         <div className={styles.overlay}>

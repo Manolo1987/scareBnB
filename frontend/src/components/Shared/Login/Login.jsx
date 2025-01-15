@@ -44,13 +44,6 @@ export default function Login() {
 
   return (
     <>
-      <button
-        className={`buttonEffect ${styles.login_button}`}
-        onClick={() => setShowLogin(true)}
-      >
-        Login
-      </button>
-
       {/* Login Overlay */}
       {showLogin && (
         <div className={styles.overlay}>
