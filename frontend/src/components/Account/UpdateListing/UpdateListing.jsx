@@ -15,6 +15,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   const [error, setError] = useState(null);
   const [showTitleImageInput, setShowTitleImageInput] = useState(false);
   const [showOtherImagesInput, setShowOtherImagesInput] = useState(false);
+  const [remainingImages, setRemainingImages] = useState(0);
 
   const [formData, setFormData] = useState({
     title: listing.title || '',
@@ -42,20 +43,33 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     otherImages: '',
   });
 
-  // const remainingImages = Math.max(
-  //   0,
-  //   4 -
-  //     (listing.images.length -
-  //       imagesToDelete.length +
-  //       formData.otherImages.length)
-  // );
+  useEffect(() => {
+    setRemainingImages(
+      Math.max(
+        0,
+        4 -
+          (listing.images.length -
+            imagesToDelete.length +
+            formData.otherImages.length)
+      )
+    );
+    //update FormErrors für otherimages here
+    if (
+      formData.otherImages.length >
+      4 - (listing.images.length - imagesToDelete.length)
+    ) {
+      setFormErrors((prevState) => ({
+        ...prevState,
+        otherImages: `You can upload only 4 images, each no larger than 5MB.`,
+      }));
+    } else {
+      setFormErrors((prevState) => ({
+        ...prevState,
+        otherImages: '',
+      }));
+    }
+  }, [formData.otherImages, imagesToDelete]);
 
-  // remainingImages Anzeige updaten wenn formData.otherImages sich ändert: (in der handleInputChange)
-  const remainingImages =
-    4 -
-    (listing.images.length -
-      imagesToDelete.length +
-      formData.otherImages.length);
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
   }
@@ -76,10 +90,6 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
   };
 
   const handleInputChange = (e) => {
-    console.log('remaining', remainingImages);
-    console.log('listing', listing.images.length);
-    console.log('toDelete', imagesToDelete.length);
-    console.log('formData', formData.otherImages.length);
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
       setFormData((prevState) => {
@@ -110,26 +120,28 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
         //differenzierte Fehlermeldung zurückgeben: zu viele files oder image size too big
       } else if (name === 'otherImages') {
         const selectedFiles = Array.from(files);
-        if (selectedFiles.length > remainingImages) {
-          setFormErrors((prevState) => ({
-            ...prevState,
-            otherImages: `You can upload only 4 images, each no larger than 5MB.`,
-          }));
-          //e.target.value = '';
-        } else {
-          const validFiles = selectedFiles.filter((file) =>
-            validateFile(file, 5 * 1024 * 1024)
-          );
+        // if (
+        //   selectedFiles.length >
+        //   4 - (listing.images.length - imagesToDelete.length)
+        // ) {
+        //   setFormErrors((prevState) => ({
+        //     ...prevState,
+        //     otherImages: `You can upload only 4 images, each no larger than 5MB.`,
+        //   }));
+        // } else {
+        const validFiles = selectedFiles.filter((file) =>
+          validateFile(file, 5 * 1024 * 1024)
+        );
 
-          setFormData((prevState) => ({
-            ...prevState,
-            otherImages: validFiles,
-          }));
-          setFormErrors((prevState) => ({
-            ...prevState,
-            otherImages: '',
-          }));
-        }
+        setFormData((prevState) => ({
+          ...prevState,
+          otherImages: validFiles,
+        }));
+        setFormErrors((prevState) => ({
+          ...prevState,
+          otherImages: '',
+        }));
+        // }
       }
     } else {
       setFormData((prevState) => ({
