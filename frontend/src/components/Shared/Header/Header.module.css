@@ -10,34 +10,35 @@ header {
     align-items: center;
     margin: 1rem;
 
-    .icon_container {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-      overflow: hidden;
-      transition: all 0.3s ease;
+    .icon_container_wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
 
-      &:hover {
-        transform: scale(1.2);
-        box-shadow: 0px 0px 10px white;
-      }
-
-      img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        opacity: 0.6;
+      .icon_container {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        overflow: hidden;
         transition: all 0.3s ease;
 
         &:hover {
-          opacity: 1;
+          transform: scale(1.2);
+          box-shadow: 0px 0px 10px white;
+        }
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+          opacity: 0.6;
+          transition: all 0.3s ease;
+
+          &:hover {
+            opacity: 1;
+          }
         }
       }
-    }
-
-    .account_container {
-      display: flex;
-      gap: 1rem;
     }
   }
 
