@@ -209,10 +209,12 @@ export default function HandleListings() {
         }));
       }
     } else if (name === 'pricePerNight') {
-      if (value.length > 0 && value < 1) {
+      const isValidPrice = /^[1-9]\d*$/.test(value);
+      if (value.length > 0 && !isValidPrice) {
         setFormErrors((prevState) => ({
           ...prevState,
-          pricePerNight: 'Please set a price for your accommodation',
+          pricePerNight:
+            'Please enter a valid positive whole number for the price',
         }));
       } else {
         setFormErrors((prevState) => ({
@@ -403,7 +405,7 @@ export default function HandleListings() {
             <div className='inputContainer'>
               <label htmlFor='pricePerNight'>pricePerNight</label>
               <input
-                type='number'
+                type='text'
                 name='pricePerNight'
                 id='pricePerNight'
                 value={formData.pricePerNight}
