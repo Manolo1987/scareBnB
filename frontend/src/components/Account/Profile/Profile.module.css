@@ -54,3 +54,13 @@
     }
   }
 }
+
+.deleteButton {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  border: none;
+  background-color: crimson;
+  color: white;
+  margin: 0 4rem;
+}
