@@ -55,7 +55,6 @@ export default function OverviewMap() {
   } = useAcco();
 
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
-  //const [loading, setLoading] = useState(true);
 
   const customIcon = new L.Icon({
     iconUrl: `${markerIcon}`,
@@ -72,12 +71,6 @@ export default function OverviewMap() {
   useEffect(() => {
     getAllAccommodations();
   }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
-
-  // useEffect(() => {
-  //   if (allAccos && allAccos.accommodations) {
-  //     setLoading(false);
-  //   }
-  // }, [allAccos]);
 
   const accommodations = allAccos?.accommodations || [];
 
