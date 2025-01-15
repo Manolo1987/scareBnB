@@ -32,7 +32,6 @@ export default function HandleListings() {
   const [formErrors, setFormErrors] = useState({
     title: '',
     description: '',
-    //state: '',
     city: '',
     latitude: '',
     longitude: '',
@@ -41,6 +40,9 @@ export default function HandleListings() {
     titleImage: '',
     otherImages: '',
   });
+  const isFormValid = () => {
+    return Object.values(formErrors).every((error) => error === '');
+  };
 
   function isValidTextField(v) {
     return /^[a-zA-Z0-9\s.,;:'"@_\-\u00C0-\u017F()]+$/.test(v);
@@ -227,6 +229,26 @@ export default function HandleListings() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isFormValid()) {
+      return;
+    }
+    if (
+      !(
+        formData.title &&
+        formData.description &&
+        formData.city &&
+        formData.latitude &&
+        formData.longitude &&
+        formData.bedrooms &&
+        formData.pricePerNight &&
+        formData.titleImage
+      )
+    ) {
+      setError('Please fill out all required fields.');
+      return;
+    } else {
+      setError('');
+    }
     const form = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       if (key === 'titleImage' && value) {
@@ -284,6 +306,7 @@ export default function HandleListings() {
     if (otherImagesInputRef.current) {
       otherImagesInputRef.current.value = null;
     }
+    setError('');
   };
 
   return (
@@ -462,7 +485,7 @@ export default function HandleListings() {
               <p className='inputError'>{formErrors.otherImages}</p>
             )}
           </div>
-          {error && <p className='error'>{error}</p>}
+          {error && <p className={styles.formError}>{error}</p>}
           <div className='formFooter'>
             <button
               type='button'
@@ -471,7 +494,11 @@ export default function HandleListings() {
             >
               Clear Form
             </button>
-            <button type='submit' className='saveButton' disabled={isLoading}>
+            <button
+              type='submit'
+              className='saveButton'
+              disabled={!isFormValid() || isLoading}
+            >
               {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>

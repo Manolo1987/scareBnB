@@ -43,6 +43,10 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
     otherImages: '',
   });
 
+  const isFormValid = () => {
+    return Object.values(formErrors).every((error) => error === '');
+  };
+
   useEffect(() => {
     setRemainingImages(
       Math.max(
@@ -257,6 +261,9 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isFormValid()) {
+      return;
+    }
     const form = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       if (key === 'titleImage' && value) {
@@ -506,7 +513,11 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
             >
               Close without Saving
             </button>
-            <button type='submit' className='saveButton' disabled={isLoading}>
+            <button
+              type='submit'
+              className='saveButton'
+              disabled={!isFormValid() || isLoading}
+            >
               {isLoading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
