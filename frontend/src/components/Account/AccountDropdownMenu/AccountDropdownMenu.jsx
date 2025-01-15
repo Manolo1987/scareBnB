@@ -70,7 +70,7 @@ export default function AccountDropdownMenu() {
                   <li>
                     <NavLink
                       to='/account/adminUserList'
-                      className={styles.dropdown_link}
+                      className={`${styles.admin_link} ${styles.dropdown_link}`}
                     >
                       User List
                     </NavLink>
@@ -78,9 +78,9 @@ export default function AccountDropdownMenu() {
                   <li>
                     <NavLink
                       to='/account/adminAccoList'
-                      className={styles.dropdown_link}
+                      className={`${styles.admin_link} ${styles.dropdown_link}`}
                     >
-                      Accommodations List
+                      Acco List
                     </NavLink>
                   </li>
                 </>
@@ -88,7 +88,7 @@ export default function AccountDropdownMenu() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className={`${styles.logout}`}
+                  className={styles.logout}
                 >
                   Logout
                 </button>

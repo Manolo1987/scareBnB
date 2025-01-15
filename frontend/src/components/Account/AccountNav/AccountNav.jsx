@@ -10,22 +10,50 @@ export default function AccountNav() {
     <div className={styles.accountNav}>
       <ul className={styles.accountNavList}>
         <li>
-          <NavLink to='/account/profile' className={styles.accountNavLink}>
+          <NavLink
+            to='/account/profile'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.accountNavLink} ${styles.activeLink}`
+                : styles.accountNavLink
+            }
+          >
             profile
           </NavLink>
         </li>
         <li>
-          <NavLink to='/account/favourites' className={styles.accountNavLink}>
+          <NavLink
+            to='/account/favourites'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.accountNavLink} ${styles.activeLink}`
+                : styles.accountNavLink
+            }
+          >
             favourites
           </NavLink>
         </li>
         <li>
-          <NavLink to='/account/bookings' className={styles.accountNavLink}>
+          <NavLink
+            to='/account/bookings'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.accountNavLink} ${styles.activeLink}`
+                : styles.accountNavLink
+            }
+          >
             bookings
           </NavLink>
         </li>
         <li>
-          <NavLink to='/account/listings' className={styles.accountNavLink}>
+          <NavLink
+            to='/account/listings'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.accountNavLink} ${styles.activeLink}`
+                : styles.accountNavLink
+            }
+          >
             listings
           </NavLink>
         </li>
@@ -34,7 +62,11 @@ export default function AccountNav() {
             <li>
               <NavLink
                 to='/account/adminUserList'
-                className={styles.accountNavLink}
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.admin_link} ${styles.accountNavLink} ${styles.activeLink}`
+                    : `${styles.admin_link} ${styles.accountNavLink}`
+                }
               >
                 UserList
               </NavLink>
@@ -42,7 +74,11 @@ export default function AccountNav() {
             <li>
               <NavLink
                 to='/account/adminAccoList'
-                className={styles.accountNavLink}
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.admin_link} ${styles.accountNavLink} ${styles.activeLink}`
+                    : `${styles.admin_link} ${styles.accountNavLink}`
+                }
               >
                 AccoList
               </NavLink>

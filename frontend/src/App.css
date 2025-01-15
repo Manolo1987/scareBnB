@@ -1,3 +1,5 @@
+
+/* ----------------------button effect */
 .buttonEffect {
   position: relative;
   overflow: hidden;
@@ -7,8 +9,6 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: all 0.6s ease;
-
-  /* testing animation */
 
   &:after {
     background: white;
