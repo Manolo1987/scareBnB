@@ -189,13 +189,13 @@ export default function Profile() {
           {!isEditing && (
             <>
               <button
-                className={styles.editProfileButton}
+                className='buttonEffect'
                 onClick={() => setIsEditing(true)}
               >
                 Edit Profile
               </button>
               <button
-                className={styles.deleteProfileButton}
+                className={styles.deleteButton}
                 onClick={() => setIsDeleting(true)}
               >
                 Delete Profile
