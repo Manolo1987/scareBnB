@@ -32,7 +32,7 @@ export default function UserAuthContextProvider({ children }) {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error(
+      console.log(
         'Token verification failed:',
         error.response?.data || error.message
       );
@@ -50,11 +50,19 @@ export default function UserAuthContextProvider({ children }) {
     if (isAuthenticated) {
       const fetchData = async () => {
         await fetchUserData();
-        await getAllUsers();
       };
       fetchData();
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (user?.roles === 'admin') {
+      const getUsers = async () => {
+        await getAllUsers();
+      };
+      getUsers();
+    }
+  }, [user]);
 
   // Registration
   const registration = async (formData) => {
@@ -65,7 +73,8 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('Successfully registered!');
       }
     } catch (error) {
-      console.error('Error during registration', error);
+      console.log('Error during registration', error);
+      toast.error('Registration failed');
     }
   };
 
@@ -98,13 +107,11 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         setUser(response.data.user);
         setFavourites(response.data.user.favourites || []);
-        console.log('user favourites', favourites);
-        console.log(response.data.user);
-        console.log('Data from fetchUserData', user);
+
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error fetching userdata', error);
+      console.log('Error fetching userdata', error);
     }
   };
 
