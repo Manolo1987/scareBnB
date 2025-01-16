@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 
 export default function BookedListingsCard({ listing }) {
   return (
-    <Link
-      to={`/accommodationList/${listing.accommodation.title
-        .toLowerCase()
-        .replace(/\s+/g, '-')}?id=${listing.accommodation._id}`}
-      state={{ id: listing.accommodation._id }}
-      className='cardLink'
-    >
-      <div className='cardContainer'>
-        <div className='imgContainer'>
+    <div className='cardContainer'>
+      <div className='imgContainer'>
+        <Link
+          to={`/accommodationList/${listing.accommodation.title
+            .toLowerCase()
+            .replace(/\s+/g, '-')}?id=${listing.accommodation._id}`}
+          state={{ id: listing.accommodation._id }}
+          className='cardLink'
+        >
           <img
             src={listing.accommodation.titleImage.secure_url}
             alt={listing.accommodation.title}
@@ -30,43 +30,43 @@ export default function BookedListingsCard({ listing }) {
               </span>
             </div>
           )}
+        </Link>
+      </div>
+      <div className='infoContainer'>
+        <div className='infoHeader'>
+          <span className='cardTitle'>{listing.accommodation.title}</span>
+          <span className='cardCity'>{listing.accommodation.city}</span>
         </div>
-        <div className='infoContainer'>
-          <div className='infoHeader'>
-            <span className='cardTitle'>{listing.accommodation.title}</span>
-            <span className='cardCity'>{listing.accommodation.city}</span>
-          </div>
-          <div className='infoBody'>
-            <p>
-              Guest: {listing.guest.firstName} {listing.guest.lastName}
-            </p>
-            <p className={styles.cardNumberOfGuests}>
-              Number of Guests: {listing.numberOfGuests}
-            </p>
-            <p className={styles.cardCheckIn}>
-              Check In: {new Date(listing.checkIn).toLocaleDateString()}
-            </p>
-            <p className={styles.cardCheckOut}>
-              Check Out: {new Date(listing.checkOut).toLocaleDateString()}
-            </p>
-            <p className={styles.cardPaymentMethod}>
-              Payment Method: {listing.paymentMethod}
-            </p>
-            <p className={styles.cardTotalPrice}>
-              Total Price: {listing.totalPrice}€
-            </p>
-          </div>
-          <div className='cardButtonContainer'>
-            <a
-              href={`mailto:${listing.guest.email}`}
-              className='cardButton'
-              title='Contact Host'
-            >
-              <Envelope size={32} className='buttonIcon' />
-            </a>
-          </div>
+        <div className='infoBody'>
+          <p>
+            Guest: {listing.guest.firstName} {listing.guest.lastName}
+          </p>
+          <p className={styles.cardNumberOfGuests}>
+            Number of Guests: {listing.numberOfGuests}
+          </p>
+          <p className={styles.cardCheckIn}>
+            Check In: {new Date(listing.checkIn).toLocaleDateString()}
+          </p>
+          <p className={styles.cardCheckOut}>
+            Check Out: {new Date(listing.checkOut).toLocaleDateString()}
+          </p>
+          <p className={styles.cardPaymentMethod}>
+            Payment Method: {listing.paymentMethod}
+          </p>
+          <p className={styles.cardTotalPrice}>
+            Total Price: {listing.totalPrice}€
+          </p>
+        </div>
+        <div className='cardButtonContainer'>
+          <a
+            href={`mailto:${listing.guest.email}`}
+            className='cardButton'
+            title='Contact Host'
+          >
+            <Envelope size={32} className='buttonIcon' />
+          </a>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
