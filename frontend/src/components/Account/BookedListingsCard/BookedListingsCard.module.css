@@ -1,42 +1,39 @@
-.bookedListingCard {
-  width: 100%;
-
-  height: auto;
+.cardContainer_special {
+  position: relative;
+}
+.contactLinkContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
-  margin: 0.5rem 0;
-  justify-content: space-around;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  align-self: start;
+}
+@media (max-width: 600px) {
+  .contactLinkContainer {
+    align-self: end;
+  }
+}
+.contactLink {
+  cursor: pointer;
+  display: flex;
   align-items: center;
-  background-color: #222;
-  border: 1px solid #444;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #111;
-  }
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  width: 2rem;
+  aspect-ratio: 1;
 }
-.img_container {
-  max-width: 300px;
-}
-.cardImage {
-  width: 100%;
-}
-
-.info_container {
+.icon {
   color: var(--color-light);
-  padding: 1rem;
-
-  .cancelledSpan {
-    font-size: 1rem;
-    color: white;
-    padding: 0.2rem 0.4rem;
-    background-color: red;
-  }
-
-  p {
-    margin: 0.5rem 0;
-    font-size: 1rem;
-  }
+  width: 1.2rem;
+}
+.cancelledContainer {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.6rem;
+  background-color: crimson;
+  padding: 0.2rem;
+  border-radius: 4px;
 }
