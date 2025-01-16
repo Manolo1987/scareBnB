@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './Booking.module.css';
 import { useBooking } from '../../context/bookingContext';
 import { useAuth } from '../../context/UserAuthContext';
 import { toast } from 'react-toastify';
 
 export default function Booking() {
-  const navigate = useNavigate();
   const {
     currentBooking,
     createBooking,

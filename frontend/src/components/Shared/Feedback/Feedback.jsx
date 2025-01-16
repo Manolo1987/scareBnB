@@ -9,7 +9,6 @@ export default function Feedback({ bookingId }) {
   const [hover, setHover] = useState(null);
 
   const handleClick = (e, currentRating) => {
-    console.log(currentRating);
     e.stopPropagation();
     e.preventDefault();
     giveFeedback(bookingId, currentRating);
