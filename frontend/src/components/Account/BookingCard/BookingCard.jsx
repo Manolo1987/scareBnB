@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Envelope, Check } from '@phosphor-icons/react';
 
 export default function BookingCard({ booking, cancelBooking, currentDate }) {
-  console.log(booking);
   return (
     <div className={styles.wrapper}>
       <Link
