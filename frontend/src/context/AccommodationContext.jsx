@@ -36,9 +36,8 @@ export default function AccommodationContextProvider({ children }) {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&bedrooms=${bedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
       const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -46,9 +45,8 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.get(`/accommodations/one/${id}`);
       setCurrentAcco(response.data);
-      //console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -61,9 +59,8 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      //console.log(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -79,13 +76,12 @@ export default function AccommodationContextProvider({ children }) {
         setShowLogin(true);
       }
       if (response.status === 200) {
-        console.log(response.data);
         toast.success('New listing added');
         return response.data;
       }
     } catch (error) {
       toast.error('Something went wrong - please try again');
-      console.log(error.response);
+      console.error(error.response);
     }
   }
 
@@ -105,7 +101,6 @@ export default function AccommodationContextProvider({ children }) {
         setShowLogin(true);
       }
       if (response.status === 200) {
-        console.log(response.data);
         toast.success('Listing updated');
         getMyListings();
 
@@ -113,14 +108,14 @@ export default function AccommodationContextProvider({ children }) {
       }
     } catch (error) {
       toast.error('Something went wrong - please try again');
-      console.log(error.response);
+      console.error(error.response);
     }
   }
 
   async function deleteListing(id) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
-      console.log(response.data.msg);
+
       if (response.status === 403) {
         setShowLogin(true);
       }
@@ -130,7 +125,7 @@ export default function AccommodationContextProvider({ children }) {
       }
     } catch (error) {
       toast.error('Something went wrong - please try again');
-      console.log(error);
+      console.error(error);
     }
   }
 
