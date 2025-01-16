@@ -64,7 +64,7 @@ export async function getAllAccommodations(req, res) {
       },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -79,7 +79,7 @@ export async function getSpecial(req, res) {
     }
     res.status(200).json(specialAccos);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -100,7 +100,7 @@ export async function getOneAccommodation(req, res) {
     //console.log(acco);
     res.status(200).json(acco);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -118,7 +118,7 @@ export async function getMyListings(req, res) {
 
     res.status(200).json(myListings);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -181,7 +181,7 @@ export async function createListing(req, res) {
 
     res.status(200).json(newListing);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
