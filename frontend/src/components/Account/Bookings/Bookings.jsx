@@ -7,11 +7,8 @@ export default function Bookings() {
   const { myBookings, cancelBooking, getMyBookings } = useBooking();
   useEffect(() => {
     getMyBookings();
-  }, [myBookings]);
-
+  }, []);
   const currentDate = new Date();
-
-  // Buchungen aufteilen
   const pastBookings = myBookings.filter(
     (booking) => new Date(booking.checkIn) < currentDate
   );
@@ -19,39 +16,48 @@ export default function Bookings() {
     (booking) => new Date(booking.checkIn) >= currentDate
   );
 
-  // Render-Funktion für Buchungen
-  const renderBooking = (booking) => {
-    const checkInDate = new Date(booking.checkIn);
-    const checkOutDate = new Date(booking.checkOut);
-
-    return (
-      <BookingCard
-        key={booking._id}
-        booking={booking}
-        checkInDate={checkInDate}
-        checkOutDate={checkOutDate}
-        cancelBooking={cancelBooking}
-        currentDate={currentDate}
-      />
-    );
-  };
-
   return (
-    <section className={styles.bookings}>
-      {/* Zukünftige Buchungen */}
+    <section className='accountWrapper'>
       <h2>Upcoming Bookings</h2>
-      {upcomingBookings.length > 0 ? (
-        upcomingBookings.map(renderBooking)
+      {upcomingBookings?.length > 0 ? (
+        <ul className='cardList'>
+          {upcomingBookings?.map((booking, index) => {
+            return (
+              <li key={index}>
+                <BookingCard
+                  booking={booking}
+                  cancelBooking={cancelBooking}
+                  currentDate={currentDate}
+                />
+              </li>
+            );
+          })}
+        </ul>
       ) : (
-        <p>No upcoming bookings found.</p>
+        <div className='messageContainer'>
+          <p className='message'>No upcoming bookings found.</p>
+        </div>
       )}
 
-      {/* Vergangene Buchungen */}
       <h2>Past Bookings</h2>
-      {pastBookings.length > 0 ? (
-        pastBookings.map(renderBooking)
+      {pastBookings?.length > 0 ? (
+        <ul className='cardList'>
+          {pastBookings?.map((booking, index) => {
+            return (
+              <li key={index}>
+                <BookingCard
+                  booking={booking}
+                  cancelBooking={cancelBooking}
+                  currentDate={currentDate}
+                />
+              </li>
+            );
+          })}
+        </ul>
       ) : (
-        <p>No past bookings found.</p>
+        <div className='messageContainer'>
+          <p className='message'>No past bookings found.</p>
+        </div>
       )}
     </section>
   );

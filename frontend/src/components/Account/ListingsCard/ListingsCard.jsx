@@ -40,7 +40,7 @@ export default function ListingsCard({ listing }) {
         state={{ id: listing._id }}
         className='cardLink'
       >
-        <div className={`cardContainer ${styles.cardContainer_special}`}>
+        <div className='cardContainer'>
           <div className='imgContainer'>
             <img
               src={listing.titleImage.secure_url}
@@ -71,21 +71,21 @@ export default function ListingsCard({ listing }) {
                 Price per Night: {listing.pricePerNight} €
               </span>
             </div>
-          </div>
-          <div className={styles.cardButtonContainer}>
-            <button className={styles.listingsButton} onClick={handleShowForm}>
-              <Pencil size={32} className={styles.buttonIcon} />
-            </button>
-            <button
-              className={styles.listingsButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setShowDeleteMessage(true);
-              }}
-            >
-              <Trash size={32} className={styles.buttonIcon} />
-            </button>
+            <div className='cardButtonContainer'>
+              <button className='cardButton' onClick={handleShowForm}>
+                <Pencil size={32} className='buttonIcon' />
+              </button>
+              <button
+                className='cardButton'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setShowDeleteMessage(true);
+                }}
+              >
+                <Trash size={32} className='buttonIcon' />
+              </button>
+            </div>
           </div>
         </div>
       </Link>
