@@ -5,7 +5,7 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  background-color: var(--color-prime);
+  background-color: var(--color-dark);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
   color: var(--color-light);
@@ -171,4 +171,8 @@
 .bookButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.cancelButton {
+  align-self: flex-end;
 }
