@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import api from '../utils/api';
 import { useAuth } from './UserAuthContext';
+import { toast } from 'react-toastify';
 
 export const AccommodationContext = createContext();
 
@@ -77,10 +78,13 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      console.log(response.data);
-      // success toast?
-      return response.data;
+      if (response.status === 200) {
+        console.log(response.data);
+        toast.success('New listing added');
+        return response.data;
+      }
     } catch (error) {
+      toast.error('Something went wrong - please try again');
       console.log(error.response);
     }
   }
@@ -100,11 +104,15 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      console.log(response.data);
-      getMyListings();
-      // success toast?
-      return response.data;
+      if (response.status === 200) {
+        console.log(response.data);
+        toast.success('Listing updated');
+        getMyListings();
+
+        return response.data;
+      }
     } catch (error) {
+      toast.error('Something went wrong - please try again');
       console.log(error.response);
     }
   }
@@ -116,9 +124,12 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      //sucess toast ?
-      getMyListings();
+      if (response.status === 200) {
+        toast.success('Listing deleted');
+        getMyListings();
+      }
     } catch (error) {
+      toast.error('Something went wrong - please try again');
       console.log(error);
     }
   }
