@@ -120,11 +120,8 @@ export const BookingContextProvider = ({ children }) => {
       const response = await api.put(`/bookings/cancelBooking/${bookingId}`);
       if (response.status === 200) {
         toast.success('Booking cancelled successfully');
-        setMyBookings((prev) =>
-          prev.map((booking) =>
-            booking._id === bookingId ? response.data.booking : booking
-          )
-        );
+
+        await getMyBookings();
       }
       if (response.status === 403) {
         setShowLogin(true);
@@ -143,8 +140,8 @@ export const BookingContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         toast.success('Feedback given successfully');
-        //navigate('/account/bookings');
-        window.location.reload();
+
+        await getMyBookings();
       }
       if (response.status === 403) {
         setShowLogin(true);
