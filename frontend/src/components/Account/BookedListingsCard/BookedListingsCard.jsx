@@ -38,10 +38,10 @@ export default function BookedListingsCard({ listing }) {
           Number of Guests: {listing.numberOfGuests}
         </p>
         <p className={styles.cardCheckIn}>
-          Check In: {new Date(listing.checkIn).toLocaleDateString()}
+          Check In: {new Date(listing.checkIn).toLocaleDateString('de-DE')}
         </p>
         <p className={styles.cardCheckOut}>
-          Check Out: {new Date(listing.checkOut).toLocaleDateString()}
+          Check Out: {new Date(listing.checkOut).toLocaleDateString('de-DE')}
         </p>
         <p className={styles.cardPaymentMethod}>
           Payment Method: {listing.paymentMethod}
