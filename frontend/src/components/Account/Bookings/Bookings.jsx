@@ -8,6 +8,7 @@ export default function Bookings() {
   useEffect(() => {
     getMyBookings();
   }, []);
+
   const currentDate = new Date();
   const pastBookings = myBookings.filter(
     (booking) => new Date(booking.checkIn) < currentDate
@@ -24,11 +25,13 @@ export default function Bookings() {
           {upcomingBookings?.map((booking, index) => {
             return (
               <li key={index}>
-                <BookingCard
-                  booking={booking}
-                  cancelBooking={cancelBooking}
-                  currentDate={currentDate}
-                />
+                {booking && (
+                  <BookingCard
+                    booking={booking}
+                    cancelBooking={cancelBooking}
+                    currentDate={currentDate}
+                  />
+                )}
               </li>
             );
           })}
@@ -45,11 +48,13 @@ export default function Bookings() {
           {pastBookings?.map((booking, index) => {
             return (
               <li key={index}>
-                <BookingCard
-                  booking={booking}
-                  cancelBooking={cancelBooking}
-                  currentDate={currentDate}
-                />
+                {booking && (
+                  <BookingCard
+                    booking={booking}
+                    cancelBooking={cancelBooking}
+                    currentDate={currentDate}
+                  />
+                )}
               </li>
             );
           })}

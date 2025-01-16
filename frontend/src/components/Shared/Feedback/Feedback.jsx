@@ -12,7 +12,7 @@ export default function Feedback({ bookingId }) {
     e.stopPropagation();
     e.preventDefault();
     giveFeedback(bookingId, currentRating);
-    getMyBookings();
+    // getMyBookings();
   };
   return (
     <div className={styles.feedbackContainer}>

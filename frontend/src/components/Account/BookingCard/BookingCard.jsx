@@ -11,14 +11,14 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
       <div className='imgContainer'>
         <Link
           to={`/accommodationList/${booking.accommodation.title
-            .toLowerCase()
-            .replace(/\s+/g, '-')}?id=${booking.accommodation._id}`}
+            ?.toLowerCase()
+            ?.replace(/\s+/g, '-')}?id=${booking.accommodation._id}`}
           state={{ id: booking.accommodation._id }}
           className='cardLink'
         >
           <img
-            src={booking.accommodation.titleImage.secure_url}
-            alt={booking.accommodation.title}
+            src={booking?.accommodation?.titleImage?.secure_url}
+            alt={booking?.accommodation.title}
             className='cardImage'
           />
           {booking.isCancelled && (
@@ -46,10 +46,10 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
             Number of Guests: {booking.numberOfGuests}
           </p>
           <p className={styles.cardCheckIn}>
-            Check In: {new Date(booking.checkIn).toLocaleDateString()}
+            Check In: {new Date(booking.checkIn).toLocaleDateString('de-DE')}
           </p>
           <p className={styles.cardCheckOut}>
-            Check Out: {new Date(booking.checkOut).toLocaleDateString()}
+            Check Out: {new Date(booking.checkOut).toLocaleDateString('de-DE')}
           </p>
           <p className={styles.cardPaymentMethod}>
             Payment Method: {booking.paymentMethod}
