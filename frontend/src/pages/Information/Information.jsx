@@ -25,13 +25,13 @@ export default function Information() {
         <section id='privacy' className={styles.box}>
           <h2>Privacy</h2>
           <div className="privacyContent">
-            <h3>Introduction</h3>
+            <h3 className={styles.titles}>Introduction</h3>
             <p>Welcome to Scarebnb, an experimental project focused on providing unique, spooky accommodation experiences.</p>
 
-            <h3>Project Status</h3>
+            <h3 className={styles.titles}>Project Status</h3>
             <p><strong>Important Notice:</strong> Scarebnb is a developmental project created by enthusiasts exploring the intersection of hospitality and horror-themed experiences.</p>
 
-            <h3>Data Collection</h3>
+            <h3 className={styles.titles}>Data Collection</h3>
             <ul>
               <li>Name</li>
               <li>Contact information</li>
@@ -40,7 +40,7 @@ export default function Information() {
               <li>Travel dates</li>
             </ul>
 
-            <h3>Data Protection Transparency</h3>
+            <h3 className={styles.titles}>Data Protection Transparency</h3>
             <p>We acknowledge that:</p>
             <ul>
               <li>Our security infrastructure is in its early stages</li>
@@ -48,16 +48,16 @@ export default function Information() {
               <li>There is a higher potential risk of data exposure compared to established platforms</li>
             </ul>
 
-            <h3>Data Protection</h3>
+            <h3 className={styles.titles}>Data Protection</h3>
             <p>We are committed to protecting your personal data. This Privacy Policy outlines how we collect, use, and safeguard your information.</p>
 
-            <h3>Data We Collect</h3>
+            <h3 className={styles.titles}>Data We Collect</h3>
             <p>We may collect the following personal data:</p>
             <ul>
               <li><strong>Personal Information:</strong> Name, contact information, payment details, accommodation preferences, and travel dates.</li>
             </ul>
 
-            <h3>How We Use Your Data</h3>
+            <h3 className={styles.titles}>How We Use Your Data</h3>
             <p>We use your personal data to:</p>
             <ul>
               <li>Process bookings and reservations.</li>
@@ -66,16 +66,16 @@ export default function Information() {
               <li>Comply with legal obligations.</li>
             </ul>
 
-            <h3>Data Sharing and Transfer</h3>
+            <h3 className={styles.titles}>Data Sharing and Transfer</h3>
             <p>We do not share your personal data with third parties, except as necessary to fulfill your booking or comply with legal requirements.</p>
 
-            <h3>Data Security</h3>
+            <h3 className={styles.titles}>Data Security</h3>
             <p>We implement reasonable security measures to protect your personal data from unauthorized access, use, or disclosure. However, please be aware that no system is completely secure.</p>
 
-            <h3>Cookies</h3>
+            <h3 className={styles.titles}>Cookies</h3>
             <p>We use cookies to store user login information. We do not use third-party cookies.</p>
 
-            <h3>Your Rights</h3>
+            <h3 className={styles.titles}>Your Rights</h3>
             <p>You have the following rights regarding your personal data:</p>
             <ul>
               <li><strong>Access:</strong> You can request access to your personal data.</li>
@@ -86,7 +86,7 @@ export default function Information() {
               <li><strong>Objection:</strong> You can object to the processing of your personal data.</li>
             </ul>
 
-            <h3>Contact Us</h3>
+            <h3 className={styles.titles}>Contact Us</h3>
             <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at <a href='mailto:scarebnba@gmail.com'>scarebnba@gmail.com</a>.</p>
             
 
@@ -99,17 +99,17 @@ export default function Information() {
           <div className={styles.imprintContent}>
             <p><strong>Disclaimer:</strong> This is an entirely fictional imprint created for the Scarebnb project as this page is not aiming to score any profit and is just for showcasing purposes.</p>
 
-            <h3>Company Details</h3>
+            <h3 className={styles.titles}>Company Details</h3>
             <p>Scarebnb GmbH (Fictional)</p>
 
-            <h3>Postal Address</h3>
+            <h3 className={styles.titles}>Postal Address</h3>
             <address>
               Geisterberg Straße 13<br />
               13666 Spukstadt, Niedersachsen<br />
               Germany
             </address>
 
-            <h3>Management</h3>
+            <h3 className={styles.titles}>Management</h3>
             <p>Fictional Managing Directors:</p>
             <ul>
               <li>Elena Schattenwanderer</li>
