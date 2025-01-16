@@ -43,8 +43,8 @@ export default function BookingCard({
         <p>
           Guest: {booking.guest.firstName} {booking.guest.lastName}
         </p>
-        <p>Check In: {checkInDate.toLocaleDateString()}</p>
-        <p>Check Out: {checkOutDate.toLocaleDateString()}</p>
+        <p>Check In: {checkInDate.toLocaleDateString('de-DE')}</p>
+        <p>Check Out: {checkOutDate.toLocaleDateString('de-DE')}</p>
         <p>Total: {booking.totalPrice}€</p>
       </div>
       {booking.isCancelled && (

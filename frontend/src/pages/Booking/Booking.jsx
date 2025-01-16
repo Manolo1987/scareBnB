@@ -63,6 +63,11 @@ export default function Booking() {
   const handleInputChange = (field, value) => {
     setCreditCardDetails((prev) => ({ ...prev, [field]: value }));
 
+    if (value === '') {
+      setValidationErrors((prev) => ({ ...prev, [field]: '' }));
+      return;
+    }
+
     let errorMessage = '';
     if (field === 'cardNumber') {
       errorMessage = validateCardNumber(value);
@@ -121,10 +126,12 @@ export default function Booking() {
           <p>Price per Night: {bookingPreview?.pricePerNight}€</p>
           <p>Guests: {currentBooking.numberOfGuests}</p>
           <p>
-            CheckIn: {new Date(currentBooking?.checkIn).toLocaleDateString()}
+            CheckIn:{' '}
+            {new Date(currentBooking?.checkIn).toLocaleDateString('de-DE')}
           </p>
           <p>
-            CheckOut: {new Date(currentBooking?.checkOut).toLocaleDateString()}
+            CheckOut:{' '}
+            {new Date(currentBooking?.checkOut).toLocaleDateString('de-DE')}
           </p>
           <p>Total Nights: {bookingPreview?.nights}</p>
           <p>Total Price: {bookingPreview?.totalPrice}€</p>
@@ -150,7 +157,20 @@ export default function Booking() {
               name='paymentMethod'
               value='banktransfer'
               checked={paymentMethod === 'banktransfer'}
-              onChange={() => setPaymentMethod('banktransfer')}
+              onChange={() => {
+                setPaymentMethod('banktransfer');
+
+                setCreditCardDetails({
+                  cardNumber: '',
+                  expiryDate: '',
+                  cvv: '',
+                });
+                setValidationErrors({
+                  cardNumber: '',
+                  expiryDate: '',
+                  cvv: '',
+                });
+              }}
             />
             Bank Transfer
           </label>
@@ -233,9 +253,15 @@ export default function Booking() {
 
       <button
         onClick={handleBooking}
-        disabled={Object.values(validationErrors).some(
-          (error) => error && !error.includes('Valid')
-        )}
+        disabled={
+          paymentMethod === 'creditCard' &&
+          (!creditCardDetails.cardNumber ||
+            !creditCardDetails.expiryDate ||
+            !creditCardDetails.cvv ||
+            validationErrors.cardNumber !== 'Valid card number.' ||
+            validationErrors.expiryDate !== 'Valid expiry date.' ||
+            validationErrors.cvv !== 'Valid CVV.')
+        }
         className={styles.bookButton}
       >
         Book Now

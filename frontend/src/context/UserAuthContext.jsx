@@ -79,6 +79,9 @@ export default function UserAuthContextProvider({ children }) {
   };
 
   // Login
+
+  const fiveHoursLater = new Date();
+  fiveHoursLater.setHours(fiveHoursLater.getHours() + 5);
   const login = async (formData) => {
     try {
       const response = await api.post('/user/login', formData, {
@@ -86,7 +89,10 @@ export default function UserAuthContextProvider({ children }) {
       });
 
       if (response.status === 200) {
-        Cookies.set('jwt', response.data.token);
+        Cookies.set('jwt', response.data.token, {
+          expires: fiveHoursLater,
+          path: '/',
+        });
         setIsAuthenticated(true);
         toast.success('Login Successfull!');
       }
