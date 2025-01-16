@@ -33,62 +33,58 @@ export default function ListingsCard({ listing }) {
 
   return (
     <>
-      <Link
-        to={`/accommodationList/${listing.title
-          .toLowerCase()
-          .replace(/\s+/g, '-')}?id=${listing._id}`}
-        state={{ id: listing._id }}
-        className='cardLink'
-      >
-        <div className='cardContainer'>
-          <div className='imgContainer'>
+      <div className='cardContainer'>
+        <div className='imgContainer'>
+          <Link
+            to={`/accommodationList/${listing.title
+              .toLowerCase()
+              .replace(/\s+/g, '-')}?id=${listing._id}`}
+            state={{ id: listing._id }}
+            className='cardLink'
+          >
             <img
               src={listing.titleImage.secure_url}
               alt={listing.title}
               className='cardImage'
             />
+          </Link>
+        </div>
+        <div className='infoContainer'>
+          <div className='infoHeader'>
+            <span className='cardTitle'>{listing.title}</span>
+            <span className='cardCity'>{listing.city}</span>
           </div>
-          <div className='infoContainer'>
-            <div className='infoHeader'>
-              <span className='cardTitle'>{listing.title}</span>
-              <span className='cardCity'>{listing.city}</span>
-            </div>
-            <div className='infoBody'>
-              <span
-                className='cardRating'
-                title={`Rating: ${listing.rating.toFixed(1)} spooks`}
-              >
-                <Ghost
-                  className='ghost'
-                  weight='fill'
-                  size={24}
-                  color='white'
-                />
-                {listing.rating.toFixed(1)}
-              </span>
-              <span className='cardBedrooms'>Bedrooms: {listing.bedrooms}</span>
-              <span className='cardPricePerNight'>
-                Price per Night: {listing.pricePerNight} €
-              </span>
-            </div>
-            <div className='cardButtonContainer'>
-              <button className='cardButton' onClick={handleShowForm}>
-                <Pencil size={32} className='buttonIcon' />
-              </button>
-              <button
-                className='cardButton'
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setShowDeleteMessage(true);
-                }}
-              >
-                <Trash size={32} className='buttonIcon' />
-              </button>
-            </div>
+          <div className='infoBody'>
+            <span
+              className='cardRating'
+              title={`Rating: ${listing.rating.toFixed(1)} spooks`}
+            >
+              <Ghost className='ghost' weight='fill' size={24} color='white' />
+              {listing.rating.toFixed(1)}
+            </span>
+            <span className='cardBedrooms'>Bedrooms: {listing.bedrooms}</span>
+            <span className='cardPricePerNight'>
+              Price per Night: {listing.pricePerNight} €
+            </span>
+          </div>
+          <div className='cardButtonContainer'>
+            <button className='cardButton' onClick={handleShowForm}>
+              <Pencil size={32} className='buttonIcon' />
+            </button>
+            <button
+              className='cardButton'
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setShowDeleteMessage(true);
+              }}
+            >
+              <Trash size={32} className='buttonIcon' />
+            </button>
           </div>
         </div>
-      </Link>
+      </div>
+
       {showUpdateForm && (
         <UpdateListing
           listing={listing}
