@@ -15,7 +15,7 @@ export default function Listings() {
   return (
     <>
       <ListingsNav />
-      <div className='listingsWrapper'>
+      <div className='accountWrapper'>
         <div className='headingEffectContainer'>
           <h1 className='headingEffect'>My Listings</h1>
         </div>
@@ -28,7 +28,7 @@ export default function Listings() {
           </div>
         )}
         {myListings?.length > 0 && (
-          <ul className={styles.mylistings_list}>
+          <ul className='cardList'>
             {myListings?.map((listing, index) => {
               return (
                 <li key={index}>
