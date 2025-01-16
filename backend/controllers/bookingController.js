@@ -177,8 +177,9 @@ export async function giveFeedback(req, res) {
     }
 
     const currentDate = new Date();
-    const checkOutDate = new Date(booking.checkOut);
-    if (currentDate < checkOutDate) {
+    // const checkOutDate = new Date(booking.checkOut);
+    const checkInDate = new Date(booking.checkIn);
+    if (currentDate < checkInDate) {
       return res
         .status(400)
         .json({ msg: 'You can only give feedback after the check-out date' });

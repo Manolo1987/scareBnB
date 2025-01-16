@@ -60,13 +60,13 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
             </p>
           </div>
           <div className='cardButtonContainer'>
-            <a
+            {/* <a
               href={`mailto:${booking.guest.email}`}
               className='cardButton'
               title='Contact Host'
             >
               <Envelope size={32} className='buttonIcon' />
-            </a>
+            </a> */}
           </div>
           <div className='infoFooter'>
             {!booking.isCancelled &&

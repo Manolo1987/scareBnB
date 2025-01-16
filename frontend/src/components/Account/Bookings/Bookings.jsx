@@ -7,15 +7,13 @@ export default function Bookings() {
   const { myBookings, cancelBooking, getMyBookings } = useBooking();
   useEffect(() => {
     getMyBookings();
-  }, [myBookings]);
+  }, []);
   const currentDate = new Date();
   const pastBookings = myBookings.filter(
     (booking) => new Date(booking.checkIn) < currentDate
-    //   (booking) => new Date(booking.checkOut) < currentDate
   );
   const upcomingBookings = myBookings.filter(
     (booking) => new Date(booking.checkIn) >= currentDate
-    //(booking) => new Date(booking.checkOut) >= currentDate
   );
 
   return (

@@ -52,11 +52,11 @@ export const BookingContextProvider = ({ children }) => {
     setBookingPreview(createBookingPreview());
   }, [currentAcco, checkIn, checkOut, numberOfGuests, paymentMethod]);
 
-  useEffect(() => {
-    if (user) {
-      setMyBookings(user?.bookings || []);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setMyBookings(user?.bookings || []);
+  //   }
+  // }, [user]);
 
   const createBooking = async () => {
     try {
@@ -143,7 +143,8 @@ export const BookingContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         toast.success('Feedback given successfully');
-        navigate('/');
+        //navigate('/account/bookings');
+        window.location.reload();
       }
       if (response.status === 403) {
         setShowLogin(true);
