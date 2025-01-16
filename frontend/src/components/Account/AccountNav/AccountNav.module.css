@@ -14,7 +14,7 @@
     .accountNavLink {
       text-decoration: none;
       color: var(--color-light);
-      padding: 10px 30px;
+      padding: 6px 30px;
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
       transition: all 0.3s ease;
 
@@ -24,7 +24,7 @@
         background: linear-gradient(135deg, rgba(220, 20, 60, 0), black);
       }
     }
-    
+
     .activeLink {
       font-weight: bold;
       text-shadow: 3px 3px 3px crimson;
@@ -36,17 +36,30 @@
         color: var(--color-light);
       }
     }
+    
+    .admin_link {
+      color: var(--color-secondary);
+    }
   }
 }
 
-.admin_link {
-  color: var(--color-secondary);
-}
 
-@media (min-width: 701px) {
-  
-}
+@media (max-width: 800px) {
+  .accountNavList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center;
 
-@media (max-width: 700px) {
-  
+    .accountNavLink {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  }
+
+  .admin_link {
+    grid-column: span 2; /* Admin-Links über die gesamte Breite */
+    text-align: center;
+    padding: 10px;
+  }
 }
