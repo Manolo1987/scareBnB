@@ -10,7 +10,7 @@ export default function Listings() {
   const { myListings, getMyListings } = useAcco();
   useEffect(() => {
     getMyListings();
-  }, [myListings]);
+  }, []);
 
   return (
     <>
