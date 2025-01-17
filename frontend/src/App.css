@@ -55,16 +55,21 @@
   --wrapMargin: 1rem auto 2rem;
 }
 /* wrapper for listings-content and profile-contant */
-.listingsWrapper {
+.accountWrapper {
   max-width: var(--wrapWidth);
   margin: var(--wrapMargin);
 }
 /* account: messages like "no bookings yet", "you don't have any listings yet, create one" */
 .messageContainer {
-  text-align: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
 .message {
   color: white;
+  text-align: center;
 }
 .messageLink {
   color: white;
@@ -159,8 +164,17 @@
   background-color: crimson;
   color: white;
 }
+
+/* ---------------global styles for list which contain cards (Listings, BookedListings, Bookings) */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 /* --------------global styles for horizontal Cards in Account Components and Map Popup*/
 .cardContainer {
+  position: relative;
   background-color: #222;
   border: 1px solid #444;
   border-radius: 8px;
@@ -194,6 +208,7 @@
 }
 .imgContainer {
   max-width: 200px;
+  position: relative;
 }
 .cardImage {
   width: 100%;
@@ -208,7 +223,25 @@
 .imgContainer.col {
   max-width: 100%;
 }
+/* cancelled-label */
+.cancelledContainer {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.701);
+}
+.cancelledSpan {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.6rem;
+  background-color: rgb(0, 0, 0);
+  padding: 0.2rem 0.4rem;
+  border-radius: 2px;
+  color: #ccc;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
 .infoContainer {
+  position: relative;
   color: var(--color-light);
   padding: 1rem;
   flex-grow: 1;
@@ -223,6 +256,7 @@
 }
 .cardTitle {
   font-size: 1.2rem;
+  margin-right: 3.2rem;
 }
 .cardCity {
   display: block;
@@ -254,6 +288,65 @@
   align-items: center;
   gap: 0.2rem;
 }
+
+/* sepcial Card Styling for cards with buttons, labels and feedback */
+.cardButtonContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  padding: 0.8rem;
+  align-self: start;
+}
+@media (max-width: 600px) {
+  .cardButtonContainer {
+    align-self: end;
+  }
+}
+.cardButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  width: 1.8rem;
+  aspect-ratio: 1;
+  .buttonIcon {
+    color: var(--color-light);
+    width: 1.2rem;
+  }
+  /* &:hover .buttonIcon {
+    color: crimson;
+  } */
+}
+.infoFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.bookingCancelButton {
+  padding: 0.2rem 0.4rem;
+  background-color: crimson;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: darkred;
+  }
+}
+.givenFeedback {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+}
+.feedbackCheck {
+  width: 1rem;
+}
+
 /* -----------------------------------override leaflet styles */
 .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper {
   /* flex-direction: column; */

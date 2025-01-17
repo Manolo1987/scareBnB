@@ -5,7 +5,6 @@ import AccoCard from '../../Shared/AccoCard/AccoCard.jsx';
 
 export default function Favourites() {
   const { favourites } = useAuth();
-  console.log('favourites', favourites);
 
   return (
     <div className={styles.favouritesContainer}>

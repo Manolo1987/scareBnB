@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
 import styles from './Feedback.module.css';
 import { useBooking } from '../../../context/bookingContext.jsx';
-
+import { Ghost } from '@phosphor-icons/react';
 
 export default function Feedback({ bookingId }) {
-  const { giveFeedback } = useBooking();
-  const emojis = ["😡", "😕", "😐", "😊", "😍"];
+  const { giveFeedback, getMyBookings } = useBooking();
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
 
-  const [selectedValue, setSelectedValue] = useState(null);
-
-  const handleSubmit = async () => {
-    console.log('Button clicked');
-    
-    try {
-      await giveFeedback(bookingId, selectedValue);
-    } catch (error) {
-      toast.error("Feedback Error.");
-    }
+  const handleClick = (e, currentRating) => {
+    e.stopPropagation();
+    e.preventDefault();
+    giveFeedback(bookingId, currentRating);
+    // getMyBookings();
   };
-
-
   return (
     <div className={styles.feedbackContainer}>
-      <h2>Feedback</h2>
-      <div className={styles.emojiContainer}>
-        {emojis.map((emoji, index) => (
-          <button key={index} onClick={() => setSelectedValue(index + 1)} className={styles.feedbackEmoji}>
-            <p>
-            {emoji}
-            </p>
-          </button>
-        ))}
-      </div>
-      <button onClick={handleSubmit} className='buttonEffect'>Submit</button>
+      <span className={styles.label}>Give Feedback: </span>
+      {[...Array(5)].map((ghost, index) => {
+        const currentRating = index + 1;
+        return (
+          <span key={index}>
+            {currentRating <= (hover || rating) ? (
+              <Ghost
+                size={32}
+                weight='fill'
+                className={styles.ratingGhostFilled}
+                onMouseEnter={() => setHover(currentRating)}
+                onMouseLeave={() => setHover(null)}
+                onClick={(e) => handleClick(e, currentRating)}
+              />
+            ) : (
+              <Ghost
+                size={32}
+                className={styles.ratingGhost}
+                onMouseEnter={() => setHover(currentRating)}
+                onMouseLeave={() => setHover(null)}
+                onClick={(e) => handleClick(e, currentRating)}
+              />
+            )}
+          </span>
+        );
+      })}
     </div>
-  )
+  );
 }

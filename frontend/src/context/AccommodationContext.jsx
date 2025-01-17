@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import api from '../utils/api';
 import { useAuth } from './UserAuthContext';
+import { toast } from 'react-toastify';
 
 export const AccommodationContext = createContext();
 
@@ -35,9 +36,8 @@ export default function AccommodationContextProvider({ children }) {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&bedrooms=${bedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
       const response = await api.get(`/accommodations/all${query}`);
       setAllAccos(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -45,9 +45,8 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.get(`/accommodations/one/${id}`);
       setCurrentAcco(response.data);
-      //console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -60,9 +59,8 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      //console.log(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -77,11 +75,13 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      console.log(response.data);
-      // success toast?
-      return response.data;
+      if (response.status === 200) {
+        toast.success('New listing added');
+        return response.data;
+      }
     } catch (error) {
-      console.log(error.response);
+      toast.error('Something went wrong - please try again');
+      console.error(error.response);
     }
   }
 
@@ -100,26 +100,32 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 403) {
         setShowLogin(true);
       }
-      console.log(response.data);
-      getMyListings();
-      // success toast?
-      return response.data;
+      if (response.status === 200) {
+        toast.success('Listing updated');
+        getMyListings();
+
+        return response.data;
+      }
     } catch (error) {
-      console.log(error.response);
+      toast.error('Something went wrong - please try again');
+      console.error(error.response);
     }
   }
 
   async function deleteListing(id) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
-      console.log(response.data.msg);
+
       if (response.status === 403) {
         setShowLogin(true);
       }
-      //sucess toast ?
-      getMyListings();
+      if (response.status === 200) {
+        toast.success('Listing deleted');
+        getMyListings();
+      }
     } catch (error) {
-      console.log(error);
+      toast.error('Something went wrong - please try again');
+      console.error(error);
     }
   }
 

@@ -33,8 +33,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.log(
-        'Token verification failed:',
-        error.response?.data || error.message
+        'Please log in to enjoy the full functionality of this website'
       );
       setIsAuthenticated(false);
     } finally {
@@ -69,16 +68,18 @@ export default function UserAuthContextProvider({ children }) {
     try {
       const response = await api.post('/user/register', formData);
       if (response.status === 201) {
-        console.log(response);
         toast.success('Successfully registered!');
       }
     } catch (error) {
-      console.log('Error during registration', error);
+      console.error('Error during registration', error);
       toast.error('Registration failed');
     }
   };
 
   // Login
+
+  const fiveHoursLater = new Date();
+  fiveHoursLater.setHours(fiveHoursLater.getHours() + 5);
   const login = async (formData) => {
     try {
       const response = await api.post('/user/login', formData, {
@@ -86,7 +87,10 @@ export default function UserAuthContextProvider({ children }) {
       });
 
       if (response.status === 200) {
-        Cookies.set('jwt', response.data.token);
+        Cookies.set('jwt', response.data.token, {
+          expires: fiveHoursLater,
+          path: '/',
+        });
         setIsAuthenticated(true);
         toast.success('Login Successfull!');
       }
@@ -111,7 +115,7 @@ export default function UserAuthContextProvider({ children }) {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log('Error fetching userdata', error);
+      console.error('Error fetching userdata', error);
     }
   };
 
@@ -129,7 +133,8 @@ export default function UserAuthContextProvider({ children }) {
         window.location.reload();
       }
     } catch (error) {
-      console.log('Error during logout:', error);
+      console.error('Error during logout:', error);
+      toast.error('Logout failed');
     }
   };
 
@@ -146,6 +151,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error('Error during update the user', error);
+      toast.error('Update failed');
     }
   };
 
@@ -160,6 +166,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error('Error fetching userdata from all users');
+      toast.error('Error fetching userdata from all users');
     }
   };
 
@@ -177,6 +184,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong - please try again');
     }
   };
 
@@ -194,6 +202,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong - please try again');
     }
   };
 
@@ -207,6 +216,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong - please try again');
     }
   };
 
@@ -222,6 +232,7 @@ export default function UserAuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong - please try again');
     }
   };
 
