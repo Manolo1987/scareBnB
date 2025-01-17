@@ -149,7 +149,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className='listingsWrapper'>
+      <div className='accountWrapper'>
         <div className='headingEffectContainer'>
           <h1 className='headingEffect'>My Profile</h1>
         </div>
