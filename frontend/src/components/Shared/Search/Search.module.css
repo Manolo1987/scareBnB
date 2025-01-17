@@ -3,8 +3,9 @@
   --height: 50px;
   min-width: 800px; /* Hier wird die minimale Breite festgelegt */
   border-radius: 8px;
-  border: solid white 1px;
-  background-color: #fe0300;
+  border: solid var(--color-mediumDark) 1px;
+  background: var(--gradient-circle), var(--color-mediumDark);
+  box-shadow: inset 0 3px 3px black, inset 0 -3px 3px black, 0 6px 20px black, 0 6px 20px black;
   width: var(--width);
   height: var(--height);
   position: absolute;

@@ -32,11 +32,11 @@ export default function FavouriteIcon({ accoId }) {
     <>
       {!isFavourite ? (
         <div onClick={handleAddFavourite}>
-          <HeartStraight size={32} color='#f70202' />
+          <HeartStraight size={32} color='crimson' />
         </div>
       ) : (
         <div onClick={handleRemoveFavourite}>
-          <HeartStraight size={32} color='#f70202' weight='fill' />
+          <HeartStraight size={32} color='crimson' weight='fill' />
         </div>
       )}
     </>
