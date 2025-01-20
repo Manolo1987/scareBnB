@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Favourites.module.css';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
 import AccoCard from '../../Shared/AccoCard/AccoCard.jsx';
 
 export default function Favourites() {
-  const { favourites } = useAuth();
+  const { favourites, fetchUserData } = useAuth();
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <div className={styles.favouritesContainer}>
