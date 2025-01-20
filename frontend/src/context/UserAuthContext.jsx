@@ -114,6 +114,9 @@ export default function UserAuthContextProvider({ children }) {
 
         setIsLoading(false);
       }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
+      }
     } catch (error) {
       console.error('Error fetching userdata', error);
     }
@@ -149,6 +152,9 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('User updated succesfully');
         await fetchUserData();
       }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
+      }
     } catch (error) {
       console.error('Error during update the user', error);
       toast.error('Update failed');
@@ -163,6 +169,9 @@ export default function UserAuthContextProvider({ children }) {
       });
       if (response.status === 200) {
         setAllUsers(response.data.users);
+      }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
       }
     } catch (error) {
       console.error('Error fetching userdata from all users');
@@ -182,6 +191,9 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('Your Profil is deleted, goodbye!');
         await logout();
       }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
+      }
     } catch (error) {
       console.error(error);
       toast.error('Something went wrong - please try again');
@@ -200,6 +212,9 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('User deleted, well done!');
         await getAllUsers();
       }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
+      }
     } catch (error) {
       console.error(error);
       toast.error('Something went wrong - please try again');
@@ -213,6 +228,9 @@ export default function UserAuthContextProvider({ children }) {
       const response = await api.post(`/user/addFavourite/${accommodationId}`);
       if (response.status === 200) {
         await fetchUserData();
+      }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
       }
     } catch (error) {
       console.error(error);
@@ -229,6 +247,9 @@ export default function UserAuthContextProvider({ children }) {
       console.log(response);
       if (response.status === 200) {
         await fetchUserData();
+      }
+      if (response.status === 403 || response.status === 401) {
+        setShowLogin(true);
       }
     } catch (error) {
       console.error(error);

@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Favourites.module.css';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
 import AccoCard from '../../Shared/AccoCard/AccoCard.jsx';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function Favourites() {
-  const { favourites } = useAuth();
+  const { favourites, fetchUserData } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchUserData();
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.favouritesContainer}>
       <div className={styles.accoGallery}>
         <h1 className={styles.title}>Favourites</h1>
-
-        {favourites.length > 0 ? (
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && favourites.length > 0 ? (
           <div className={styles.accoList}>
             {favourites.map((fav) => (
               <div className={styles.accoCard} key={fav._id}>
@@ -20,7 +31,7 @@ export default function Favourites() {
             ))}
           </div>
         ) : (
-          <p>No favourites yet!</p>
+          !isLoading && <p>No favourites yet!</p>
         )}
       </div>
     </div>

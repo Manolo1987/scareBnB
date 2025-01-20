@@ -11,7 +11,7 @@ export const useBooking = () => useContext(BookingContext);
 
 export const BookingContextProvider = ({ children }) => {
   const { isAuthenticated, user, setShowLogin } = useAuth();
-  const { currentAcco } = useAcco();
+  const { currentAcco, getAllAccommodations } = useAcco();
   const navigate = useNavigate();
   const today = new Date();
   const tomorrow = new Date();
@@ -67,11 +67,12 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 201) {
         toast.success('Booking successful!');
         setMyBookings((prev) => [...prev, response.data.newBooking]);
+        getAllAccommodations(21);
         setTimeout(() => {
           navigate('/account/bookings');
         }, 5000);
       }
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
@@ -87,7 +88,7 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 200) {
         setMyBookings(response.data.bookings);
       }
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
@@ -103,7 +104,7 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 200) {
         setMyBookedListings(response.data.bookings);
       }
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
@@ -123,7 +124,7 @@ export const BookingContextProvider = ({ children }) => {
 
         await getMyBookings();
       }
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
@@ -143,7 +144,7 @@ export const BookingContextProvider = ({ children }) => {
 
         await getMyBookings();
       }
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
