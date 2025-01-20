@@ -23,13 +23,12 @@ export default function AccomodationList() {
       <Search />
       <div>
         {!stateFilter && <h2 className={styles.h2} >All Accommodations</h2>}
-        {stateFilter && <h2 className={styles.h2} >Accommodations in {stateFilter}</h2>}
+        {stateFilter && <h2 className={styles.h2} >{stateFilter} Accommodations</h2>}
 
         <div className={styles.controls}>
           <div className={styles.filterAndSort}>
           <Filter />
           {selectedView === 'gallery-view' && <Sort />}
-          </div>
           <div className={styles.switchView_container}>
             <div className={styles.radio_container}>
               <input
@@ -39,11 +38,11 @@ export default function AccomodationList() {
                 className={styles.radio}
                 checked={selectedView === 'gallery-view'}
                 onChange={handleToggleChange}
-              />
+                />
               <label
                 htmlFor='gallery-view'
                 className={`${styles.icon} ${styles.galleryIcon}`}
-              >
+                >
                 <SquaresFour size={32} className={styles.icon} />
               </label>
             </div>
@@ -55,15 +54,16 @@ export default function AccomodationList() {
                 className={styles.radio}
                 checked={selectedView === 'map-view'}
                 onChange={handleToggleChange}
-              />
+                />
               <label
                 htmlFor='map-view'
                 className={`${styles.icon} ${styles.mapIcon}`}
-              >
+                >
                 <MapTrifold size={32} className={styles.icon} />
               </label>
             </div>
           </div>
+                </div>
         </div>
         {selectedView === 'gallery-view' && <AccoGallery />}
         {selectedView === 'map-view' && <OverviewMap />}

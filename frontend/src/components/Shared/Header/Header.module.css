@@ -43,13 +43,13 @@ header {
 }
 
 .bigHeader {
-  height: 30vh;
+  height: 27rem;
   background: var(--gradient-circle), url('../../../assets/images/Scarebnb-header-img_2.jpeg') no-repeat center
   center / cover;
 }
 
 .smallHeader {
-  height: 15vh;
+  height: 13.5rem;
   background: var(--gradient-circle), url('../../../assets/images/Scarebnb-header-img_2.jpeg') no-repeat center
   center / cover;
 
@@ -71,4 +71,11 @@ header {
 
 a {
   text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+  .bigHeader {
+    height: 18rem;
+  }
 }

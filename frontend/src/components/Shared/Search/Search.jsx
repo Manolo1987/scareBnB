@@ -82,27 +82,26 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <label className={styles.searchbarLabel}>
-          CheckIn:
-          <input
-            type='date'
-            value={bookingPreview.checkIn.toISOString().split('T')[0]}
-            onChange={handleCheckInChange}
-            className={styles.searchbarInput}
-            id='checkIn'
-            min={today}
+        <label className={styles.searchbarLabel}>CheckIn:</label>
+        <label>
+        <input
+          type='date'
+          value={bookingPreview.checkIn.toISOString().split('T')[0]}
+          onChange={handleCheckInChange}
+          className={styles.searchbarInput}
+          id='checkIn'
+          min={today}
           />
         </label>
-        <label className={styles.searchbarLabel}>
-          CheckOut:
-          <input
-            type='date'
-            value={bookingPreview.checkOut.toISOString().split('T')[0]}
-            onChange={handleCheckOutChange}
-            className={styles.searchbarInput}
-            min={bookingPreview.checkIn.toISOString().split('T')[0]}
-          />
-        </label>
+        <label className={styles.searchbarLabel}>CheckOut:</label>
+        <label>
+        <input
+          type='date'
+          value={bookingPreview.checkOut.toISOString().split('T')[0]}
+          onChange={handleCheckOutChange}
+          className={styles.searchbarInput}
+          min={bookingPreview.checkIn.toISOString().split('T')[0]}
+        /></label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select
           value={bookingPreview.numberOfGuests}
@@ -115,9 +114,11 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <button className='buttonEffect' type='submit'>
-          <MagnifyingGlass size={16} />
-        </button>
+        <div className={styles.buttonContainer}>
+          <button className='buttonEffect' type='submit'>
+            <MagnifyingGlass size={16} />
+          </button>
+        </div>
       </form>
     </div>
   );

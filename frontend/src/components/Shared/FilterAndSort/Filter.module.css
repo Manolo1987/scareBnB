@@ -1,4 +1,5 @@
 .filter_container {
+  font-size: clamp(0.8rem, 0.3684rem + 0.5263vw, 1rem);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -9,4 +10,8 @@
   display: flex;
   gap: 0.4rem;
   align-items: center;
+}
+
+.filterSelect {
+  width: 4rem;
 }
