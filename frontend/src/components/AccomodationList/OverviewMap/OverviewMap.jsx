@@ -53,7 +53,7 @@ export default function OverviewMap() {
     sortBy,
     sortOrder,
   } = useAcco();
-
+  const [loading, setIsLoading] = useState();
   const [stateBounds, setStateBounds] = useState(regionBounds.germany);
 
   const customIcon = new L.Icon({
@@ -69,18 +69,21 @@ export default function OverviewMap() {
   const mapRef = useRef();
 
   useEffect(() => {
-    getAllAccommodations();
-  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
+    const loadData = async () => {
+      await getAllAccommodations();
+      setIsLoading(false);
+    };
 
-  const accommodations = allAccos?.accommodations || [];
+    loadData();
 
-  useEffect(() => {
     if (stateFilter && regionBounds[stateFilter]) {
       setStateBounds(regionBounds[stateFilter]);
     } else {
       setStateBounds(regionBounds.germany);
     }
-  }, [stateFilter]);
+  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
+
+  const accommodations = allAccos?.accommodations || [];
 
   useEffect(() => {
     if (mapRef.current && stateBounds && stateBounds.length === 2) {
@@ -89,6 +92,12 @@ export default function OverviewMap() {
     }
   }, [stateBounds]);
 
+  useEffect(() => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.closePopup();
+    }
+  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder]);
   return (
     <div className={styles.map_outerContainer}>
       <MapContainer
@@ -99,10 +108,6 @@ export default function OverviewMap() {
         zoomControl={false}
         minZoom={3}
         maxZoom={16}
-        // maxBounds={[
-        //   [-85.06, -180],
-        //   [85.06, 180],
-        // ]}
         scrollWheelZoom={false}
         gestureHandling={true}
         ref={mapRef}
@@ -115,8 +120,8 @@ export default function OverviewMap() {
           url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
         />
         <ZoomControl position='bottomright' />
-        {/* <ChangeView /> */}
-        {accommodations.length > 0 &&
+        {!loading &&
+          accommodations.length > 0 &&
           accommodations.map((acco, index) => {
             if (acco.latitude && acco.longitude) {
               return (
@@ -125,7 +130,7 @@ export default function OverviewMap() {
                   position={[acco?.latitude, acco?.longitude]}
                   icon={customIcon}
                 >
-                  <Popup>
+                  <Popup autoPan={true}>
                     <Link
                       to={`/accommodationList/${acco.title
                         .toLowerCase()
