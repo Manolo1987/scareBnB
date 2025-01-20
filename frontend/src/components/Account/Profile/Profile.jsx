@@ -150,6 +150,29 @@ export default function Profile() {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      password: '',
+      confirmPassword: '',
+      phone: user?.phone || '',
+      dateOfBirth: user?.dateOfBirth
+        ? new Date(user.dateOfBirth).toISOString().split('T')[0]
+        : '',
+    });
+    setErrors({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phone: '',
+      dateOfBirth: '',
+    });
+  };
+
   return (
     <>
       <div className='accountWrapper'>
@@ -327,7 +350,10 @@ export default function Profile() {
                 <button
                   className='cancelButton'
                   type='button'
-                  onClick={() => setIsEditing(false)}
+                  onClick={() => {
+                    setIsEditing(false);
+                    resetForm();
+                  }}
                 >
                   Cancel
                 </button>
@@ -349,7 +375,9 @@ export default function Profile() {
             <div className='formFooter'>
               <button
                 className='cancelButton'
-                onClick={() => setIsDeleting(false)}
+                onClick={() => {
+                  setIsDeleting(false);
+                }}
               >
                 Cancel
               </button>
