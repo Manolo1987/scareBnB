@@ -44,7 +44,7 @@ export default function Bookings() {
         </div>
       )}
 
-      <h2>Past Bookings</h2>
+      <h2 className={styles.pastBookings}>Past Bookings</h2>
       {pastBookings?.length > 0 ? (
         <ul className='cardList'>
           {pastBookings?.map((booking, index) => {
