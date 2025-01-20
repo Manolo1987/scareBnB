@@ -4,7 +4,6 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import AccountDropdownMenu from '../../Account/AccountDropdownMenu/AccountDropdownMenu';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../../assets/images/LOGO_scarebnb_V1_160px.png';
 
 export default function Header() {
   const location = useLocation();
@@ -13,12 +12,7 @@ export default function Header() {
   return (
     <header className={isHomepage ? styles.bigHeader : styles.smallHeader}>
       <section className={styles.top_banner}>
-        <div className={styles.icon_container_wrapper}>
-          <div className={styles.icon_container}>
-            <Link to='/'>
-              <img src={logo} alt='website_icon' />
-            </Link>
-          </div>
+        <div className={styles.title_wrapper}>
           {!isHomepage && (
             <Link to='/'>
               <h1 className={styles.h1}>Scarebnb</h1>

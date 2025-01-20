@@ -1,7 +1,7 @@
 main {
   flex-grow: 1;
   width: 100%;
-  background: var(--gradient-sides), url('https://images.unsplash.com/photo-1527049979667-990f1d0d8e7f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background: var(--gradient-circle), url('https://i.pinimg.com/originals/b0/eb/41/b0eb41bdb91e75f326a0b1056fa088c6.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

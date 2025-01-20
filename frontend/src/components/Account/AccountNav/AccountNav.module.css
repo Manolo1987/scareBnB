@@ -1,5 +1,5 @@
 .accountNav {
-  background: var(--gradient-sides);
+  background: var(--gradient-circle);
   background-color: var(--color-medium);
   box-shadow: 0px 10px 20px black, 0px -10px 20px black;
   padding: 10px 0;

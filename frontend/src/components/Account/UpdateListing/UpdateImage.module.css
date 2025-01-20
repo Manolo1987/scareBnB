@@ -33,6 +33,7 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.659);
+  z-index: 100;
 }
 .imageButton {
   cursor: pointer;

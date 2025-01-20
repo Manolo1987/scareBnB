@@ -41,7 +41,6 @@ export default function RatingFilter({ minRating, setMinRating }) {
 
   const toggleDropdown = () => {
     setIsOpen((prev) => {
-      console.log(prev);
       return !prev;
     });
   };

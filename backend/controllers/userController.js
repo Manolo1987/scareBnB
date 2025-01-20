@@ -130,7 +130,7 @@ export async function logout(req, res) {
     });
     res.status(200).json({ msg: 'Logout successful' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server error' });
   }
 }
@@ -156,10 +156,10 @@ export async function getUser(req, res) {
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
-    console.log({ user }); // debugging
+
     res.status(200).json({ msg: 'User found', user: user });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -246,10 +246,10 @@ export async function getAllUsers(req, res) {
     if (users.length === 0) {
       return res.status(404).json({ msg: 'No users found' });
     }
-    console.log({ users }); // debugging
+
     res.status(200).json({ msg: 'Users found', users: users });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server error!' });
   }
 }
@@ -258,7 +258,6 @@ export async function getAllUsers(req, res) {
 export async function deleteUserByAdmin(req, res) {
   try {
     const { userId } = req.params;
-    console.log(userId);
 
     const deletedUser = await User.findByIdAndDelete(userId);
 

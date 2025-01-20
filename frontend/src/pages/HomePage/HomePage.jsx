@@ -34,21 +34,9 @@ export default function HomePage() {
             if you dare.
           </p>
           <p>
-            Step inside and embrace the thrill of ghostly whispers, creaking
-            floors, and cold drafts that seem to come from nowhere. Whether
-            you're a thrill-seeker, a paranormal enthusiast, or simply curious,
-            our spooky stays will make your next getaway truly haunting.
-          </p>
-          <p>
             Ready to check in? Just remember... there's no guarantee you'll be
             able to check out.
           </p>
-
-          <div className={styles.lineBreak} >
-            <hr />
-            <DiamondsFour size={20} />
-            <hr />
-          </div>
         </section>
         <section className={styles.highlight_section}>
           <h3 className={styles.highlight_header}>Our Most Haunted Stays</h3>

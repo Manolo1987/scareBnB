@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'; // Für Routing
 import styles from './AdminAccoList.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { useAuth } from '../../../context/UserAuthContext';
-import PaginationPage from '../../AccomodationList/PaginationPage/PaginationPage';
 import { Spinner } from '@phosphor-icons/react';
 
 export default function AdminAccoList() {

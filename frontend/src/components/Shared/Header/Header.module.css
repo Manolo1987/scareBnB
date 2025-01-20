@@ -9,62 +9,32 @@ header {
     justify-content: space-between;
     align-items: center;
     margin: 1rem;
-
-    .icon_container_wrapper {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-
-      .icon_container {
-        height: 60px;
-        width: 60px;
-        border-radius: 50%;
-        overflow: hidden;
-        transition: all 0.3s ease;
-
-        &:hover {
-          transform: scale(1.2);
-          box-shadow: 0px 0px 10px white;
-        }
-
-        img {
-          height: 100%;
-          width: 100%;
-          object-fit: contain;
-          opacity: 0.6;
-          transition: all 0.3s ease;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-      }
-    }
   }
+}
 
-  .title {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.title {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    p {
-      font-size: clamp(16px, 1.5vw, 32px);
-      font-family: var(--font-typewriter);
-      color: var(--color-light);
-      opacity: 0.7;
-      margin: 0.5rem;
-    }
+  p {
+    font-size: clamp(16px, 1.5vw, 24px);
+    font-family: var(--font-typewriter);
+    color: var(--color-light);
+    opacity: 0.7;
+    margin: 0.5rem;
   }
 }
 
 .h1 {
-  font-size: clamp(2rem, 5vw, 6rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-family: var(--font-title);
   letter-spacing: 1.2rem;
   color: var(--color-prime);
   text-shadow: 0px 0px 10px white;
+  padding-left: 1rem;
   transition: all 0.6s ease;
 
   &:hover {
@@ -73,31 +43,21 @@ header {
 }
 
 .bigHeader {
-  height: 40vh;
-  background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 100%
-    ),
-    linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%),
-    url('../../../assets/images/Scarebnb-header-img_1.jpeg') no-repeat center
-      center / cover;
+  height: 30vh;
+  background: var(--gradient-circle), url('../../../assets/images/Scarebnb-header-img_2.jpeg') no-repeat center
+  center / cover;
 }
 
 .smallHeader {
   height: 15vh;
-  background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.6) 100%
-    ),
-    linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%),
-    url('../../../assets/images/Scarebnb-header-img_2.jpeg') no-repeat center
-      center / cover;
+  background: var(--gradient-circle), url('../../../assets/images/Scarebnb-header-img_2.jpeg') no-repeat center
+  center / cover;
+
 
   .h1 {
-    font-size: clamp(1.5rem, 2.5vw, 3rem);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
     letter-spacing: 0.5rem;
+    padding: 1rem;
   }
 }
 

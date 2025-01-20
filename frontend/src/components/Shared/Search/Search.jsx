@@ -27,8 +27,13 @@ export default function Search() {
   const handleCheckOutChange = (e) => {
     const value = e.target.value;
     const newDate = value ? new Date(value) : new Date();
-    newDate.setDate(newDate.getDate() + 1); // Setzt auf morgen
-    setCheckOut(newDate);
+    if (newDate <= bookingPreview.checkIn) {
+      const adjustedDate = new Date(bookingPreview.checkIn);
+      adjustedDate.setDate(adjustedDate.getDate() + 1);
+      setCheckOut(adjustedDate);
+    } else {
+      setCheckOut(newDate);
+    }
   };
 
   const handleGuestsChange = (e) => {
@@ -77,7 +82,7 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <label className={styles.searchbarLabel}>CheckIn:</label>
+        <label className={styles.searchbarLabel}>CheckIn:
         <input
           type='date'
           value={bookingPreview.checkIn.toISOString().split('T')[0]}
@@ -85,15 +90,15 @@ export default function Search() {
           className={styles.searchbarInput}
           id='checkIn'
           min={today}
-        />
-        <label className={styles.searchbarLabel}>CheckOut:</label>
+        /></label>
+        <label className={styles.searchbarLabel}>CheckOut:
         <input
           type='date'
           value={bookingPreview.checkOut.toISOString().split('T')[0]}
           onChange={handleCheckOutChange}
           className={styles.searchbarInput}
           min={bookingPreview.checkOut.toISOString().split('T')[0]}
-        />
+        /></label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select
           value={bookingPreview.numberOfGuests}
