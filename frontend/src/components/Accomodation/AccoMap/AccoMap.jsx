@@ -68,7 +68,7 @@ const AccoMap = ({ lat, lon, title }) => {
           url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
         />
         <Marker position={[lat, lon]} icon={customIcon}>
-          <Popup isOpen={true}>{title}</Popup>
+          {/* <Popup isOpen={true}>{title}</Popup> */}
         </Marker>
       </MapContainer>
     </div>
