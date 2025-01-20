@@ -61,7 +61,7 @@ export default function BookedListingsCard({ listing }) {
           <a
             href={`mailto:${listing.guest.email}`}
             className='cardButton'
-            title='Contact Host'
+            title={`Send an email at ${listing.guest.email}`}
           >
             <Envelope size={32} className='buttonIcon' />
           </a>
