@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import api from '../utils/api';
 import { useAuth } from './UserAuthContext';
 import { toast } from 'react-toastify';
@@ -28,14 +28,14 @@ export default function AccommodationContextProvider({ children }) {
   const [selectedView, setSelectedView] = useState('gallery-view');
   //for update Listing Component
   const [imagesToDelete, setImagesToDelete] = useState([]);
-  // const [showDeleteMessage, setShowDeleteMessage] = useState(false);
 
   async function getAllAccommodations(limit) {
-    // apply loading state here
     try {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&bedrooms=${bedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
       const response = await api.get(`/accommodations/all${query}`);
-      setAllAccos(response.data);
+      if (response.status === 200) {
+        setAllAccos(response.data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +44,9 @@ export default function AccommodationContextProvider({ children }) {
   async function getOneAccommodation(id) {
     try {
       const response = await api.get(`/accommodations/one/${id}`);
-      setCurrentAcco(response.data);
+      if (response.status === 200) {
+        setCurrentAcco(response.data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -55,8 +57,10 @@ export default function AccommodationContextProvider({ children }) {
       const response = await api.get('/accommodations/my', {
         withCredentials: true,
       });
-      setMyListings(response.data);
-      if (response.status === 403) {
+      if (response.status === 200) {
+        setMyListings(response.data);
+      }
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
     } catch (error) {
@@ -72,7 +76,7 @@ export default function AccommodationContextProvider({ children }) {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
       if (response.status === 200) {
@@ -97,13 +101,12 @@ export default function AccommodationContextProvider({ children }) {
           },
         }
       );
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
       if (response.status === 200) {
         toast.success('Listing updated');
         getMyListings();
-
         return response.data;
       }
     } catch (error) {
@@ -116,7 +119,7 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
 
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
       if (response.status === 200) {
@@ -132,7 +135,7 @@ export default function AccommodationContextProvider({ children }) {
   async function postComment(id, comment) {
     try {
       const response = await api.post(`/accommodations/comment/${id}`, comment);
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
       setCurrentAcco(response.data);
@@ -146,7 +149,7 @@ export default function AccommodationContextProvider({ children }) {
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 401) {
         setShowLogin(true);
       }
       return response.data;
@@ -205,8 +208,6 @@ export default function AccommodationContextProvider({ children }) {
         updateListing,
         imagesToDelete,
         setImagesToDelete,
-        // showDeleteMessage,
-        // setShowDeleteMessage,
       }}
     >
       {children}
