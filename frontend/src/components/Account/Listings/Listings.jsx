@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../App.css';
 import styles from './Listings.module.css';
 import ListingsCard from '../ListingsCard/ListingsCard.jsx';
 import ListingsNav from '../ListingsNav/ListingsNav.jsx';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function Listings() {
   const { myListings, getMyListings } = useAcco();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    getMyListings();
+    const fetchData = async () => {
+      await getMyListings();
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -19,6 +27,7 @@ export default function Listings() {
         <div className='headingEffectContainer'>
           <h1 className='headingEffect'>My Listings</h1>
         </div>
+        {isLoading && <LoadingSpinner />}
         {myListings?.length < 1 && (
           <div className='messageContainer'>
             <p className='message'>You don't have any listings yet.</p>
