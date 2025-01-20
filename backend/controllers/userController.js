@@ -25,48 +25,6 @@ export async function register(req, res) {
 }
 
 // Login
-/* export async function login(req, res) {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email: email.toLowerCase() });
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const passwordMatch = await user.isValidPassword(password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: 'Check your incredentials' });
-    }
-
-    const token = generateToken({
-      userId: user._id,
-      email: user.email,
-      roles: user.roles,
-    });
-    res
-      .status(200)
-      .cookie('jwt', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: false, // false in development, true in production
-        path: '/',
-        maxAge: 60 * 60 * 1000, // 1h
-      })
-      .json({
-        msg: 'Login successful',
-        user: user, // acces to user data in frontend
-        token,
-      });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'Server error' });
-  }
-}
-
-*/
 
 export async function login(req, res) {
   try {
@@ -104,7 +62,7 @@ export async function login(req, res) {
       .cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
-        secure: false, // false in development, true in production
+        secure: true, // false in development, true in production
         path: '/',
         maxAge: 5 * 60 * 60 * 1000, // 1h
       })
@@ -126,7 +84,7 @@ export async function logout(req, res) {
       httpOnly: true,
       sameSite: 'none',
       path: '/',
-      secure: false, // false in development, true in production
+      secure: true, // false in development, true in production
     });
     res.status(200).json({ msg: 'Logout successful' });
   } catch (error) {
