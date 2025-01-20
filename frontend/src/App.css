@@ -11,18 +11,17 @@
   &:after {
     background: white;
     content: '';
+    width: 50px;
     height: 150px;
     left: -80px;
     opacity: 0.2;
     position: absolute;
     top: -50px;
     transform: rotate(35deg);
-    transition: all 250ms ease-in-out;
-    width: 50px;
+    transition: all 0.25s ease-in-out;
   }
   &:hover:after {
     left: 120%;
-    transition: all 250ms ease-in-out;
   }
 }
 /* ---------------------------h1 spooky effect */
