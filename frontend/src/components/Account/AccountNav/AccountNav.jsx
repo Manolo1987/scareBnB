@@ -9,7 +9,7 @@ export default function AccountNav() {
   return (
     <div className={styles.accountNav}>
       <ul className={styles.accountNavList}>
-        <li>
+        <li className={styles.buttonEffe}>
           <NavLink
             to='/account/profile'
             className={({ isActive }) =>
