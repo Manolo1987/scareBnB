@@ -1,5 +1,5 @@
 .imageGallery {
-  width: fit-content;
+  width: 100%;
   max-width: 100vw;
   margin: auto;
   display: flex;
