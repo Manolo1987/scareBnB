@@ -82,23 +82,27 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <label className={styles.searchbarLabel}>CheckIn:
-        <input
-          type='date'
-          value={bookingPreview.checkIn.toISOString().split('T')[0]}
-          onChange={handleCheckInChange}
-          className={styles.searchbarInput}
-          id='checkIn'
-          min={today}
-        /></label>
-        <label className={styles.searchbarLabel}>CheckOut:
-        <input
-          type='date'
-          value={bookingPreview.checkOut.toISOString().split('T')[0]}
-          onChange={handleCheckOutChange}
-          className={styles.searchbarInput}
-          min={bookingPreview.checkOut.toISOString().split('T')[0]}
-        /></label>
+        <label className={styles.searchbarLabel}>
+          CheckIn:
+          <input
+            type='date'
+            value={bookingPreview.checkIn.toISOString().split('T')[0]}
+            onChange={handleCheckInChange}
+            className={styles.searchbarInput}
+            id='checkIn'
+            min={today}
+          />
+        </label>
+        <label className={styles.searchbarLabel}>
+          CheckOut:
+          <input
+            type='date'
+            value={bookingPreview.checkOut.toISOString().split('T')[0]}
+            onChange={handleCheckOutChange}
+            className={styles.searchbarInput}
+            min={bookingPreview.checkIn.toISOString().split('T')[0]}
+          />
+        </label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select
           value={bookingPreview.numberOfGuests}
