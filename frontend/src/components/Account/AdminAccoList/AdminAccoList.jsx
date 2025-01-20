@@ -122,7 +122,7 @@ export default function AdminAccoList() {
                                 deleteListing(acco._id);
                               }
                             }}
-                            className={styles.deleteButton}
+                            className={`buttonEffect ${styles.deleteButton}`}
                           >
                             Delete
                           </button>
