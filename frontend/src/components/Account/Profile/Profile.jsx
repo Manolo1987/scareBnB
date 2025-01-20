@@ -9,8 +9,8 @@ export default function Profile() {
     user,
     updateProfile,
     deleteMyProfile,
-    showPassword,
-    togglePasswordVisibility,
+    //showPassword,
+    //togglePasswordVisibility,
   } = useAuth();
   const navigate = useNavigate();
 
@@ -43,15 +43,18 @@ export default function Profile() {
     dateOfBirth: '',
   });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prevState) => !prevState);
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validierungslogik basierend auf deinem Mongoose-Schema
     let error = '';
     if (name === 'firstName' || name === 'lastName') {
       if (!/^[a-zA-Z\s.,;:'"_\-\u00C0-\u00FFäöüÄÖÜß]+$/.test(value)) {
@@ -127,7 +130,7 @@ export default function Profile() {
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
         ...prev,
-        confirmPassword: 'Passwords do not match',
+        confirmPassword: 'Passwords do not match.',
       }));
       return;
     }
@@ -140,11 +143,34 @@ export default function Profile() {
         await updateProfile(changedData);
         setIsEditing(false);
       } else {
-        alert('no changes found');
+        alert('No changes found.');
       }
     } catch (error) {
       console.error('Profile update error:', error || error.message);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      password: '',
+      confirmPassword: '',
+      phone: user?.phone || '',
+      dateOfBirth: user?.dateOfBirth
+        ? new Date(user.dateOfBirth).toISOString().split('T')[0]
+        : '',
+    });
+    setErrors({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phone: '',
+      dateOfBirth: '',
+    });
   };
 
   return (
@@ -324,7 +350,10 @@ export default function Profile() {
                 <button
                   className='cancelButton'
                   type='button'
-                  onClick={() => setIsEditing(false)}
+                  onClick={() => {
+                    setIsEditing(false);
+                    resetForm();
+                  }}
                 >
                   Cancel
                 </button>
@@ -346,7 +375,9 @@ export default function Profile() {
             <div className='formFooter'>
               <button
                 className='cancelButton'
-                onClick={() => setIsDeleting(false)}
+                onClick={() => {
+                  setIsDeleting(false);
+                }}
               >
                 Cancel
               </button>

@@ -9,7 +9,6 @@ export default function AdminUserList() {
   return (
     <section className={styles.userListContainer}>
       <h2>All ScareBnB Users</h2>
-
       <p>Here you can view and delete users</p>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
@@ -150,7 +149,7 @@ export default function AdminUserList() {
                             deleteUserAsAdmin(listedUser._id);
                           }
                         }}
-                        className={styles.deleteButton}
+                        className={`buttonEffect ${styles.deleteButton}`}
                       >
                         Delete User
                       </button>
