@@ -26,14 +26,14 @@ export default function BookedListings() {
           <h1 className='headingEffect'>My Booked Listings</h1>
         </div>
         {isLoading && <LoadingSpinner />}
-        {myBookedListings?.length < 1 && (
+        {!isLoading && myBookedListings?.length < 1 && (
           <div className='messageContainer'>
             <p className='message'>
               You don't have any booked listings at the moment.
             </p>
           </div>
         )}
-        {myBookedListings?.length > 0 && (
+        {!isLoading && myBookedListings?.length > 0 && (
           <ul className='cardList'>
             {myBookedListings?.map((listing, index) => {
               return (

@@ -28,7 +28,7 @@ export default function Listings() {
           <h1 className='headingEffect'>My Listings</h1>
         </div>
         {isLoading && <LoadingSpinner />}
-        {myListings?.length < 1 && (
+        {!isLoading && myListings?.length < 1 && (
           <div className='messageContainer'>
             <p className='message'>You don't have any listings yet.</p>
             <Link to='/account/add-new-listing' className='messageLink'>
@@ -36,7 +36,7 @@ export default function Listings() {
             </Link>
           </div>
         )}
-        {myListings?.length > 0 && (
+        {!isLoading && myListings?.length > 0 && (
           <ul className='cardList'>
             {myListings?.map((listing, index) => {
               return (
