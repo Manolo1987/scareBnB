@@ -19,7 +19,9 @@ export default function Bookings() {
 
   return (
     <section className='accountWrapper'>
-      <h2>Upcoming Bookings</h2>
+      <div className='headingEffectContainer'>
+        <h2 className='headingEffect'>Upcoming Bookings</h2>
+      </div>
       {upcomingBookings?.length > 0 ? (
         <ul className='cardList'>
           {upcomingBookings?.map((booking, index) => {

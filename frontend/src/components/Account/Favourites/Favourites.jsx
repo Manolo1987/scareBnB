@@ -7,9 +7,12 @@ export default function Favourites() {
   const { favourites } = useAuth();
 
   return (
+    <>
+        <div className='headingEffectContainer'>
+          <h1 className='headingEffect'>Favourites</h1>
+        </div>
     <div className={styles.favouritesContainer}>
       <div className={styles.accoGallery}>
-        <h1 className={styles.title}>Favourites</h1>
 
         {favourites.length > 0 ? (
           <div className={styles.accoList}>
@@ -24,5 +27,6 @@ export default function Favourites() {
         )}
       </div>
     </div>
+        </>
   );
 }
