@@ -12,15 +12,16 @@
     list-style: none;
 
     .accountNavLink {
-      width: 6rem;
       text-decoration: none;
       color: var(--color-light);
+      background-color: rgba(0, 0, 0, 0);
+      text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.414);
       border-radius: 3px;
       padding: 6px 20px;
       transition: all 0.6s ease;
 
       &:hover {
-        background: linear-gradient(to bottom, rgba(220, 20, 60, 0), rgba(0, 0, 0, 0.71));
+        background-color: rgba(255, 255, 255, 0.128);
       }
     }
 
@@ -30,9 +31,9 @@
 
     .activeLink {
       font-weight: bold;
-      text-shadow: 3px 3px 3px crimson;
+      text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.414);
       color: var(--color-prime);
-      background: linear-gradient(to bottom, rgba(78, 6, 20, 0), rgba(220, 20, 60, 0.651));
+      background-color: rgba(220, 20, 60, 0.537);
 
       &:hover {
         color: var(--color-light);
