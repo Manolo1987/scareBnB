@@ -13,7 +13,7 @@ export async function register(req, res) {
       email: email.toLowerCase(),
     });
     if (existingUser) {
-      return res.status(400).json({ msg: 'User already exists!' });
+      return res.status(400).json({ msg: 'Email or Phone already exists!' });
     }
 
     const newUser = await User.create(req.body);
