@@ -1,10 +1,20 @@
+/* Container Styles */
 .userListContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--color-light);
   padding: 2rem;
   gap: 1rem;
+}
+
+.userListContainer h2 {
+  font-family: var(--font-headline);
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  margin: 1rem 0 0 0;
 }
 
 .userList {
@@ -14,20 +24,10 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem 0;
-  background-color: var(--color-dark);
 }
 
-.listedUser {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 5px solid white;
-}
-
+/* User List Items */
+.listedUser,
 .userBooking {
   display: flex;
   align-items: flex-start;
@@ -36,72 +36,76 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1rem 0;
-  border-bottom: 5px solid white;
+  border-bottom: 5px solid #2b2b2b;
 }
 
 /* Table Styles */
 .tableContainer {
   max-width: 100%;
-  overflow-x: auto; /* Ermöglicht horizontales Scrollen bei kleinen Bildschirmen */
+  overflow-x: auto;
   margin: 20px 0;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  color: black;
+  background-color: #1e1e1e;
+  color: var(--color-light);
 }
 
 .table {
   width: 100%;
-  border-collapse: collapse; /* Entfernt doppelte Linien */
+  border-collapse: collapse;
   text-align: left;
-  font-family: Arial, sans-serif;
   font-size: 14px;
 }
 
 .table th,
 .table td {
   padding: 12px 16px;
-  border: 1px solid #ddd; /* Dünne Linie zwischen Zellen */
+  border: 1px solid #2b2b2b;
 }
 
 .table th {
-  background-color: #7d23f3; /* Blauer Hintergrund für den Header */
-  color: white;
+  background-color: #0d0d0d;
+  color: crimson;
   position: sticky;
-  top: 0; /* Header bleibt beim Scrollen sichtbar */
+  top: 0;
   z-index: 1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
+.table tr {
+  transition: all 0.3s ease;
+}
+
 .table tr:nth-child(even) {
-  background-color: #f2f2f2; /* Wechselnde Hintergrundfarbe für bessere Lesbarkeit */
+  background-color: #252525;
 }
 
 .table tr:hover {
-  background-color: #e6f7ff; /* Leichtes Blau beim Hover */
+  background-color: #3f3f3f;
 }
 
-/* Details Section for Listings and Comments */
+/* Details Section */
 details {
   margin-top: 10px;
   padding: 10px;
-  background-color: #e6f7ff;
-  border: 1px solid #ddd;
+  background-color: #252525;
+  color: #e0e0e0;
+  border: 1px solid #444;
   border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(255, 0, 0, 0.2);
 }
 
 details summary {
   font-weight: bold;
   cursor: pointer;
   padding: 5px;
-  background-color: #f2f2f2;
+  background-color: #141414;
   border-radius: 4px;
+  color: var(--color-light);
 }
 
 details[open] {
-  background-color: #d0f0f0;
+  background-color: #0d0d0d;
 }
 
 details p {
@@ -118,12 +122,21 @@ details ul li {
   margin-bottom: 5px;
 }
 
-/* User Comment Styles */
+details a {
+  color: var(--color-medium);
+}
+
+details a:hover {
+  color: crimson;
+}
+
+/* User Comments */
 .userComment {
   padding: 12px;
-  background-color: #f9f9f9;
-  border-left: 4px solid #7d23f3;
+  background-color: #282828;
+  border-left: 4px solid crimson;
   margin-bottom: 10px;
+  color: #f5f5f5;
 }
 
 .userComment p {
@@ -133,29 +146,27 @@ details ul li {
 
 .userComment .accommodation {
   font-weight: bold;
+  color: crimson;
 }
 
-.userComment .title {
-  font-style: italic;
-  color: #7d23f3;
-}
-
+/* Buttons */
 button.deleteButton {
-  background-color: #ff4d4d;
+  background-color: black;
   color: white;
   border: none;
   padding: 8px 16px;
   cursor: pointer;
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 button.deleteButton:hover {
-  background-color: #e60000;
+  background-color: crimson;
 }
 
 button.viewButton {
-  background-color: #10ac10;
-  color: white;
+  background-color: #222;
+  color: crimson;
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -165,14 +176,19 @@ button.viewButton {
 }
 
 button.viewButton:hover {
-  background-color: #0056b3;
-}
-
-.cancelled {
-  background-color: red;
-  padding: 0.4rem 0.8rem;
+  background-color: crimson;
   color: white;
 }
+
+/* Cancelled Label */
+.cancelled {
+  background-color: crimson;
+  padding: 0.2rem 0.4rem;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .table th,
@@ -187,5 +203,11 @@ button.viewButton:hover {
 
   details summary {
     font-size: 14px;
+  }
+
+  button.deleteButton,
+  button.viewButton {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }
