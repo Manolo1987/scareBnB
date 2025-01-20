@@ -9,8 +9,8 @@ export default function Profile() {
     user,
     updateProfile,
     deleteMyProfile,
-    showPassword,
-    togglePasswordVisibility,
+    //showPassword,
+    //togglePasswordVisibility,
   } = useAuth();
   const navigate = useNavigate();
 
@@ -43,15 +43,18 @@ export default function Profile() {
     dateOfBirth: '',
   });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prevState) => !prevState);
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validierungslogik basierend auf deinem Mongoose-Schema
     let error = '';
     if (name === 'firstName' || name === 'lastName') {
       if (!/^[a-zA-Z\s.,;:'"_\-\u00C0-\u00FFäöüÄÖÜß]+$/.test(value)) {
@@ -127,7 +130,7 @@ export default function Profile() {
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
         ...prev,
-        confirmPassword: 'Passwords do not match',
+        confirmPassword: 'Passwords do not match.',
       }));
       return;
     }
@@ -140,7 +143,7 @@ export default function Profile() {
         await updateProfile(changedData);
         setIsEditing(false);
       } else {
-        alert('no changes found');
+        alert('No changes found.');
       }
     } catch (error) {
       console.error('Profile update error:', error || error.message);
