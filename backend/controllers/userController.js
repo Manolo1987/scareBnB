@@ -3,6 +3,8 @@
 import User from '../models/User.js';
 import Accommodation from '../models/Accommodation.js';
 import Booking from '../models/Booking.js';
+import Comment from '../models/Comment.js';
+import cloudinary from '../config/cloudinary.js';
 import { generateToken } from '../middleware/jwt.js';
 
 // Register
@@ -172,6 +174,43 @@ export async function updateUser(req, res) {
 export async function deleteUser(req, res) {
   try {
     const { userId } = req;
+    // Kommentare löschen
+    await Comment.deleteMany({ author: userId });
+
+    // Buchungen löschen
+    await Booking.deleteMany({ $or: [{ guest: userId }, { host: userId }] });
+    // Accommodation löschen
+    const listings = await Accommodation.find({ owner: userId });
+    for (const listing of listings) {
+      // Kommentare zur Unterkunft löschen
+      await Comment.deleteMany({ location: listing._id });
+
+      // Buchungen zur Unterkunft löschen
+      await Booking.deleteMany({ accommodation: listing._id });
+
+      // Bilder in Cloudinary löschen
+      const imagesIds = [listing.titleImage.public_id];
+      if (listing.images.length > 0) {
+        for (let img of listing.images) {
+          imagesIds.push(img.public_id);
+        }
+      }
+
+      //delete images on cloudinary
+      for (let imgId of imagesIds) {
+        console.log(imgId, 'deleted');
+        await cloudinary.uploader.destroy(imgId, function (error, result) {
+          console.log(result);
+          console.error(error);
+        });
+      }
+
+      const users = await User.updateMany(
+        { favourites: listing._id },
+        { $pull: { favourites: listing._id } }
+      );
+    }
+    await Accommodation.deleteMany({ owner: userId });
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) return res.status(404).json({ msg: 'User not found' });
@@ -216,7 +255,43 @@ export async function getAllUsers(req, res) {
 export async function deleteUserByAdmin(req, res) {
   try {
     const { userId } = req.params;
+    // Kommentare löschen
+    await Comment.deleteMany({ author: userId });
 
+    // Buchungen löschen
+    await Booking.deleteMany({ $or: [{ guest: userId }, { host: userId }] });
+    // Accommodation löschen
+    const listings = await Accommodation.find({ owner: userId });
+    for (const listing of listings) {
+      // Kommentare zur Unterkunft löschen
+      await Comment.deleteMany({ location: listing._id });
+
+      // Buchungen zur Unterkunft löschen
+      await Booking.deleteMany({ accommodation: listing._id });
+
+      // Bilder in Cloudinary löschen
+      const imagesIds = [listing.titleImage.public_id];
+      if (listing.images.length > 0) {
+        for (let img of listing.images) {
+          imagesIds.push(img.public_id);
+        }
+      }
+
+      //delete images on cloudinary
+      for (let imgId of imagesIds) {
+        console.log(imgId, 'deleted');
+        await cloudinary.uploader.destroy(imgId, function (error, result) {
+          console.log(result);
+          console.error(error);
+        });
+      }
+
+      const users = await User.updateMany(
+        { favourites: listing._id },
+        { $pull: { favourites: listing._id } }
+      );
+    }
+    await Accommodation.deleteMany({ owner: userId });
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {
