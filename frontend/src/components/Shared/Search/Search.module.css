@@ -1,16 +1,18 @@
 .searchbar {
-  --width: 1000px;
   --height: 50px;
-  min-width: 800px; /* Hier wird die minimale Breite festgelegt */
+  width: 90vw;
+  height: var(--height);
   border-radius: 8px;
   border: solid var(--color-mediumDark) 1px;
   background: var(--gradient-circle), var(--color-mediumDark);
   box-shadow: inset 0 3px 3px black, inset 0 -3px 3px black, 0 6px 20px black, 0 6px 20px black;
-  width: var(--width);
-  height: var(--height);
   position: absolute;
   top: calc(var(--height) / -2);
-  left: calc(50vw - var(--width) / 2);
+  left: 5vw; /* Centers the component (100vw - 70vw) / 2 = 15vw */
+
+  button {
+    width: 12rem;
+  }
 }
 
 .searchbarForm {
@@ -22,10 +24,13 @@
   padding: 0.3em 0.3em;
 
   button {
+    width: 100%;
+    height: 100%;
     padding: 0.4em;
-    margin-left: 8px;
     border-radius: 50%;
-    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   label {
@@ -40,18 +45,35 @@
   }
 }
 
-@media (max-width: 768px) {
+.searchbarLabel {
+  width: 5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--input-height);
+  aspect-ratio: 1;
+}
+
+@media (max-width: 968px) {
   .searchbar {
-    width: 90vw; /* Changed from max-width: 20vw */
+    width: 85vw; /* Changed from max-width: 20vw */
     min-width: unset; /* entfernt min width */
-    left: 5vw; /* Center searchbar mit gleichen margins */
+    left: 7.5vw; /* Center searchbar mit gleichen margins */
 
     .searchbarSelect {
       width: 100px;
     }
 
     .searchbarLabel {
-      visibility: hidden;
+      visibility: hidden; 
       width: 0px;
     }
 
@@ -68,5 +90,3 @@
     }
   }
 }
-
-

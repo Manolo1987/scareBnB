@@ -82,7 +82,8 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <label className={styles.searchbarLabel}>CheckIn:
+        <label className={styles.searchbarLabel}>CheckIn:</label>
+        <label>
         <input
           type='date'
           value={bookingPreview.checkIn.toISOString().split('T')[0]}
@@ -90,8 +91,10 @@ export default function Search() {
           className={styles.searchbarInput}
           id='checkIn'
           min={today}
-        /></label>
-        <label className={styles.searchbarLabel}>CheckOut:
+          />
+        </label>
+        <label className={styles.searchbarLabel}>CheckOut:</label>
+        <label>
         <input
           type='date'
           value={bookingPreview.checkOut.toISOString().split('T')[0]}
@@ -111,9 +114,11 @@ export default function Search() {
             </option>
           ))}
         </select>
-        <button className='buttonEffect' type='submit'>
-          <MagnifyingGlass size={16} />
-        </button>
+        <div className={styles.buttonContainer}>
+          <button className='buttonEffect' type='submit'>
+            <MagnifyingGlass size={16} />
+          </button>
+        </div>
       </form>
     </div>
   );
