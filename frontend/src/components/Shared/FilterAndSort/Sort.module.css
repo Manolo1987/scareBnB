@@ -2,6 +2,14 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
+
+  label {
+    font-size: clamp(0.8rem, 0.3684rem + 0.5263vw, 1rem);
+  }
+
+  select {
+    width: 5rem;
+  }
 }
 .icon_button {
   cursor: pointer;
