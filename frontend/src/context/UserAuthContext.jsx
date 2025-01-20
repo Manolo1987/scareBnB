@@ -54,14 +54,14 @@ export default function UserAuthContextProvider({ children }) {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    if (user?.roles === 'admin') {
-      const getUsers = async () => {
-        await getAllUsers();
-      };
-      getUsers();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.roles === 'admin') {
+  //     const getUsers = async () => {
+  //       await getAllUsers();
+  //     };
+  //     getUsers();
+  //   }
+  // }, [user]);
 
   // Registration
   const registration = async (formData) => {
