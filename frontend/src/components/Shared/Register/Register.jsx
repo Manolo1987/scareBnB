@@ -31,10 +31,115 @@ export default function Register() {
     dateOfBirth: '',
     dataConsent: '',
   });
+
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prevState) => !prevState);
+  };
+
+  const validateField = (name, value) => {
+    let error = '';
+    if (name === 'firstName' || name === 'lastName') {
+      if (!/^[a-zA-Z\s.,;:'"_\-\u00C0-\u00FFäöüÄÖÜß]+$/.test(value)) {
+        error = `${name} contains invalid characters!`;
+      } else if (value.length < 3 || value.length > 30) {
+        error = `${name} must be between 3 and 30 characters long.`;
+      }
+    }
+    if (name === 'email') {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+        error = 'Invalid email!';
+      }
+    }
+    if (name === 'phone') {
+      if (!/^[0-9]+$/.test(value)) {
+        error = 'Phone number must only contain numbers!';
+      }
+    }
+    if (name === 'password') {
+      if (
+        !/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/.test(
+          value
+        )
+      ) {
+        error =
+          'Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character!';
+      }
+    }
+    if (name === 'confirmPassword') {
+      if (value !== formData.password) {
+        error = 'Passwords do not match!';
+      }
+    }
+    if (name === 'dateOfBirth') {
+      const today = new Date();
+      const maxPastDate = new Date(
+        today.getFullYear() - 101,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      if (new Date(value) > today) {
+        error = 'The date of birth cannot be in the future!';
+      } else if (new Date(value) < maxPastDate) {
+        error =
+          'The date of birth cannot be more than 101 years in the past! (You are not a ghost)';
+      }
+    }
+    return error;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (value.trim() === '') {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: '',
+      }));
+      return;
+    }
+
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let formIsValid = true;
+
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) {
+        formIsValid = false;
+        newErrors[key] = error;
+      }
+    });
+
+    setErrors(newErrors);
+
+    if (!formIsValid) return;
+
+    try {
+      await registration(formData);
+      setShowRegister(false);
+    } catch (error) {
+      console.error('Registration error:', error || error.message);
+    }
   };
 
   const closeAndReset = () => {
@@ -51,39 +156,16 @@ export default function Register() {
       dateOfBirth: '',
       dataConsent: false,
     });
-    setErrors({});
-  };
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      setErrors((prev) => ({
-        ...prev,
-        confirmPassword: 'Passwords do not match',
-      }));
-      return;
-    }
-    try {
-      await registration(formData);
-      setShowRegister(false);
-    } catch (error) {
-      console.error('Registration error:', error || error.message);
-    }
+    setErrors({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phone: '',
+      dateOfBirth: '',
+      dataConsent: '',
+    });
   };
 
   return (

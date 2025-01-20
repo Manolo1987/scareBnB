@@ -71,8 +71,12 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('Successfully registered!');
       }
     } catch (error) {
-      console.error('Error during registration', error);
-      toast.error('Registration failed');
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.msg);
+      } else {
+        console.error('Error during registration', error);
+        toast.error('Registration failed');
+      }
     }
   };
 
