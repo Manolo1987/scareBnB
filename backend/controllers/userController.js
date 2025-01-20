@@ -3,6 +3,8 @@
 import User from '../models/User.js';
 import Accommodation from '../models/Accommodation.js';
 import Booking from '../models/Booking.js';
+import Comment from '../models/Comment.js';
+import cloudinary from '../config/cloudinary.js';
 import { generateToken } from '../middleware/jwt.js';
 
 // Register
@@ -13,7 +15,7 @@ export async function register(req, res) {
       email: email.toLowerCase(),
     });
     if (existingUser) {
-      return res.status(400).json({ msg: 'User already exists!' });
+      return res.status(400).json({ msg: 'Email or Phone already exists!' });
     }
 
     const newUser = await User.create(req.body);
@@ -25,48 +27,6 @@ export async function register(req, res) {
 }
 
 // Login
-/* export async function login(req, res) {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email: email.toLowerCase() });
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const passwordMatch = await user.isValidPassword(password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: 'Check your incredentials' });
-    }
-
-    const token = generateToken({
-      userId: user._id,
-      email: user.email,
-      roles: user.roles,
-    });
-    res
-      .status(200)
-      .cookie('jwt', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: false, // false in development, true in production
-        path: '/',
-        maxAge: 60 * 60 * 1000, // 1h
-      })
-      .json({
-        msg: 'Login successful',
-        user: user, // acces to user data in frontend
-        token,
-      });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'Server error' });
-  }
-}
-
-*/
 
 export async function login(req, res) {
   try {
@@ -104,7 +64,7 @@ export async function login(req, res) {
       .cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
-        secure: false, // false in development, true in production
+        secure: true, // false in development, true in production
         path: '/',
         maxAge: 5 * 60 * 60 * 1000, // 1h
       })
@@ -126,7 +86,7 @@ export async function logout(req, res) {
       httpOnly: true,
       sameSite: 'none',
       path: '/',
-      secure: false, // false in development, true in production
+      secure: true, // false in development, true in production
     });
     res.status(200).json({ msg: 'Logout successful' });
   } catch (error) {
@@ -214,6 +174,43 @@ export async function updateUser(req, res) {
 export async function deleteUser(req, res) {
   try {
     const { userId } = req;
+    // Kommentare löschen
+    await Comment.deleteMany({ author: userId });
+
+    // Buchungen löschen
+    await Booking.deleteMany({ $or: [{ guest: userId }, { host: userId }] });
+    // Accommodation löschen
+    const listings = await Accommodation.find({ owner: userId });
+    for (const listing of listings) {
+      // Kommentare zur Unterkunft löschen
+      await Comment.deleteMany({ location: listing._id });
+
+      // Buchungen zur Unterkunft löschen
+      await Booking.deleteMany({ accommodation: listing._id });
+
+      // Bilder in Cloudinary löschen
+      const imagesIds = [listing.titleImage.public_id];
+      if (listing.images.length > 0) {
+        for (let img of listing.images) {
+          imagesIds.push(img.public_id);
+        }
+      }
+
+      //delete images on cloudinary
+      for (let imgId of imagesIds) {
+        console.log(imgId, 'deleted');
+        await cloudinary.uploader.destroy(imgId, function (error, result) {
+          console.log(result);
+          console.error(error);
+        });
+      }
+
+      const users = await User.updateMany(
+        { favourites: listing._id },
+        { $pull: { favourites: listing._id } }
+      );
+    }
+    await Accommodation.deleteMany({ owner: userId });
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) return res.status(404).json({ msg: 'User not found' });
@@ -258,7 +255,43 @@ export async function getAllUsers(req, res) {
 export async function deleteUserByAdmin(req, res) {
   try {
     const { userId } = req.params;
+    // Kommentare löschen
+    await Comment.deleteMany({ author: userId });
 
+    // Buchungen löschen
+    await Booking.deleteMany({ $or: [{ guest: userId }, { host: userId }] });
+    // Accommodation löschen
+    const listings = await Accommodation.find({ owner: userId });
+    for (const listing of listings) {
+      // Kommentare zur Unterkunft löschen
+      await Comment.deleteMany({ location: listing._id });
+
+      // Buchungen zur Unterkunft löschen
+      await Booking.deleteMany({ accommodation: listing._id });
+
+      // Bilder in Cloudinary löschen
+      const imagesIds = [listing.titleImage.public_id];
+      if (listing.images.length > 0) {
+        for (let img of listing.images) {
+          imagesIds.push(img.public_id);
+        }
+      }
+
+      //delete images on cloudinary
+      for (let imgId of imagesIds) {
+        console.log(imgId, 'deleted');
+        await cloudinary.uploader.destroy(imgId, function (error, result) {
+          console.log(result);
+          console.error(error);
+        });
+      }
+
+      const users = await User.updateMany(
+        { favourites: listing._id },
+        { $pull: { favourites: listing._id } }
+      );
+    }
+    await Accommodation.deleteMany({ owner: userId });
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {

@@ -84,9 +84,9 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
         </div>
         <div className='cardButtonContainer'>
           <a
-            href={`mailto:${booking.guest.email}`}
+            href={`mailto:${booking.host.email}`}
             className='cardButton'
-            title='Contact Host'
+            title={`send email to ${booking.host.email}`}
           >
             <Envelope size={32} className='buttonIcon' />
           </a>

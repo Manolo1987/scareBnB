@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Bookings.module.css';
 import { useBooking } from '../../../context/bookingContext';
 import BookingCard from '../BookingCard/BookingCard';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function Bookings() {
   const { myBookings, cancelBooking, getMyBookings } = useBooking();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    getMyBookings();
+    const fetchData = async () => {
+      await getMyBookings();
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   const currentDate = new Date();
@@ -22,7 +30,9 @@ export default function Bookings() {
       <div className='headingEffectContainer'>
         <h2 className='headingEffect'>Upcoming Bookings</h2>
       </div>
-      {upcomingBookings?.length > 0 ? (
+      <h2>Upcoming Bookings</h2>
+      {isLoading && <LoadingSpinner />}
+      {!isLoading && upcomingBookings?.length > 0 ? (
         <ul className='cardList'>
           {upcomingBookings?.map((booking, index) => {
             return (
@@ -43,9 +53,10 @@ export default function Bookings() {
           <p className='message'>No upcoming bookings found.</p>
         </div>
       )}
+      <h2>Past Bookings</h2>
+      {isLoading && <LoadingSpinner />}
+      {!isLoading && pastBookings?.length > 0 ? (
 
-      <h2 className={styles.pastBookings}>Past Bookings</h2>
-      {pastBookings?.length > 0 ? (
         <ul className='cardList'>
           {pastBookings?.map((booking, index) => {
             return (

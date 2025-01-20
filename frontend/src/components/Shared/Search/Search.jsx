@@ -100,7 +100,7 @@ export default function Search() {
           value={bookingPreview.checkOut.toISOString().split('T')[0]}
           onChange={handleCheckOutChange}
           className={styles.searchbarInput}
-          min={bookingPreview.checkOut.toISOString().split('T')[0]}
+          min={bookingPreview.checkIn.toISOString().split('T')[0]}
         /></label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select

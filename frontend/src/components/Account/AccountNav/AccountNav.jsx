@@ -18,7 +18,7 @@ export default function AccountNav() {
                 : styles.accountNavLink
             }
           >
-            profile
+            Profile
           </NavLink>
         </li>
         <li>
@@ -30,7 +30,7 @@ export default function AccountNav() {
                 : styles.accountNavLink
             }
           >
-            favourites
+            Favourites
           </NavLink>
         </li>
         <li>
@@ -42,7 +42,7 @@ export default function AccountNav() {
                 : styles.accountNavLink
             }
           >
-            bookings
+            Bookings
           </NavLink>
         </li>
         <li>
@@ -54,7 +54,7 @@ export default function AccountNav() {
                 : styles.accountNavLink
             }
           >
-            listings
+            Listings
           </NavLink>
         </li>
         {isAdmin && (

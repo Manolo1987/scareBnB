@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../App.css';
 import styles from './BookedListings.module.css';
 import ListingsNav from '../ListingsNav/ListingsNav.jsx';
 import BookedListingsCard from '../BookedListingsCard/BookedListingsCard.jsx';
 import { useBooking } from '../../../context/bookingContext.jsx';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function BookedListings() {
   const { myBookedListings, getMyBookedListings } = useBooking();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    getMyBookedListings();
+    const fetchData = async () => {
+      await getMyBookedListings();
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
   return (
     <>
@@ -17,14 +25,15 @@ export default function BookedListings() {
         <div className='headingEffectContainer'>
           <h1 className='headingEffect'>My Booked Listings</h1>
         </div>
-        {myBookedListings?.length < 1 && (
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && myBookedListings?.length < 1 && (
           <div className='messageContainer'>
             <p className='message'>
               You don't have any booked listings at the moment.
             </p>
           </div>
         )}
-        {myBookedListings?.length > 0 && (
+        {!isLoading && myBookedListings?.length > 0 && (
           <ul className='cardList'>
             {myBookedListings?.map((listing, index) => {
               return (

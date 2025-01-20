@@ -1,3 +1,4 @@
+/* Container Styles */
 .accoListContainer {
   width: 100%;
   display: flex;
@@ -5,72 +6,88 @@
   align-items: center;
   padding: 2rem;
   gap: 1rem;
+  color: var(--color-light);
 }
 
+.accoListContainer h2 {
+  font-family: var(--font-headline);
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  text-shadow: 6px 6px 3px black;
+  margin: 1rem 0 0 0;
+}
+
+.accoListContainer p {
+  text-shadow: 6px 6px 3px black;
+}
+
+/* Table Styles */
 .tableContainer {
   max-width: 100%;
-  overflow-x: auto; /* Ermöglicht horizontales Scrollen bei kleinen Bildschirmen */
+  overflow-x: auto;
   margin: 20px 0;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  color: black;
+  background-color: #1e1e1e;
+  color: var(--color-light);
 }
 
 .table {
   width: 100%;
-  border-collapse: collapse; /* Entfernt doppelte Linien */
+  border-collapse: collapse;
   text-align: left;
-  font-family: Arial, sans-serif;
   font-size: 14px;
 }
 
-.table th,
+.table th, 
 .table td {
   padding: 12px 16px;
-  border: 1px solid #ddd; /* Dünne Linie zwischen Zellen */
+  border: 1px solid #2b2b2b;
 }
 
 .table th {
-  background-color: #7d23f3; /* Blauer Hintergrund für den Header */
-  color: white;
+  background-color: #0d0d0d;
+  color: crimson;
   position: sticky;
-  top: 0; /* Header bleibt beim Scrollen sichtbar */
+  top: 0;
   z-index: 1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .table tr:nth-child(even) {
-  background-color: #f2f2f2; /* Wechselnde Hintergrundfarbe für bessere Lesbarkeit */
+  background-color: #252525;
 }
 
 .table tr:hover {
-  background-color: #e6f7ff; /* Leichtes Blau beim Hover */
+  background-color: rgb(77, 76, 76);
 }
 
+/* Action Buttons */
 .actionButtons {
   display: flex;
-  gap: 10px; /* Abstand zwischen Buttons */
+  gap: 10px;
 }
 
 .viewButton {
-  background-color: #10ac10;
-  color: white;
+  background-color: #151515;
+  color: crimson;
   text-decoration: none;
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 14px;
   text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .viewButton:hover {
-  background-color: #0056b3;
+  background-color: var(--color-light);
+  color: black;
 }
 
 .deleteButton {
-  background-color: #ff4d4d;
+  background-color: black;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -79,9 +96,10 @@
 }
 
 .deleteButton:hover {
-  background-color: #e60000;
+  background-color: crimson;
 }
 
+/* Loading Animation */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -91,6 +109,11 @@
 }
 
 .spinner {
+  border: 4px solid #3a3a3a;
+  border-top: 4px solid crimson;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   animation: spin 1s linear infinite;
 }
 
@@ -100,5 +123,20 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .table th, 
+  .table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .viewButton, 
+  .deleteButton {
+    padding: 5px 10px;
+    font-size: 12px;
   }
 }

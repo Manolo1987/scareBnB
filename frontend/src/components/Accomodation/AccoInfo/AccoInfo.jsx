@@ -4,16 +4,22 @@ import { Desk } from '@phosphor-icons/react';
 import AccoMap from '../AccoMap/AccoMap';
 import FavouriteIcon from '../../Shared/FavouriteIcon/FavouriteIcon';
 import { useAuth } from '../../../context/UserAuthContext';
-
+import AccoSlider from '../../Accomodation/AccoSlider/AccoSlider';
 
 export default function AccoInfo({ currentAcco }) {
-    const { isAuthenticated } = useAuth();
-  
+  const { isAuthenticated } = useAuth();
+
   return (
     <section className={styles.accoInfo_container}>
-      <div className={styles.titleAndFavIcon}>
-        <h2 className={styles.title}>Accommodation Details</h2>
+      <div className={styles.title_fav_container}>
+        <h2 className={styles.title}>{currentAcco?.title}</h2>
         {isAuthenticated && <FavouriteIcon accoId={currentAcco._id} />}
+      </div>
+      <div className={styles.img_slider}>
+        <AccoSlider
+          titleImage={currentAcco?.titleImage}
+          images={currentAcco?.images}
+        />
       </div>
       <div className={styles.section}>
         <h4>Story</h4>
