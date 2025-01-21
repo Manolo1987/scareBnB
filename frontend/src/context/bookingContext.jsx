@@ -76,7 +76,12 @@ export const BookingContextProvider = ({ children }) => {
         setShowLogin(true);
       }
     } catch (error) {
-      toast.error(error.response?.data?.msg || 'Booking failed.');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Booking failed.');
+      }
     }
   };
 
@@ -88,11 +93,13 @@ export const BookingContextProvider = ({ children }) => {
       if (response.status === 200) {
         setMyBookings(response.data.bookings);
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      toast.error(error.response?.data?.msg || 'Server Error.');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -108,7 +115,12 @@ export const BookingContextProvider = ({ children }) => {
         setShowLogin(true);
       }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -124,11 +136,13 @@ export const BookingContextProvider = ({ children }) => {
 
         await getMyBookings();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -144,11 +158,13 @@ export const BookingContextProvider = ({ children }) => {
 
         await getMyBookings();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 

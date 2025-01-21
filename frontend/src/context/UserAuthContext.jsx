@@ -118,11 +118,14 @@ export default function UserAuthContextProvider({ children }) {
 
         setIsLoading(false);
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error('Error fetching userdata', error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        console.error('Error fetching userdata', error);
+      }
     }
   };
 
@@ -156,12 +159,13 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('User updated succesfully');
         await fetchUserData();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error('Error during update the user', error);
-      toast.error('Update failed');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -174,12 +178,13 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         setAllUsers(response.data.users);
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error('Error fetching userdata from all users');
-      toast.error('Error fetching userdata from all users');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -195,12 +200,13 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('Your Profil is deleted, goodbye!');
         await logout();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong - please try again');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -216,12 +222,13 @@ export default function UserAuthContextProvider({ children }) {
         toast.success('User deleted, well done!');
         await getAllUsers();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong - please try again');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -233,12 +240,13 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         await fetchUserData();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong - please try again');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -252,12 +260,13 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         await fetchUserData();
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong - please try again');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 

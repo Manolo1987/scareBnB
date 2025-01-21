@@ -60,11 +60,13 @@ export default function AccommodationContextProvider({ children }) {
       if (response.status === 200) {
         setMyListings(response.data);
       }
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
@@ -76,16 +78,18 @@ export default function AccommodationContextProvider({ children }) {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
+
       if (response.status === 200) {
         toast.success('New listing added');
         return response.data;
       }
     } catch (error) {
-      toast.error('Something went wrong - please try again');
-      console.error(error.response);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
@@ -101,17 +105,19 @@ export default function AccommodationContextProvider({ children }) {
           },
         }
       );
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
+
       if (response.status === 200) {
         toast.success('Listing updated');
         getMyListings();
         return response.data;
       }
     } catch (error) {
-      toast.error('Something went wrong - please try again');
-      console.error(error.response);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
@@ -119,43 +125,50 @@ export default function AccommodationContextProvider({ children }) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
 
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
       if (response.status === 200) {
         toast.success('Listing deleted');
         getMyListings();
       }
     } catch (error) {
-      toast.error('Something went wrong - please try again');
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
   async function postComment(id, comment) {
     try {
       const response = await api.post(`/accommodations/comment/${id}`, comment);
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
+
       setCurrentAcco(response.data);
       return response.data;
     } catch (error) {
-      console.error('Error posting comment:', error);
-      return null;
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        return null;
+      }
     }
   }
 
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
-      if (response.status === 403 || response.status === 401) {
-        setShowLogin(true);
-      }
+
       return response.data;
     } catch (error) {
-      console.error('Error deleting comment:', error);
-      return null;
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        return null;
+      }
     }
   }
 
