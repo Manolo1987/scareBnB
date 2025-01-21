@@ -35,6 +35,7 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
         className={`buttonEffect ${styles.pg_button}`}
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
+        title='Previous'
       >
         Previous
       </button>
@@ -46,7 +47,9 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
         ) : (
           <button
             key={`page-${page}`}
-            className={`buttonEffect ${page === currentPage ? styles.active : styles.pg_button}`}
+            className={`buttonEffect ${
+              page === currentPage ? styles.active : styles.pg_button
+            }`}
             onClick={() => onPageChange(page)}
           >
             {page}
@@ -57,6 +60,7 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
         className={`buttonEffect ${styles.pg_button}`}
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
+        title='Next'
       >
         Next
       </button>

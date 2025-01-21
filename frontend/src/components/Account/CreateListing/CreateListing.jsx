@@ -496,12 +496,14 @@ export default function HandleListings() {
               type='button'
               className='cancelButton'
               onClick={handleClearForm}
+              title='Clear form'
             >
               Clear Form
             </button>
             <button
               type='submit'
               className='saveButton'
+              title='Save listing'
               disabled={!isFormValid() || isLoading}
             >
               {isLoading ? 'Saving...' : 'Save'}

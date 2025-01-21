@@ -41,11 +41,13 @@ export default function ListingsCard({ listing }) {
               .replace(/\s+/g, '-')}?id=${listing._id}`}
             state={{ id: listing._id }}
             className='cardLink'
+            title='View Accommodation'
           >
             <img
               src={listing.titleImage.secure_url}
               alt={listing.title}
               className='cardImage'
+              title={listing.title}
             />
           </Link>
         </div>
@@ -68,7 +70,12 @@ export default function ListingsCard({ listing }) {
             </span>
           </div>
           <div className='cardButtonContainer'>
-            <button className='cardButton' onClick={handleShowForm}>
+            <button
+              className='cardButton'
+              onClick={handleShowForm}
+              title='Edit Accommodation'
+              aria-label='Edit Accommodation'
+            >
               <Pencil size={32} className='buttonIcon' />
             </button>
             <button
@@ -78,6 +85,8 @@ export default function ListingsCard({ listing }) {
                 e.preventDefault();
                 setShowDeleteMessage(true);
               }}
+              title='Delete Accommodation'
+              aria-label='Delete Accommodation'
             >
               <Trash size={32} className='buttonIcon' />
             </button>
@@ -102,6 +111,8 @@ export default function ListingsCard({ listing }) {
                 type='button'
                 className='cancelButton'
                 onClick={() => setShowDeleteMessage(false)}
+                aria-label='Cancel'
+                title='Cancel'
               >
                 Cancel
               </button>
@@ -109,6 +120,8 @@ export default function ListingsCard({ listing }) {
                 type='button'
                 className='saveButton'
                 onClick={handleDelete}
+                aria-label='Delete'
+                title='Delete'
               >
                 Delete
               </button>

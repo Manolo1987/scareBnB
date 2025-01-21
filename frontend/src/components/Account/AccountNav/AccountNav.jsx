@@ -12,6 +12,7 @@ export default function AccountNav() {
         <li>
           <NavLink
             to='/account/profile'
+            title='Profile'
             className={({ isActive }) =>
               isActive
                 ? `${styles.accountNavLink} ${styles.activeLink}`
@@ -24,6 +25,7 @@ export default function AccountNav() {
         <li>
           <NavLink
             to='/account/favourites'
+            title='Favourites'
             className={({ isActive }) =>
               isActive
                 ? `${styles.accountNavLink} ${styles.activeLink}`
@@ -36,6 +38,7 @@ export default function AccountNav() {
         <li>
           <NavLink
             to='/account/bookings'
+            title='Bookings'
             className={({ isActive }) =>
               isActive
                 ? `${styles.accountNavLink} ${styles.activeLink}`
@@ -48,6 +51,7 @@ export default function AccountNav() {
         <li>
           <NavLink
             to='/account/listings'
+            title='Listings'
             className={({ isActive }) =>
               isActive
                 ? `${styles.accountNavLink} ${styles.activeLink}`
@@ -62,6 +66,7 @@ export default function AccountNav() {
             <li>
               <NavLink
                 to='/account/adminUserList'
+                title='UserList'
                 className={({ isActive }) =>
                   isActive
                     ? `${styles.admin_link} ${styles.accountNavLink} ${styles.activeLink}`
@@ -74,6 +79,7 @@ export default function AccountNav() {
             <li>
               <NavLink
                 to='/account/adminAccoList'
+                title='AccoList'
                 className={({ isActive }) =>
                   isActive
                     ? `${styles.admin_link} ${styles.accountNavLink} ${styles.activeLink}`

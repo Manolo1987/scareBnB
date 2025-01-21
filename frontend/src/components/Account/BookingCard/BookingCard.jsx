@@ -87,6 +87,7 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
             href={`mailto:${booking.host.email}`}
             className='cardButton'
             title={`send email to ${booking.host.email}`}
+            aria-label='send email to host'
           >
             <Envelope size={32} className='buttonIcon' />
           </a>

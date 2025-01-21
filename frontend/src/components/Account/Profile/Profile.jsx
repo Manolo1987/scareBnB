@@ -217,12 +217,14 @@ export default function Profile() {
               <button
                 className='buttonEffect'
                 onClick={() => setIsEditing(true)}
+                title='Edit Profile'
               >
                 Edit Profile
               </button>
               <button
                 className={styles.deleteButton}
                 onClick={() => setIsDeleting(true)}
+                title='Delete Profile'
               >
                 Delete Profile
               </button>
@@ -350,6 +352,7 @@ export default function Profile() {
                 <button
                   className='cancelButton'
                   type='button'
+                  title='Cancel'
                   onClick={() => {
                     setIsEditing(false);
                     resetForm();
@@ -357,7 +360,7 @@ export default function Profile() {
                 >
                   Cancel
                 </button>
-                <button className='saveButton' type='submit'>
+                <button className='saveButton' type='submit' title='Save'>
                   Save
                 </button>
               </div>
@@ -375,13 +378,18 @@ export default function Profile() {
             <div className='formFooter'>
               <button
                 className='cancelButton'
+                title='Cancel'
                 onClick={() => {
                   setIsDeleting(false);
                 }}
               >
                 Cancel
               </button>
-              <button className='saveButton' onClick={() => deleteMyProfile()}>
+              <button
+                className='saveButton'
+                onClick={() => deleteMyProfile()}
+                title='Delete'
+              >
                 Delete
               </button>
             </div>

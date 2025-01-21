@@ -19,12 +19,14 @@ export default function AccountDropdownMenu() {
   };
 
   return (
-    <div className={styles.dropdown} >
+    <div className={styles.dropdown}>
       <div
         className={
           isAuthenticated ? styles.dropdown_icon_red : styles.dropdown_icon
         }
         onClick={toggleMenu}
+        title='Account'
+        aria-label='Account'
       >
         {isAuthenticated ? (
           <UserCircleCheck size={50} color='white' weight='fill' />
@@ -86,10 +88,7 @@ export default function AccountDropdownMenu() {
                 </>
               )}
               <li>
-                <button
-                  onClick={handleLogout}
-                  className={styles.logout}
-                >
+                <button onClick={handleLogout} className={styles.logout}>
                   Logout
                 </button>
               </li>

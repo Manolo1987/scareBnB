@@ -81,6 +81,7 @@ export default function AdminUserList() {
                                   state={{ id: booking.accommodation._id }}
                                   target='_blank'
                                   rel='noopener noreferrer'
+                                  title='View Accommodation in a new tab'
                                 >
                                   {booking.accommodation.title}
                                 </Link>
@@ -122,6 +123,7 @@ export default function AdminUserList() {
                                 state={{ id: listing._id }}
                                 target='_blank'
                                 rel='noopener noreferrer'
+                                title='View Accommodation in a new tab'
                               >
                                 {listing.title}
                               </Link>
@@ -148,6 +150,7 @@ export default function AdminUserList() {
                                 state={{ id: comment.location._id }}
                                 target='_blank'
                                 rel='noopener noreferrer'
+                                title='View Comment in a new tab'
                               >
                                 {comment.location.title}
                               </Link>
@@ -170,6 +173,7 @@ export default function AdminUserList() {
                             }
                           }}
                           className={styles.deleteButton}
+                          title='Delete User'
                         >
                           Delete User
                         </button>
