@@ -10,24 +10,28 @@ export default function AdminAccoList() {
   const {
     allAccos,
     getAllAccommodations,
-    currentPage,
-    setCurrentPage,
     stateFilter,
+    setStateFilter,
     maxPrice,
+    setMaxPrice,
     minPrice,
+    setMinPrice,
     bedrooms,
+    setBedrooms,
     minRating,
-    sortBy,
-    sortOrder,
+    setMinRating,
     deleteListing,
   } = useAcco();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const limit = 1000;
 
   useEffect(() => {
-    setCurrentPage(1);
+    setStateFilter('');
+    setMinPrice('');
+    setMaxPrice('');
+    setBedrooms('');
+    setMinRating('');
   }, []);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ export default function AdminAccoList() {
       setLoading(true);
       setError(null);
       try {
-        await getAllAccommodations(limit);
+        await getAllAccommodations();
       } catch (error) {
         console.error('Error loading accommodations:', error);
         setError('Failed to load accommodations. Please try again later.');
@@ -49,16 +53,7 @@ export default function AdminAccoList() {
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [
-    stateFilter,
-    maxPrice,
-    minPrice,
-    bedrooms,
-    minRating,
-    sortBy,
-    sortOrder,
-    currentPage,
-  ]);
+  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating]);
 
   return (
     <section className={styles.accoListContainer}>
