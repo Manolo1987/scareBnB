@@ -30,7 +30,7 @@ export default function FilterAndSort() {
     };
   }, []);
   return (
-    <div className={styles.filterDropdown}>
+    <div className={styles.filterDropdown} title='Filter and sort'>
       <div
         ref={buttonRef}
         className={`${styles.dropdownButton} ${
@@ -44,23 +44,23 @@ export default function FilterAndSort() {
         <div className={styles.dropDownListContainer} ref={dropdownRef}>
           <ul className={styles.dropdownList}>
             <li>
-              <div className={styles.filter_item}>
+              <div className={styles.filter_item} title='Price'>
                 <PriceFilter />
               </div>
             </li>
             <li>
-              <div className={styles.filter_item}>
+              <div className={styles.filter_item} title='Bedrooms'>
                 <BedroomsFilter />
               </div>
             </li>
             <li>
-              <div className={styles.filter_item}>
+              <div className={styles.filter_item} title='Rating'>
                 <RatingFilter />
               </div>
             </li>
             {selectedView === 'gallery-view' && (
               <li>
-                <div className={styles.filter_item}>
+                <div className={styles.filter_item} title='Sort'>
                   <Sort />
                 </div>
               </li>
