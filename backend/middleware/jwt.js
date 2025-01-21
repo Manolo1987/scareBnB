@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 export const generateToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES || '1h',
+    expiresIn: process.env.JWT_EXPIRES_IN || '5h',
   });
 };
 
@@ -10,6 +10,7 @@ const verifyToken = (token) => {
   try {
     return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
+    console.error('JWT Verification Error:', error.message);
     throw new Error('Invalid token');
   }
 };
