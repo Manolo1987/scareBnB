@@ -64,3 +64,6 @@ body {
   min-height: 100vh;
   color: #fff;
 }
+ul {
+  list-style: none;
+}
