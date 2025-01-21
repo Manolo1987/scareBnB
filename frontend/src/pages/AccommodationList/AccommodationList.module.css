@@ -6,60 +6,13 @@
 
 .controls {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 2rem;
   margin: 0 auto;
-  max-width: 90%;
-  padding: 1rem 0;
-  flex-wrap: wrap;
-}
-
-.filterAndSort {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-/* globale styles für alle Select Dropdowns in der AccommodationList*/
-.controlsSelect {
-  /* -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; */
-  font-size: 1rem;
-  color: #fff;
-  padding: 8px;
-  border: 1px solid var(--color-mediumDark);
-  border-radius: none;
-  cursor: pointer;
-  background-color: transparent;
-}
-.controlsSelect:hover {
-  background-color: black;
-}
-.controlsSelect:focus {
-  outline: none;
-}
-.controlsSelect > option {
-  background-color: rgb(0, 0, 0);
-  border: 1px solid var(--color-mediumDark);
-  cursor: pointer;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  box-shadow: 0;
-  padding-block-end: 0px;
-  padding-block-start: 0px;
-  padding-inline-end: 0px;
-  padding-inline-start: 0px;
-  border-image-width: 0px;
-  border-radius: none;
-}
-.controlsSelect:focus > option:hover {
-  background-color: #242424;
-}
-.controlsSelect:focus > option:checked {
-  background-color: #590202 !important;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
 }
 
 .switchView_container {
@@ -96,23 +49,4 @@
       color: crimson;
     }
   }
-}
-
-@media (max-width: 768px) {
-  .controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: .2rem;
-  margin: 0 auto;
-  max-width: 90%;
-  padding: 0.5rem 0;
-  flex-wrap: wrap;
-}
-
-.filterAndSort {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
 }
