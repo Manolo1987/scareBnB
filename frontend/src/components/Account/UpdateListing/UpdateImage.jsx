@@ -39,6 +39,8 @@ export default function UpdateImage({ img }) {
             type='button'
             className={`${styles.imageRecoverButton} ${styles.imageButton}`}
             onClick={handleRecoverImage}
+            title='Recover'
+            aria-label='Recover'
           >
             <ArrowCounterClockwise size={24} className={styles.buttonIcon} />
           </button>
@@ -48,6 +50,8 @@ export default function UpdateImage({ img }) {
           type='button'
           className={`${styles.imageDeleteButton} ${styles.imageButton}`}
           onClick={toggleOverlay}
+          title='Delete'
+          aria-label='Delete'
         >
           <Trash size={24} className={styles.buttonIcon} />
         </button>

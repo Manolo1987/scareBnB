@@ -25,7 +25,11 @@ export default function AccomodationList() {
         <div className={styles.controls}>
           <FilterAndSort />
           <div className={styles.switchView_container}>
-            <div className={styles.radio_container}>
+            <div
+              className={styles.radio_container}
+              title='Gallery View'
+              aria-label='Gallery View'
+            >
               <input
                 type='radio'
                 name='view'
@@ -41,7 +45,11 @@ export default function AccomodationList() {
                 <SquaresFour size={32} className={styles.icon} />
               </label>
             </div>
-            <div className={styles.radio_container}>
+            <div
+              className={styles.radio_container}
+              title='Map View'
+              aria-label='Map View'
+            >
               <input
                 type='radio'
                 name='view'
