@@ -30,7 +30,6 @@ export default function Bookings() {
       <div className='headingEffectContainer'>
         <h2 className='headingEffect'>Upcoming Bookings</h2>
       </div>
-      <h2>Upcoming Bookings</h2>
       {isLoading && <LoadingSpinner />}
       {!isLoading && upcomingBookings?.length > 0 ? (
         <ul className='cardList'>
