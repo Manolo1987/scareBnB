@@ -8,13 +8,13 @@ import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export default function Search() {
   const navigate = useNavigate();
-  const { setStateFilter, getAllAccommodations, setCurrentPage } = useAcco();
+  const { stateFilter, setStateFilter, setCurrentPage } = useAcco();
 
   const { bookingPreview, setCheckIn, setCheckOut, setNumberOfGuests } =
     useBooking();
   const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-  const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState(stateFilter);
 
   const handleCheckInChange = (e) => {
     if (e.target.value === '') {
@@ -47,15 +47,9 @@ export default function Search() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // pagination Reset bei neuer Suche
     setCurrentPage(1);
-
     setStateFilter(selectedRegion);
 
-    // Fetch accommodations mit neuem filter
-    // getAllAccommodations(10);
-
-    // Navigate mit search parametern
     const searchParams = new URLSearchParams({
       state: selectedRegion,
       checkIn: bookingPreview.checkIn.toISOString().split('T')[0],
@@ -84,24 +78,25 @@ export default function Search() {
         </select>
         <label className={styles.searchbarLabel}>CheckIn:</label>
         <label>
-        <input
-          type='date'
-          value={bookingPreview.checkIn.toISOString().split('T')[0]}
-          onChange={handleCheckInChange}
-          className={styles.searchbarInput}
-          id='checkIn'
-          min={today}
+          <input
+            type='date'
+            value={bookingPreview.checkIn.toISOString().split('T')[0]}
+            onChange={handleCheckInChange}
+            className={styles.searchbarInput}
+            id='checkIn'
+            min={today}
           />
         </label>
         <label className={styles.searchbarLabel}>CheckOut:</label>
         <label>
-        <input
-          type='date'
-          value={bookingPreview.checkOut.toISOString().split('T')[0]}
-          onChange={handleCheckOutChange}
-          className={styles.searchbarInput}
-          min={bookingPreview.checkIn.toISOString().split('T')[0]}
-        /></label>
+          <input
+            type='date'
+            value={bookingPreview.checkOut.toISOString().split('T')[0]}
+            onChange={handleCheckOutChange}
+            className={styles.searchbarInput}
+            min={bookingPreview.checkIn.toISOString().split('T')[0]}
+          />
+        </label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select
           value={bookingPreview.numberOfGuests}
