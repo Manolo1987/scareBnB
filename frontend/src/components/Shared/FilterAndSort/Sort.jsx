@@ -22,7 +22,7 @@ export default function Sort() {
         onChange={handleSortChange}
         className={globalStyles.controlsSelect}
       >
-        <option value='pricePerNight'>Price per Night</option>
+        <option value='pricePerNight'>Price</option>
         <option value='rating'>Rating</option>
         <option value='bedrooms'>Bedrooms</option>
       </select>

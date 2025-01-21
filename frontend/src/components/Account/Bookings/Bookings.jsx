@@ -28,7 +28,7 @@ export default function Bookings() {
   return (
     <section className='accountWrapper'>
       <div className='headingEffectContainer'>
-        <h1 className='headingEffect'>Bookings</h1>
+        <h2 className='headingEffect'>Upcoming Bookings</h2>
       </div>
       <h2>Upcoming Bookings</h2>
       {isLoading && <LoadingSpinner />}
@@ -53,10 +53,10 @@ export default function Bookings() {
           <p className='message'>No upcoming bookings found.</p>
         </div>
       )}
-
       <h2>Past Bookings</h2>
       {isLoading && <LoadingSpinner />}
       {!isLoading && pastBookings?.length > 0 ? (
+
         <ul className='cardList'>
           {pastBookings?.map((booking, index) => {
             return (

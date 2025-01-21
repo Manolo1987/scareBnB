@@ -18,9 +18,12 @@ export default function Favourites() {
   }, []);
 
   return (
+    <>
+        <div className='headingEffectContainer'>
+          <h1 className='headingEffect'>Favourites</h1>
+        </div>
     <div className={styles.favouritesContainer}>
       <div className={styles.accoGallery}>
-        <h1 className={styles.title}>Favourites</h1>
         {isLoading && <LoadingSpinner />}
         {!isLoading && favourites.length > 0 ? (
           <div className={styles.accoList}>
@@ -35,5 +38,6 @@ export default function Favourites() {
         )}
       </div>
     </div>
+        </>
   );
 }

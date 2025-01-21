@@ -67,7 +67,9 @@ const AccoMap = ({ lat, lon, title }) => {
           attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
           url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
         />
-        <Marker position={[lat, lon]} icon={customIcon}></Marker>
+        <Marker position={[lat, lon]} icon={customIcon}>
+          {/* <Popup isOpen={true}>{title}</Popup> */}
+        </Marker>
       </MapContainer>
     </div>
   );
