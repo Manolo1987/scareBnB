@@ -11,7 +11,7 @@
 @media (min-width: 1401px) {
   .bookingPreviewWrapper {
     position: fixed;
-    top: 20%;
+    top: 30%;
     right: 2%;
   }
 }

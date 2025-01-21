@@ -22,8 +22,8 @@ export default function AccomodationList() {
     <>
       <Search />
       <div>
-        {!stateFilter && <h2 className={styles.h2} >All Accommodations</h2>}
-        {stateFilter && <h2 className={styles.h2} >{stateFilter} Accommodations</h2>}
+        {!stateFilter && <h2 className={styles.h2} >All Listings</h2>}
+        {stateFilter && <h2 className={styles.h2} >{stateFilter}</h2>}
 
         <div className={styles.controls}>
           <div className={styles.filterAndSort}>

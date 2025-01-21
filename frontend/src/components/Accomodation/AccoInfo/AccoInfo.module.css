@@ -87,9 +87,9 @@
   }
 }
 
-/* @media (max-width: 768px) {
- .info_box {
-  display: flex;
-  flex-direction: column;
+@media (max-width: 768px) {
+ .description {
+  text-align: justify;
+  /* word-spacing: -0.1rem; */
  }
-} */
+}
