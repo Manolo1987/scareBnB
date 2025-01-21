@@ -91,6 +91,9 @@ export default function AdminAccoList() {
               <tbody>
                 {allAccos.accommodations
                   ?.filter((acco) => acco.owner._id !== user._id)
+                  .sort((a, b) =>
+                    a.owner.firstName.localeCompare(b.owner.firstName)
+                  )
                   .map((acco) => (
                     <tr key={acco._id}>
                       <td>
