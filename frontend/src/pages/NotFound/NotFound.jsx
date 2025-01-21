@@ -17,7 +17,7 @@ export default function NotFound() {
       });
     }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [navigate]);
   return (
     <div className={styles.foundWrapper}>
