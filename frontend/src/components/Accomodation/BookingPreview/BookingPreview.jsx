@@ -101,7 +101,7 @@ export default function BookingPreview() {
         </p>
 
         {/* Reservation Button */}
-        <button onClick={handleClick}>Reservation</button>
+        <button className='buttonEffect' onClick={handleClick}>Reservation</button>
       </section>
     </div>
   );

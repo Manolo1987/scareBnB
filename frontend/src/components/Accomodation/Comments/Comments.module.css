@@ -7,9 +7,13 @@
   padding: 2rem;
 
   .header {
-    font-size: 1.5rem;
     text-align: center;
+    font-family: var(--font-headline);
+    font-weight: normal;
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
     color: var(--color-light);
+    text-shadow: 6px 6px 3px rgb(0, 0, 0);
     margin-bottom: 1rem;
   }
   .comment_list {
@@ -133,3 +137,4 @@
   clip: rect(0, 0, 0, 0);
   overflow: hidden;
 }
+

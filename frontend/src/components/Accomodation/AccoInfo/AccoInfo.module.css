@@ -18,9 +18,9 @@
       text-align: center;
       font-size: 2.5rem;
       font-family: var(--font-headline);
-      font-weight: normal;
-      letter-spacing: 0.5rem;
+      letter-spacing: 0.3rem;
       color: var(--color-light);
+      text-shadow: 6px 6px 3px rgb(0, 0, 0);
     }
   }
 
@@ -39,6 +39,7 @@
   }
 
   .section {
+    position: relative;
     margin-bottom: 1.5rem;
 
     h4 {
@@ -47,8 +48,14 @@
       font-weight: normal;
       letter-spacing: 0.3rem;
       color: var(--color-medium);
-      text-shadow: 3px 3px 3px rgb(76, 76, 76);
+      text-shadow: 6px 6px 3px rgb(0, 0, 0);
       margin-bottom: 0.5rem;
+    }
+
+    .favIcon {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
 
     .description {

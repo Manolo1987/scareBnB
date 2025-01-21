@@ -13,7 +13,7 @@ export default function AccoInfo({ currentAcco }) {
     <section className={styles.accoInfo_container}>
       <div className={styles.title_fav_container}>
         <h2 className={styles.title}>{currentAcco?.title}</h2>
-        {isAuthenticated && <FavouriteIcon accoId={currentAcco._id} />}
+        
       </div>
       <div className={styles.img_slider}>
         <AccoSlider
@@ -23,6 +23,11 @@ export default function AccoInfo({ currentAcco }) {
       </div>
       <div className={styles.section}>
         <h4>Story</h4>
+        {isAuthenticated && (
+          <div className={styles.favIcon}>
+            <FavouriteIcon accoId={currentAcco._id} />
+          </div>
+        )}
         <p className={styles.description}>
           {currentAcco?.description || 'There is no Story available right now.'}
         </p>
