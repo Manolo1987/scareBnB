@@ -108,6 +108,7 @@ export default function AdminAccoList() {
                             target='_blank'
                             rel='noopener noreferrer'
                             className={styles.viewButton}
+                            title='View in a new tab'
                           >
                             View
                           </Link>
@@ -121,6 +122,7 @@ export default function AdminAccoList() {
                               }
                             }}
                             className={`buttonEffect ${styles.deleteButton}`}
+                            title='Delete'
                           >
                             Delete
                           </button>

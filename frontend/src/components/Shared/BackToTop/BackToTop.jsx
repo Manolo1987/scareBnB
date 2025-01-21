@@ -27,6 +27,8 @@ export default function BackToTop() {
         isVisible ? styles.visible : styles.hidden
       }`}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      title='Back to top'
+      aria-label='Back to top'
     >
       <ArrowCircleUp size={40} color='#fdfcfc' weight='fill' />
     </button>

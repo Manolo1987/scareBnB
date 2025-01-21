@@ -14,7 +14,7 @@ export default function Header() {
       <section className={styles.top_banner}>
         <div className={styles.title_wrapper}>
           {!isHomepage && (
-            <Link to='/'>
+            <Link to='/' title='Home'>
               <h1 className={styles.h1}>Scarebnb</h1>
             </Link>
           )}
@@ -27,7 +27,7 @@ export default function Header() {
       </section>
       {isHomepage && (
         <div className={styles.title}>
-          <Link to='/'>
+          <Link to='/' title='Home'>
             <h1 className={styles.h1}>Scarebnb</h1>
           </Link>
           <p>Ready getting spooked!?</p>

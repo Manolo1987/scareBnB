@@ -457,6 +457,8 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
                 type='button'
                 className={styles.titleImageEditButton}
                 onClick={() => setShowTitleImageInput(true)}
+                title='Edit Title Image'
+                aria-label='Edit Title Image'
               >
                 <Pencil size={24} className={styles.buttonIcon} />
               </button>
@@ -510,6 +512,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               type='button'
               className='cancelButton'
               onClick={setShowUpdateForm}
+              title='Close without Saving'
             >
               Close without Saving
             </button>
@@ -517,6 +520,7 @@ export default function UpdateListing({ listing, setShowUpdateForm }) {
               type='submit'
               className='saveButton'
               disabled={!isFormValid() || isLoading}
+              title='Save Changes'
             >
               {isLoading ? 'Saving...' : 'Save Changes'}
             </button>

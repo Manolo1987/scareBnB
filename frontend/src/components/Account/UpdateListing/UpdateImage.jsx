@@ -64,6 +64,7 @@ export default function UpdateImage({ img }) {
               type='button'
               className='cancelButton'
               onClick={() => setIsOverlayOpen(false)}
+              title='Cancel'
             >
               Cancel
             </button>
@@ -71,6 +72,7 @@ export default function UpdateImage({ img }) {
               type='button'
               className='saveButton'
               onClick={handleDeleteImage}
+              title='Delete'
             >
               Delete
             </button>

@@ -133,6 +133,8 @@ export default function Comments() {
                     <button
                       onClick={() => handleCommentDelete(comment?._id)}
                       className={styles.deleteButton}
+                      title='Delete Comment'
+                      aria-label='Delete Comment'
                     >
                       <XCircle size={30} color='crimson' weight='fill' />
                     </button>
@@ -151,6 +153,8 @@ export default function Comments() {
         <button
           onClick={handleShowMore}
           className={`buttonEffect ${styles.pagination_button}`}
+          title='show more comments'
+          aria-label='show more comments'
         >
           Show More
         </button>
@@ -160,6 +164,8 @@ export default function Comments() {
         <button
           onClick={handleShowLess}
           className={`buttonEffect ${styles.pagination_button}`}
+          title='show less comments'
+          aria-label='show less comments'
         >
           Show Less
         </button>
@@ -195,6 +201,8 @@ export default function Comments() {
           <button
             type='submit'
             className={`buttonEffect ${styles.submit_button}`}
+            title='Add Comment'
+            aria-label='Add Comment'
           >
             Add Comment
           </button>

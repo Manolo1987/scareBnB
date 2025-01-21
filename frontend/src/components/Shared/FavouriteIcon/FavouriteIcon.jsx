@@ -31,11 +31,21 @@ export default function FavouriteIcon({ accoId }) {
   return (
     <>
       {!isFavourite ? (
-        <div onClick={handleAddFavourite} className={styles.fav}>
+        <div
+          onClick={handleAddFavourite}
+          className={styles.fav}
+          title='Add to favourites'
+          aria-label='Add to favourites'
+        >
           <HeartStraight size={30} color='crimson' />
         </div>
       ) : (
-        <div onClick={handleRemoveFavourite} className={styles.fav}>
+        <div
+          onClick={handleRemoveFavourite}
+          className={styles.fav}
+          title='Remove from favourites'
+          aria-label='Remove from favourites'
+        >
           <HeartStraight size={30} color='crimson' weight='fill' />
         </div>
       )}
