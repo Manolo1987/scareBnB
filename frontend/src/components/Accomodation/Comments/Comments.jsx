@@ -10,6 +10,7 @@ export default function Comments() {
   const [newComment, setNewComment] = useState({ title: '', content: '' });
   const [comments, setComments] = useState([]);
   const [visibleGroups, setVisibleGroups] = useState(1);
+  const [errors, setErrors] = useState({ title: '', content: '' });
 
   useEffect(() => {
     if (currentAcco?.comments) {
@@ -17,14 +18,68 @@ export default function Comments() {
     }
   }, [currentAcco]);
 
+  const validateComment = (field, value) => {
+    let error = '';
+    const regex = /^[a-zA-Z0-9\s.,;:'"()!?&€$@_\+\*\-/^°\u00C0-\u017F\n\r]+$/;
+
+    if (value.trim() === '') {
+      return '';
+    }
+
+    if (field === 'content') {
+      if (value.length > 1000) {
+        error = 'Content exceeds maximum length of 1000 characters.';
+      } else if (!regex.test(value)) {
+        error = `Content contains invalid characters!`;
+      }
+    } else if (field === 'title') {
+      if (value.length > 100) {
+        error = 'Title exceeds maximum length of 100 characters.';
+      } else if (!regex.test(value)) {
+        error = `Title contains invalid characters!`;
+      }
+    }
+
+    return error;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setNewComment((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    const error = value.trim() === '' ? '' : validateComment(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
+    }));
+  };
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.title || !newComment.content) return;
+
+    const titleError =
+      newComment.title.trim() === ''
+        ? 'Title is required.'
+        : validateComment('title', newComment.title);
+    const contentError =
+      newComment.content.trim() === ''
+        ? 'Content is required.'
+        : validateComment('content', newComment.content);
+
+    if (titleError || contentError) {
+      setErrors({ title: titleError, content: contentError });
+      return;
+    }
 
     const postedComment = await postComment(currentAcco._id, newComment);
     if (postedComment) {
       setComments((prevComments) => [...prevComments, postedComment]);
       setNewComment({ title: '', content: '' });
+      setErrors({ title: '', content: '' });
     } else {
       console.error('Failed to post comment');
     }
@@ -112,29 +167,31 @@ export default function Comments() {
 
       {isAuthenticated && (
         <form onSubmit={handleCommentSubmit} className={styles.comment_form}>
+          <label htmlFor='title' className={styles.srOnly}>
+            Title
+          </label>
           <input
             type='text'
+            id='title'
+            name='title'
             placeholder='Title'
             value={newComment.title}
-            onChange={(e) =>
-              setNewComment((prev) => ({
-                ...prev,
-                title: String(e.target.value),
-              }))
-            }
+            onChange={handleChange}
             className={styles.input}
           />
+          {errors.title && <p className={styles.error}>{errors.title}</p>}
+          <label htmlFor='content' className={styles.srOnly}>
+            Content
+          </label>
           <textarea
+            id='content'
+            name='content'
             placeholder='Write your comment...'
             value={newComment.content}
-            onChange={(e) =>
-              setNewComment((prev) => ({
-                ...prev,
-                content: String(e.target.value),
-              }))
-            }
+            onChange={handleChange}
             className={styles.textarea}
           />
+          {errors.content && <p className={styles.error}>{errors.content}</p>}
           <button
             type='submit'
             className={`buttonEffect ${styles.submit_button}`}

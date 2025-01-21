@@ -239,7 +239,8 @@ export async function getAllUsers(req, res) {
         path: 'bookedListings',
         populate: { path: 'accommodation' },
       })
-      .populate({ path: 'comments', populate: { path: 'location' } });
+      .populate({ path: 'comments', populate: { path: 'location' } })
+      .sort({ firstName: 1 });
     if (users.length === 0) {
       return res.status(404).json({ msg: 'No users found' });
     }

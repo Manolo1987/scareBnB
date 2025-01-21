@@ -44,7 +44,7 @@ export default function Filter() {
           id='price'
           value={price}
           onChange={handlePriceChange}
-          className={globalStyles.controlsSelect}
+          className={`${globalStyles.controlsSelect} ${styles.filterSelect}`}
         >
           <option value={'all'}>all</option>
           <option value='0-80'>0 - 80</option>
@@ -59,7 +59,7 @@ export default function Filter() {
           id='bedrooms'
           value={bedrooms}
           onChange={handleBedroomsChange}
-          className={globalStyles.controlsSelect}
+          className={`${globalStyles.controlsSelect} ${styles.filterSelect}`}
         >
           <option value={'all'}>all</option>
           <option value='2'>2</option>

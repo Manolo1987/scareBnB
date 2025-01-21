@@ -5,16 +5,26 @@ const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Überprüfen, ob der Benutzer die Cookies bereits akzeptiert hat
-    const cookiesAccepted = sessionStorage.getItem('cookiesAccepted');
-    if (!cookiesAccepted) {
+    // Überprüfen, ob der Cookie "cookiesAccepted" existiert
+    const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+      const [name, value] = cookie.split('=');
+      acc[name] = value;
+      return acc;
+    }, {});
+
+    if (!cookies.cookiesAccepted) {
       setShowBanner(true);
     }
   }, []);
 
   const handleAcceptCookies = () => {
-    // Speichern der Zustimmung im sessionStorage
-    sessionStorage.setItem('cookiesAccepted', 'true');
+    // Cookie setzen, der die Zustimmung speichert
+    const expirationDays = 14; // Cookie läuft nach 14 Tagen ab
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + expirationDays);
+
+    document.cookie = `cookiesAccepted=true; path=/; expires=${expirationDate.toUTCString()}; Secure; SameSite=None`;
+
     setShowBanner(false);
   };
 

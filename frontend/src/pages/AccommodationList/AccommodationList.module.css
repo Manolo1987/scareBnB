@@ -97,3 +97,22 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+  margin: 0 auto;
+  max-width: 90%;
+  padding: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.filterAndSort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+}
