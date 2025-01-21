@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AccommodationList.module.css';
 import OverviewMap from '../../components/AccomodationList/OverviewMap/OverviewMap.jsx';
 import AccoGallery from '../../components/AccomodationList/AccoGallery/AccoGallery.jsx';
-import Filter from '../../components/Shared/FilterAndSort/Filter.jsx';
-import Sort from '../../components/Shared/FilterAndSort/Sort.jsx';
+import FilterAndSort from '../../components/Shared/FilterAndSort/FilterAndSort.jsx';
 import { useAcco } from '../../context/AccommodationContext.jsx';
 import { MapTrifold, SquaresFour } from '@phosphor-icons/react';
 import Search from '../../components/Shared/Search/Search.jsx';
@@ -11,8 +10,6 @@ import Search from '../../components/Shared/Search/Search.jsx';
 export default function AccomodationList() {
   const { stateFilter, getAllAccommodations, selectedView, setSelectedView } =
     useAcco();
-
-  // const [selectedView, setSelectedView] = useState('map-view');
 
   const handleToggleChange = (event) => {
     setSelectedView(event.target.id);
@@ -22,13 +19,11 @@ export default function AccomodationList() {
     <>
       <Search />
       <div>
-        {!stateFilter && <h2 className={styles.h2} >All Listings</h2>}
-        {stateFilter && <h2 className={styles.h2} >{stateFilter}</h2>}
+        {!stateFilter && <h2 className={styles.h2}>All Listings</h2>}
+        {stateFilter && <h2 className={styles.h2}>{stateFilter}</h2>}
 
         <div className={styles.controls}>
-          <div className={styles.filterAndSort}>
-          <Filter />
-          {selectedView === 'gallery-view' && <Sort />}
+          <FilterAndSort />
           <div className={styles.switchView_container}>
             <div className={styles.radio_container}>
               <input
@@ -38,11 +33,11 @@ export default function AccomodationList() {
                 className={styles.radio}
                 checked={selectedView === 'gallery-view'}
                 onChange={handleToggleChange}
-                />
+              />
               <label
                 htmlFor='gallery-view'
                 className={`${styles.icon} ${styles.galleryIcon}`}
-                >
+              >
                 <SquaresFour size={32} className={styles.icon} />
               </label>
             </div>
@@ -54,16 +49,15 @@ export default function AccomodationList() {
                 className={styles.radio}
                 checked={selectedView === 'map-view'}
                 onChange={handleToggleChange}
-                />
+              />
               <label
                 htmlFor='map-view'
                 className={`${styles.icon} ${styles.mapIcon}`}
-                >
+              >
                 <MapTrifold size={32} className={styles.icon} />
               </label>
             </div>
           </div>
-                </div>
         </div>
         {selectedView === 'gallery-view' && <AccoGallery />}
         {selectedView === 'map-view' && <OverviewMap />}

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Ghost, CaretDown } from '@phosphor-icons/react';
 import styles from './RatingFilter.module.css';
+import { useAcco } from '../../../context/AccommodationContext.jsx';
 
-export default function RatingFilter({ minRating, setMinRating }) {
+export default function RatingFilter() {
+  const { minRating, setMinRating } = useAcco();
   const [isOpen, setIsOpen] = useState(false);
 
   const getIconsForRating = (rating) => {
@@ -32,7 +34,7 @@ export default function RatingFilter({ minRating, setMinRating }) {
   };
 
   const ratingOptions = [
-    { value: 'all', label: 'all', rating: 0 },
+    { value: '', label: 'all', rating: 0 },
     { value: '2', label: 'min 2', rating: 2 },
     { value: '3', label: 'min 3', rating: 3 },
     { value: '4', label: 'min 4', rating: 4 },
@@ -46,7 +48,7 @@ export default function RatingFilter({ minRating, setMinRating }) {
   };
 
   return (
-    <div className={styles.filter_item}>
+    <>
       <label htmlFor='rating' className={styles.label}>
         Rating:
       </label>
@@ -87,9 +89,9 @@ export default function RatingFilter({ minRating, setMinRating }) {
           </ul>
         )}
         <div className={styles.arrowDown}>
-          <CaretDown size={18} />
+          <CaretDown size={14} />
         </div>
       </div>
-    </div>
+    </>
   );
 }

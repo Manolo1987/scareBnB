@@ -1,16 +1,14 @@
-.filter_item {
-  display: flex;
-  gap: 0.2rem;
-  align-items: center;
-}
-
 .dropdown {
+  flex-grow: 1;
   font-size: 1rem;
   position: relative;
   padding: 8px;
   border: 1px solid var(--color-mediumDark);
   cursor: pointer;
   min-width: 8rem;
+}
+.dropdown:hover {
+  background-color: black;
 }
 
 .selectedValue {
@@ -20,10 +18,10 @@
 
 .dropdownList {
   position: absolute;
-  top: -1px;
+  /* top: -1px; */
+  top: 2.1rem;
   left: -1px;
-  width: fit-content;
-  min-width: 8rem;
+  width: 100%;
   border: 1px solid var(--color-mediumDark);
   background-color: rgb(0, 0, 0);
   z-index: 500;
