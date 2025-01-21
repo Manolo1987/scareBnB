@@ -19,7 +19,7 @@
 .listingsNavLink {
   display: block;
   padding: 0.8rem 1rem;
-  color: #fff;
+  color: var(--color-light);
   text-decoration: none;
   transition: background-color 0.3s ease;
   white-space: nowrap;
@@ -27,7 +27,7 @@
 }
 
 .listingsNavLink:hover {
-  background-color: #ff0000;
+  color: var(--color-secondary);
 }
 .activeLink {
   text-decoration: underline;

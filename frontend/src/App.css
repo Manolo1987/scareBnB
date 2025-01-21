@@ -38,11 +38,11 @@
 .headingEffect {
   text-shadow: 6px 6px 3px black;
   width: 100%;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-light);
   font-family:  var(--font-headline);
   font-weight: normal;
   /* text-transform: uppercase; */
-  letter-spacing: .5px;
+  letter-spacing: 0.5rem;
   font-size: 2rem;
   text-align: center;
   position: absolute;
@@ -89,7 +89,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  background-color: rgb(34, 34, 34);
+  background-color: #111111bd;
+  border: 1px solid var(--color-mediumDark);
   padding: 1.6rem;
   border-radius: 5px;
 }

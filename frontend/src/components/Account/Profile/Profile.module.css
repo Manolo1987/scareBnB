@@ -1,4 +1,9 @@
 .profileInfo {
+  color: var(--color-light);
+  background-color: var(--color-mediumOpacity);
+  border-radius: 8px;
+  padding: 2rem;
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -55,12 +60,27 @@
   }
 }
 
-.deleteButton {
-  cursor: pointer;
-  padding: 0.4rem 0.8rem;
-  border-radius: 5px;
-  border: none;
-  background-color: crimson;
-  color: white;
-  margin: 0 4rem;
+.button_container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+
+  .buttons {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: black;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .buttons:nth-last-of-type(1):hover {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: crimson;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
 }

@@ -213,22 +213,22 @@ export default function Profile() {
             </tbody>
           </table>
           {!isEditing && (
-            <>
+            <div className={styles.button_container}>
               <button
-                className='buttonEffect'
+                className={styles.buttons}
                 onClick={() => setIsEditing(true)}
                 title='Edit Profile'
               >
                 Edit Profile
               </button>
               <button
-                className={styles.deleteButton}
+                className={styles.buttons}
                 onClick={() => setIsDeleting(true)}
                 title='Delete Profile'
               >
                 Delete Profile
               </button>
-            </>
+            </div>
           )}
         </div>
 
