@@ -23,7 +23,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <nav>
-        <ul>
+        <ul className={styles.footerNav}>
           <li>
             <Link
               to='/information#privacy'
