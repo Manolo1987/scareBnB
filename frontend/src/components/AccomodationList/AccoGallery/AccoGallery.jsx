@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AccoGallery.module.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAcco } from '../../../context/AccommodationContext';
 import AccoCard from '../../Shared/AccoCard/AccoCard';
 import PaginationPage from '../PaginationPage/PaginationPage';
@@ -17,16 +18,21 @@ export default function AccoGallery() {
     bedrooms,
     minRating,
     sortBy,
-    sortOrder
+    sortOrder,
   } = useAcco();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const limit = 21;
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, []);
+    const queryParams = new URLSearchParams(location.search);
+    const page = parseInt(queryParams.get('page'), 10) || 1;
+    setCurrentPage(page);
+  }, [location.search, setCurrentPage]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,11 +55,21 @@ export default function AccoGallery() {
 
     // cleanup fürs timeout
     return () => clearTimeout(timeoutId);
-  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder, currentPage]);
+  }, [
+    stateFilter,
+    maxPrice,
+    minPrice,
+    bedrooms,
+    minRating,
+    sortBy,
+    sortOrder,
+    currentPage,
+  ]);
 
   const handlePageChange = (page) => {
     console.log('Switching to page:', page);
     setCurrentPage(page);
+    navigate(`?page=${page}`);
   };
 
   const totalPages = allAccos.pagination?.totalCount
