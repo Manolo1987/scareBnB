@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './AccoGallery.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAcco } from '../../../context/AccommodationContext';
@@ -28,6 +28,16 @@ export default function AccoGallery() {
   const [error, setError] = useState(null);
   const limit = 21;
 
+  const prevFilters = useRef({
+    stateFilter,
+    maxPrice,
+    minPrice,
+    bedrooms,
+    minRating,
+    sortBy,
+    sortOrder,
+  });
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = parseInt(queryParams.get('page'), 10) || 1;
@@ -35,8 +45,26 @@ export default function AccoGallery() {
   }, [location.search, setCurrentPage]);
 
   useEffect(() => {
-    setCurrentPage(1); // Setze die Seite zurück
-    navigate('?page=1'); // Aktualisiere die URL auf Seite 1
+    const currentFilters = {
+      stateFilter,
+      maxPrice,
+      minPrice,
+      bedrooms,
+      minRating,
+      sortBy,
+      sortOrder,
+    };
+
+    // Prüfe, ob sich die Filter geändert haben
+    const filtersChanged = Object.keys(currentFilters).some(
+      (key) => currentFilters[key] !== prevFilters.current[key]
+    );
+
+    if (filtersChanged) {
+      setCurrentPage(1); // Setze die Seite auf 1 zurück
+      navigate('?page=1'); // Aktualisiere die URL auf Seite 1
+      prevFilters.current = currentFilters; // Speichere die aktuellen Filter
+    }
   }, [
     stateFilter,
     maxPrice,
