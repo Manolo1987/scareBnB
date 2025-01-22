@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import styles from './FilterAndSort.module.css';
 
 export default function PriceFilter() {
-  const [price, setPrice] = useState();
-  const { setMinPrice, setMaxPrice } = useAcco();
+  const { minPrice, setMinPrice, maxPrice, setMaxPrice } = useAcco();
 
   const handlePriceChange = (e) => {
     if (e.target.value === 'all') {
@@ -21,11 +20,13 @@ export default function PriceFilter() {
       <select
         name='price'
         id='price'
-        value={price}
+        value={
+          minPrice !== '' && maxPrice !== '' ? `${minPrice}-${maxPrice}` : 'all'
+        }
         onChange={handlePriceChange}
         className={`${styles.controlsSelect} ${styles.filterSelect}`}
       >
-        <option value={'all'}>all</option>
+        <option value='all'>all</option>
         <option value='0-80'>0 - 80</option>
         <option value='81-100'>81 - 100</option>
         <option value='101-120'>101 - 120</option>
