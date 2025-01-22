@@ -35,6 +35,20 @@ export default function AccoGallery() {
   }, [location.search, setCurrentPage]);
 
   useEffect(() => {
+    setCurrentPage(1); // Setze die Seite zurück
+    navigate('?page=1'); // Aktualisiere die URL auf Seite 1
+  }, [
+    stateFilter,
+    maxPrice,
+    minPrice,
+    bedrooms,
+    minRating,
+    sortBy,
+    sortOrder,
+    navigate,
+  ]);
+
+  useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       setError(null); // error reset vor neuer anfrage
