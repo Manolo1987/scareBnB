@@ -80,7 +80,7 @@ export default function AccoInfo({ currentAcco }) {
             </p>
           </div>
         </div>
-        <div>
+        <div className={styles.map_container}>
           <AccoMap
             lat={currentAcco?.latitude}
             lon={currentAcco?.longitude}

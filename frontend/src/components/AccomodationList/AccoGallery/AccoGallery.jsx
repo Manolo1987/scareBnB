@@ -17,7 +17,7 @@ export default function AccoGallery() {
     bedrooms,
     minRating,
     sortBy,
-    sortOrder
+    sortOrder,
   } = useAcco();
 
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,16 @@ export default function AccoGallery() {
 
     // cleanup fürs timeout
     return () => clearTimeout(timeoutId);
-  }, [stateFilter, maxPrice, minPrice, bedrooms, minRating, sortBy, sortOrder, currentPage]);
+  }, [
+    stateFilter,
+    maxPrice,
+    minPrice,
+    bedrooms,
+    minRating,
+    sortBy,
+    sortOrder,
+    currentPage,
+  ]);
 
   const handlePageChange = (page) => {
     console.log('Switching to page:', page);
@@ -77,7 +86,9 @@ export default function AccoGallery() {
             {allAccos?.accommodations?.length > 0 ? (
               allAccos.accommodations.map((acco, index) => (
                 <div key={acco.id || index} className={styles.accoCard}>
-                  <AccoCard acco={acco} />
+                  <div className={styles.accoCardWidth}>
+                    <AccoCard acco={acco} />
+                  </div>
                 </div>
               ))
             ) : (

@@ -26,11 +26,11 @@ export default function Accommodation() {
       <Search />
       {/* if currentAcco not found -> navigate to NotFound */}
       {currentAcco && (
-        <>
+        <div className={styles.accommodation_container} >
           <AccoInfo currentAcco={currentAcco} />
           <BookingPreview />
           <Comments />
-        </>
+        </div>
       )}
     </>
   );

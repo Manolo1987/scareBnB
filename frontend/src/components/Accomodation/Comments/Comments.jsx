@@ -136,7 +136,7 @@ export default function Comments() {
                       title='Delete Comment'
                       aria-label='Delete Comment'
                     >
-                      <XCircle size={30} color='crimson' weight='fill' />
+                      <XCircle size={28} color='crimson' weight="bold" />
                     </button>
                   )}
                 </li>

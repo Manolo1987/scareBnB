@@ -1,7 +1,12 @@
 .h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-top: 3rem;
+  font-family: var(--font-headline);
+  font-weight: normal;
+  font-size: 2.5rem;
+  letter-spacing: 0.5rem;
+  color: var(--color-light);
+  text-shadow: 6px 6px 3px black;
+  margin-top: 4rem;
 }
 
 .controls {
