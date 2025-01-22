@@ -52,7 +52,7 @@
 }
 /* ---------------- global styles for account content */
 .accountContainer {
-  margin-top: 1rem;
+  margin: 1rem;
   --wrapWidth: 600px;
   --wrapMargin: 1rem auto 2rem;
 }

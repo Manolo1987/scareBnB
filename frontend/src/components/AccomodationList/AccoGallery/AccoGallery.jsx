@@ -135,7 +135,9 @@ export default function AccoGallery() {
             {allAccos?.accommodations?.length > 0 ? (
               allAccos.accommodations.map((acco, index) => (
                 <div key={acco.id || index} className={styles.accoCard}>
-                  <AccoCard acco={acco} />
+                  <div className={styles.accoCardWidth}>
+                    <AccoCard acco={acco} />
+                  </div>
                 </div>
               ))
             ) : (

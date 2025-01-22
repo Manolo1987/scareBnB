@@ -3,7 +3,6 @@
 }
 
 .accoCardContainer {
-  width: 100%;
   max-width: 300px;
   height: auto;
   display: flex;
@@ -32,6 +31,8 @@
       display: flex;
       justify-content: space-between;
       font-size: 1.2rem;
+  text-shadow: 3px 3px 3px black;
+
     }
 
     span {
@@ -46,14 +47,21 @@
 
       .ghost {
         display: inline-block;
-        margin-right: 4px;
       }
     }
 
+    .center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .rating {
-      text-align: end;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 1.1rem;
-      /* font-weight: bold; */
       color: #c9812c;
     }
   }

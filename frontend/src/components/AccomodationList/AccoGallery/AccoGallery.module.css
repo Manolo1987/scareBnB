@@ -33,6 +33,10 @@
   }
 }
 
+.accoCardWidth {
+  width: 300px;
+}
+
 .loadingContainer {
   display: flex;
   flex-direction: column;
