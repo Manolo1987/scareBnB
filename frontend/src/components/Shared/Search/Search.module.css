@@ -9,13 +9,10 @@
   position: absolute;
   top: calc(var(--height) / -2);
   left: 5vw; /* Centers the component (100vw - 70vw) / 2 = 15vw */
-
-  button {
-    width: 12rem;
-  }
 }
 
 .searchbarForm {
+  display: flex;
   width: 100%;
   height: 100%;
   display: flex;
@@ -23,10 +20,8 @@
   align-items: center;
   padding: 0.3em 0.3em;
 
-  button {
-    width: 100%;
-    height: 100%;
-    padding: 0.4em;
+  .buttonSearch {
+    padding: 0.4rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -58,35 +53,51 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--input-height);
-  aspect-ratio: 1;
+  gap: .5rem;
+  /* height: var(--input-height); */
+  /* aspect-ratio: 1; */
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1091px) {
   .searchbar {
-    width: 85vw; /* Changed from max-width: 20vw */
-    min-width: unset; /* entfernt min width */
-    left: 7.5vw; /* Center searchbar mit gleichen margins */
+    width: 90vw;
+    height: 7rem;
+    min-width: unset;
+    left: 5vw; 
+    /* Center searchbar mit gleichen margins */
 
-    .searchbarSelect {
-      width: 100px;
+    .searchbarForm {
+      flex-direction: column;
+      justify-content: space-around;
+      width: 100%;
+      padding: 1rem;
     }
 
     .searchbarLabel {
-      visibility: hidden; 
+      display: none ;
       width: 0px;
+    }
+
+    .searchbarGuests {
+      display: none;
     }
 
     .searchbarInput {
       /* background-color: #FE0300; */
+      display: none;
       width: 20px;
       height: 24px;
       position: relative;
     }
 
-    button {
-      border-radius: 50%;
-      aspect-ratio: 1;
-    }
+    .buttonContainer {
+      margin: 0;
+      font-size: clamp(0.5rem, 0.3684rem + 0.5263vw, 1rem);
+
+
+      .buttonSeeAll {
+        height: 2.2rem;
+      }
   }
+}
 }

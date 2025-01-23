@@ -85,6 +85,13 @@
   }
 }
 
+@media (max-width: 1091px) {
+  .homepage {
+    margin-top: 2.2rem;
+  }
+}
+
+
 @media (min-width: 701px) {
   .intro_textArea {
     width: 50%;
