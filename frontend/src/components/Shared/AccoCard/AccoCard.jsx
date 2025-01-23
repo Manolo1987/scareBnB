@@ -42,7 +42,7 @@ export default function AccoCard({ acco }) {
           </p>
           <p>Bedrooms: {acco.bedrooms} </p>
           <p>Price per Night: {acco.pricePerNight}€</p>
-          <p>
+          <p className={styles.center}>
             Availability:{' '}
             {acco.isBooked ? (
               <>

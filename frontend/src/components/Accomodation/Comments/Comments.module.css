@@ -21,25 +21,26 @@
 
     .comment_item {
       position: relative;
-      background-color: #fff;
+      background-color: rgba(0, 0, 0, 0.761);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 6px;
       margin-bottom: 1rem;
       padding: 1rem;
 
       .comment_title {
-        color: var(--color-dark);
+        color: var(--color-light);
       }
 
       .comment_content {
-        color: var(--color-mediumDark);
+        color: var(--color-medium);
         margin: 0.5rem;
       }
 
       .comment_author {
         margin-top: 0.5rem;
         font-size: 0.8rem;
-        color: var(--color-medium);
+        color: var(--color-mediumDark);
+        text-shadow: 1px 1px 1px rgb(6, 6, 6);
       }
 
       .deleteButton {
@@ -74,7 +75,9 @@
     .input,
     .textarea {
       padding: 0.75rem;
-      border: 1px solid #ccc;
+      background-color: var(--color-darkOpacity);
+      color: var(--color-light);
+      border: 1px solid var(--color-mediumDark);
       border-radius: 4px;
       font-size: 1rem;
     }
@@ -87,7 +90,7 @@
     .submit_button {
       align-self: flex-end;
       background-color: var(--color-prime);
-      color: #fff;
+      color: var(--color-light);
       border: none;
       border-radius: 4px;
       cursor: pointer;

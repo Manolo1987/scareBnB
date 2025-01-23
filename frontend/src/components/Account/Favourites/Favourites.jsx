@@ -19,25 +19,27 @@ export default function Favourites() {
 
   return (
     <>
-        <div className='headingEffectContainer'>
-          <h1 className='headingEffect'>Favourites</h1>
-        </div>
-    <div className={styles.favouritesContainer}>
-      <div className={styles.accoGallery}>
-        {isLoading && <LoadingSpinner />}
-        {!isLoading && favourites.length > 0 ? (
-          <div className={styles.accoList}>
-            {favourites.map((fav) => (
-              <div className={styles.accoCard} key={fav._id}>
-                <AccoCard acco={fav} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          !isLoading && <p>No favourites yet!</p>
-        )}
+      <div className='headingEffectContainer'>
+        <h1 className='headingEffect'>Favourites</h1>
       </div>
-    </div>
-        </>
+      <div className={styles.favouritesContainer}>
+        <div className={styles.accoGallery}>
+          {isLoading && <LoadingSpinner />}
+          {!isLoading && favourites.length > 0 ? (
+            <div className={styles.accoList}>
+              {favourites.map((fav) => (
+                <div className={styles.accoCard} key={fav._id}>
+                  <div className={styles.accoCardWidth}>
+                    <AccoCard acco={fav} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            !isLoading && <p>No favourites yet!</p>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

@@ -52,7 +52,7 @@ export default function Bookings() {
           <p className='message'>No upcoming bookings found.</p>
         </div>
       )}
-      <h2>Past Bookings</h2>
+      <h3 className={styles.subHeader}>Past Bookings</h3>
       {isLoading && <LoadingSpinner />}
       {!isLoading && pastBookings?.length > 0 ? (
 
