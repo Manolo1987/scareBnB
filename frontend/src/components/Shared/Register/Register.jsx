@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 export default function Register() {
   const {
@@ -231,7 +232,11 @@ export default function Register() {
                   role='button'
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? '👻' : '👁️'}
+                  {showPassword ? (
+                    <EyeSlash size={22} weight='duotone' />
+                  ) : (
+                    <Eye size={22} weight='duotone' />
+                  )}
                 </span>
                 {errors.password && (
                   <p className={styles.error}>{errors.password}</p>
@@ -255,7 +260,11 @@ export default function Register() {
                     showConfirmPassword ? 'Hide password' : 'Show password'
                   }
                 >
-                  {showConfirmPassword ? '👻' : '👁️'}
+                  {showConfirmPassword ? (
+                    <EyeSlash size={22} weight='duotone' />
+                  ) : (
+                    <Eye size={22} weight='duotone' />
+                  )}
                 </span>
                 {errors.confirmPassword && (
                   <p className={styles.error}>{errors.confirmPassword}</p>
@@ -299,8 +308,14 @@ export default function Register() {
                 I agree to the terms and conditions
               </label>
 
-              <button type='submit'>Submit</button>
-              <button type='button' onClick={closeAndReset}>
+              <button className='buttonEffect' type='submit'>
+                Submit
+              </button>
+              <button
+                className='buttonEffect'
+                type='button'
+                onClick={closeAndReset}
+              >
                 Close
               </button>
             </form>
