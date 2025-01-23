@@ -35,7 +35,8 @@ export const BookingContextProvider = ({ children }) => {
   const createBookingPreview = () => ({
     accommodationTitle: currentAcco?.title || null,
     accommodationId: currentAcco?._id || null,
-    accommodationTitleImage: currentAcco?.titleImage.secure_url || null,
+    accommodationTitleImage:
+      currentAcco?.titleImage.secure_url || navigate('/'),
     numberOfGuests,
     checkIn,
     checkOut,
