@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 export default function Login() {
   const {
@@ -75,11 +76,21 @@ export default function Login() {
                   role='button'
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? '👻' : '👁️'}
+                  {showPassword ? (
+                    <EyeSlash size={22} weight='duotone' />
+                  ) : (
+                    <Eye size={22} weight='duotone' />
+                  )}
                 </span>
               </label>
-              <button type='submit'>Login</button>
-              <button type='button' onClick={closeAndReset}>
+              <button className='buttonEffect' type='submit'>
+                Login
+              </button>
+              <button
+                className='buttonEffect'
+                type='button'
+                onClick={closeAndReset}
+              >
                 Close
               </button>
               <p>
