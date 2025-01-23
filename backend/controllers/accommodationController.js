@@ -4,6 +4,7 @@ import Accommodation from '../models/Accommodation.js';
 import Booking from '../models/Booking.js';
 import Comment from '../models/Comment.js';
 import cloudinary from '../config/cloudinary.js';
+import mongoose from 'mongoose';
 
 export async function getAllAccommodations(req, res) {
   try {
@@ -71,16 +72,34 @@ export async function getAllAccommodations(req, res) {
 
 export async function getSpecial(req, res) {
   try {
-    const specialAccos = await Accommodation.find().limit(4);
-    // TODO: get handpicked nice Accommodations here
+    // owner Ids
+    const ownerIds = [
+      '675ff2cfae1af798eba7cc9e', // Andreas Zwiebelhuber
+      '675ffef5d6e5dd8ec58f9d2e', // Danny (Dr. Acula)
+      '677e4cb25dcf46aa42037435', // Manuel
+      '679209ed8f892529f7764dde', // Jana (Frank Enstein)
+      '67920cdec87e847cc0b72286', // Kenneth (Grim Reaper)
+    ];
+
+    // change strings to objectIds
+    const objectIds = ownerIds.map(mongoose.Types.ObjectId.createFromHexString);
+
+    const specialAccos = await Accommodation.aggregate([
+      {
+        $match: {
+          owner: { $in: objectIds },
+        },
+      },
+      { $sample: { size: 4 } }, // 4 random accos
+    ]);
 
     if (specialAccos.length === 0) {
       return res.status(404).json({ msg: 'No accommodations found.' });
     }
-    res.status(200).json(specialAccos);
+    return res.status(200).json(specialAccos);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: 'Server Error!' });
+    return res.status(500).json({ msg: 'Server Error!' });
   }
 }
 
@@ -114,7 +133,9 @@ export async function getMyListings(req, res) {
       return res.status(404).json({ msg: 'User not found.' });
     }
 
-    const myListings = user.listings;
+    let myListings = user.listings;
+
+    myListings = myListings.sort((a, b) => b.createdAt - a.createdAt);
 
     res.status(200).json(myListings);
   } catch (error) {
