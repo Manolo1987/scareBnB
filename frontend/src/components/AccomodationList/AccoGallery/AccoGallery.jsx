@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAcco } from '../../../context/AccommodationContext';
 import AccoCard from '../../Shared/AccoCard/AccoCard';
 import PaginationPage from '../PaginationPage/PaginationPage';
-import { Spinner } from '@phosphor-icons/react';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function AccoGallery() {
   const {
@@ -121,10 +121,9 @@ export default function AccoGallery() {
   return (
     <div className={styles.accoGallery}>
       {loading ? (
-        <div className={styles.loadingContainer}>
-          <Spinner size={32} className={styles.spinner} />
+        <LoadingSpinner>
           <p>Loading accommodations...</p>
-        </div>
+        </LoadingSpinner>
       ) : error ? (
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>
