@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'; // Für Routing
 import styles from './AdminAccoList.module.css';
 import { useAcco } from '../../../context/AccommodationContext';
 import { useAuth } from '../../../context/UserAuthContext';
-import { Spinner } from '@phosphor-icons/react';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function AdminAccoList() {
   const { user } = useAuth();
@@ -61,10 +61,9 @@ export default function AdminAccoList() {
 
       <p>Here you can view and delete accommodations from our users</p>
       {loading ? (
-        <div className={styles.loadingContainer}>
-          <Spinner size={32} className={styles.spinner} />
+        <LoadingSpinner>
           <p>Loading accommodations...</p>
-        </div>
+        </LoadingSpinner>
       ) : error ? (
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>

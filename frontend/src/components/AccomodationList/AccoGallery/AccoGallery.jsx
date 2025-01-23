@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAcco } from '../../../context/AccommodationContext';
 import AccoCard from '../../Shared/AccoCard/AccoCard';
 import PaginationPage from '../PaginationPage/PaginationPage';
-import { Spinner } from '@phosphor-icons/react';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner.jsx';
 
 export default function AccoGallery() {
   const {
@@ -55,15 +55,14 @@ export default function AccoGallery() {
       sortOrder,
     };
 
-    // Prüfe, ob sich die Filter geändert haben
     const filtersChanged = Object.keys(currentFilters).some(
       (key) => currentFilters[key] !== prevFilters.current[key]
     );
 
     if (filtersChanged) {
-      setCurrentPage(1); // Setze die Seite auf 1 zurück
-      navigate('?page=1'); // Aktualisiere die URL auf Seite 1
-      prevFilters.current = currentFilters; // Speichere die aktuellen Filter
+      setCurrentPage(1);
+      navigate('?page=1');
+      prevFilters.current = currentFilters;
     }
   }, [
     stateFilter,
@@ -79,7 +78,7 @@ export default function AccoGallery() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      setError(null); // error reset vor neuer anfrage
+      setError(null);
       try {
         await getAllAccommodations(limit);
       } catch (error) {
@@ -90,12 +89,10 @@ export default function AccoGallery() {
       }
     };
 
-    // 100ms timeout um sicher zu gehen, dass alle states geupdatet sind
     const timeoutId = setTimeout(() => {
       loadData();
     }, 100);
 
-    // cleanup fürs timeout
     return () => clearTimeout(timeoutId);
   }, [
     stateFilter,
@@ -121,10 +118,9 @@ export default function AccoGallery() {
   return (
     <div className={styles.accoGallery}>
       {loading ? (
-        <div className={styles.loadingContainer}>
-          <Spinner size={32} className={styles.spinner} />
+        <LoadingSpinner>
           <p>Loading accommodations...</p>
-        </div>
+        </LoadingSpinner>
       ) : error ? (
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>
