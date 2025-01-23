@@ -30,7 +30,7 @@ export default function Header() {
           <Link to='/' title='Home'>
             <h1 className={styles.h1}>Scarebnb</h1>
           </Link>
-          <p>Ready getting spooked!?</p>
+          <p>Ready to get spooked!?</p>
         </div>
       )}
       <div className={styles.headerBorder}></div>

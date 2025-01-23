@@ -91,6 +91,12 @@
   margin: 0 auto;
 }
 
+@media (max-width: 1091px) {
+  .accoInfo_container {
+    margin-top: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
  .description {
   text-align: justify;

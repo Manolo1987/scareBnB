@@ -6,6 +6,17 @@ import { Ghost, DoorOpen, LockKey } from '@phosphor-icons/react';
 
 export default function AccoCard({ acco }) {
   const { isAuthenticated } = useAuth();
+
+  if (!acco) {
+    console.error('No accommodation data provided');
+    return null;
+  }
+
+  if (!acco.title || !acco._id) {
+    console.error('Incomplete accommodation data', acco);
+    return <div>Invalid accommodation data</div>;
+  }
+
   return (
     <Link
       to={`/accommodationList/${acco.title

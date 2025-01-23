@@ -18,7 +18,7 @@ export default function AccomodationList() {
   return (
     <>
       <Search />
-      <div>
+      <div className={styles.accommodationList}>
         {!stateFilter && <h2 className={styles.h2}>All Listings</h2>}
         {stateFilter && <h2 className={styles.h2}>{stateFilter}</h2>}
 
