@@ -96,10 +96,10 @@ export default function Booking() {
   };
 
   return (
-    <section className={`${styles.BookingCard}`}>
-      <h1>
+    <section className={styles.BookingCard}>
+      <h2>
         Booking for {user?.firstName} {user?.lastName}
-      </h1>
+      </h2>
 
       <div className={styles.infoContainer}>
         <div className={styles.img_container}>
@@ -120,20 +120,32 @@ export default function Booking() {
             </Link>
           )}
         </div>
-        <div>
+        <div className={styles.booking_info}>
           <h3>{bookingPreview?.accommodationTitle}</h3>
-          <p>Price per Night: {bookingPreview?.pricePerNight}€</p>
-          <p>Guests: {currentBooking.numberOfGuests}</p>
+          <p>
+            Price per Night: <span>{bookingPreview?.pricePerNight}€</span>
+          </p>
+          <p>
+            Guests: <span>{currentBooking.numberOfGuests}</span>
+          </p>
           <p>
             CheckIn:{' '}
-            {new Date(currentBooking?.checkIn).toLocaleDateString('de-DE')}
+            <span>
+              {new Date(currentBooking?.checkIn).toLocaleDateString('de-DE')}
+            </span>
           </p>
           <p>
             CheckOut:{' '}
-            {new Date(currentBooking?.checkOut).toLocaleDateString('de-DE')}
+            <span>
+              {new Date(currentBooking?.checkOut).toLocaleDateString('de-DE')}
+            </span>
           </p>
-          <p>Total Nights: {bookingPreview?.nights}</p>
-          <p>Total Price: {bookingPreview?.totalPrice}€</p>
+          <p>
+            Total Nights: <span>{bookingPreview?.nights}</span>
+          </p>
+          <p>
+            Total Price: <span>{bookingPreview?.totalPrice}€</span>
+          </p>
         </div>
       </div>
 
@@ -178,75 +190,96 @@ export default function Booking() {
 
       {paymentMethod === 'creditCard' && (
         <form className={styles.creditCardForm}>
-          <h3>Enter Credit Card Details</h3>
-          <label>
-            Card Number
-            <input
-              type='text'
-              maxLength='16'
-              value={creditCardDetails.cardNumber}
-              onChange={(e) => handleInputChange('cardNumber', e.target.value)}
-            />
-            <p
-              className={
-                validationErrors.cardNumber === 'Valid card number.'
-                  ? styles.validMessage
-                  : styles.errorMessage
-              }
-            >
-              {validationErrors.cardNumber}
-            </p>
-          </label>
-          <label>
-            Expiry Date (MM/YY)
-            <input
-              type='text'
-              maxLength='5'
-              value={creditCardDetails.expiryDate}
-              onChange={(e) => handleInputChange('expiryDate', e.target.value)}
-            />
-            <p
-              className={
-                validationErrors.expiryDate === 'Valid expiry date.'
-                  ? styles.validMessage
-                  : styles.errorMessage
-              }
-            >
-              {validationErrors.expiryDate}
-            </p>
-          </label>
-          <label>
-            CVV
-            <input
-              type='text'
-              maxLength='3'
-              value={creditCardDetails.cvv}
-              onChange={(e) => handleInputChange('cvv', e.target.value)}
-            />
-            <p
-              className={
-                validationErrors.cvv === 'Valid CVV.'
-                  ? styles.validMessage
-                  : styles.errorMessage
-              }
-            >
-              {validationErrors.cvv}
-            </p>
-          </label>
+          <fieldset>
+            <legend>Enter Credit Card Details</legend>
+            
+            <label>
+              Card Number
+              <input
+                type='text'
+                maxLength='16'
+                value={creditCardDetails.cardNumber}
+                onChange={(e) =>
+                  handleInputChange('cardNumber', e.target.value)
+                }
+                placeholder='Card Number'
+              />
+              <p
+                className={
+                  validationErrors.cardNumber === 'Valid card number.'
+                    ? styles.validMessage
+                    : styles.errorMessage
+                }
+              >
+                {validationErrors.cardNumber}
+              </p>
+            </label>
+            <label>
+              Expiry Date (MM/YY)
+              <input
+                type='text'
+                maxLength='5'
+                value={creditCardDetails.expiryDate}
+                onChange={(e) =>
+                  handleInputChange('expiryDate', e.target.value)
+                }
+                placeholder='Expiry Date (MM/YY)'
+              />
+              <p
+                className={
+                  validationErrors.expiryDate === 'Valid expiry date.'
+                    ? styles.validMessage
+                    : styles.errorMessage
+                }
+              >
+                {validationErrors.expiryDate}
+              </p>
+            </label>
+            <label>
+              CVV
+              <input
+                type='text'
+                maxLength='3'
+                value={creditCardDetails.cvv}
+                onChange={(e) => handleInputChange('cvv', e.target.value)}
+                placeholder='CVV'
+              />
+              <p
+                className={
+                  validationErrors.cvv === 'Valid CVV.'
+                    ? styles.validMessage
+                    : styles.errorMessage
+                }
+              >
+                {validationErrors.cvv}
+              </p>
+            </label>
+          </fieldset>
         </form>
       )}
 
       {paymentMethod === 'banktransfer' && (
         <div className={styles.bankDetails}>
-          <h3>
-            Your payment must be received within 3 business days, otherwise, we
-            will cancel the booking
-          </h3>
-          <h4>Bank Transfer Details</h4>
-          <p>Account Name: ScareBnB</p>
-          <p>IBAN: DE89 3704 0044 0532 0130 00</p>
-          <p>BIC: COBADEFFXXX</p>
-          <p>Bank Name: Commerzbank</p>
+          <p>
+            <strong>
+              Your payment must be received within 3 business days, otherwise,
+              we will cancel the booking
+            </strong>
+          </p>
+          <hr />
+          <h3>Bank Transfer Details</h3>
+          <p>
+            Account Name: <span>ScareBnB</span>
+          </p>
+          <p>
+            IBAN: <span>DE89 3704 0044 0532 0130 00</span>
+          </p>
+          <p>
+            BIC: <span>COBADEFFXXX</span>
+          </p>
+          <p>
+            Bank Name: <span>Commerzbank</span>
+          </p>
         </div>
       )}
 
