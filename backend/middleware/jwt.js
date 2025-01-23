@@ -39,14 +39,14 @@ export const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     try {
       const userRoles = Array.isArray(req.roles) ? req.roles : [req.roles];
-      console.log('User Roles:', userRoles);
-      console.log('Allowed Roles:', allowedRoles);
+      // console.log('User Roles:', userRoles);
+      // console.log('Allowed Roles:', allowedRoles);
 
       // check if role is included
       const hasPermission = userRoles.some((role) =>
         allowedRoles.includes(role)
       );
-      console.log('Has permission:', hasPermission);
+      // console.log('Has permission:', hasPermission);
       if (!hasPermission) {
         return res
           .status(403)
