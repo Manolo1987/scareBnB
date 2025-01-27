@@ -6,11 +6,13 @@ Welcome to ScareBnB, a spooky twist on the classic accommodation booking platfor
 
 This project was created by a talented group of developers who worked together to bring this chilling idea to life. Check out our team members below:
 
-- [Manuel](https://github.com/Manolo1987)
-- [Andreas](https://github.com/AndreasKnopf)
-- [Kenneth](https://github.com/KennethLiese88)
-- [Danny](https://github.com/dannykoehlerpoetsch)
-- [Jana](https://github.com/j-grzy)
+<p style="text-align: center;">
+  <a href="https://github.com/Manolo1987" target="_blank">Manuel</a> | 
+  <a href="https://github.com/AndreasKnopf" target="_blank">Andreas</a> | 
+  <a href="https://github.com/KennethLiese88" target="_blank">Kenneth</a> | 
+  <a href="https://github.com/dannykoehlerpoetsch" target="_blank">Danny</a> |
+  <a href="https://github.com/j-grzy" target="_blank">Jana</a>
+</p>
 
 ## What's This Project About?
 
