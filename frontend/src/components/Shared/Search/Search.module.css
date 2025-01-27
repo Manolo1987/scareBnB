@@ -40,6 +40,23 @@
   }
 }
 
+input, select, textarea {
+  accent-color: var(--color-secondary);
+  color: var(--color-light);
+  background-color: var(--color-dark);
+  border: 1px solid var(--color-mediumDark);
+  border-radius: 6px;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: crimson;
+    box-shadow: 0 0 6px crimson;
+    outline: none;
+  }
+}
+
 .searchbarLabel {
   width: 5rem;
   height: 100%;

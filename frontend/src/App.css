@@ -102,6 +102,10 @@
   color: white;
 }
 /* -------------------global styles for updateListing, createListing and edit profile forms */
+input::file-selector-button {
+  cursor: pointer;
+}
+
 .formWrapper {
   /* max-width: 600px;
   margin: 1rem auto 2rem; */
