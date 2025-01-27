@@ -63,6 +63,7 @@
 
 .table th,
 .table td {
+  vertical-align: top;
   padding: 12px 16px;
   border: 1px solid #2b2b2b;
 }
@@ -87,7 +88,6 @@
 
 /* Details Section */
 details {
-  margin-top: 10px;
   padding: 10px;
   background-color: #141414;
   color: #e0e0e0;

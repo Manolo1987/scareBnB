@@ -1,7 +1,10 @@
 .deleteMessageContainer {
-  background-color: rgb(60, 60, 60);
+  color: var(--color-mlight);
+  background: linear-gradient(135deg, #2c2c2c, #000000de);
+  border: 1px solid var(--color-mediumDark);
   border-radius: 8px;
-  padding: 2rem;
+  box-shadow: 30px 30px 10px rgba(0, 0, 0, 0.823);
+  padding: 1rem;
   max-width: 300px;
   display: flex;
   flex-direction: column;
@@ -9,5 +12,6 @@
 }
 
 .deleteMessage {
+  text-align: center;
   line-height: 2rem;
 }
