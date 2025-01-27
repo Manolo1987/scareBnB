@@ -44,7 +44,7 @@ export default function Search() {
     setSelectedRegion(event.target.value);
   };
 
-  const seeAllListings = (e) => { 
+  const seeAllListings = (e) => {
     e.preventDefault();
     setStateFilter('');
     setSelectedRegion('');
@@ -77,6 +77,8 @@ export default function Search() {
             value={selectedRegion}
             onChange={handleRegionChange}
             className={styles.searchbarSelect}
+            title='Choose your final destination'
+            aria-label='Choose your final destination'
           >
             <option value=''>Choose your final destination</option>
             {states.map((state) => (
@@ -95,6 +97,8 @@ export default function Search() {
             className={styles.searchbarInput}
             id='checkIn'
             min={today}
+            title='Check-in date'
+            aria-label='Check-in date'
           />
         </label>
         <label className={styles.searchbarLabel}>CheckOut:</label>
@@ -105,13 +109,16 @@ export default function Search() {
             onChange={handleCheckOutChange}
             className={styles.searchbarInput}
             min={bookingPreview.checkIn.toISOString().split('T')[0]}
+            title='Check-out date'
+            aria-label='Check-out date'
           />
         </label>
         <label className={styles.searchbarLabel}>Guests:</label>
         <select
           value={bookingPreview.numberOfGuests}
           onChange={handleGuestsChange}
-          className={` ${styles.searchbarSelect} ${styles.searchbarGuests}` }
+          className={` ${styles.searchbarSelect} ${styles.searchbarGuests}`}
+          title='Number of guests'
         >
           {[...Array(5)].map((_, i) => (
             <option key={i + 1} value={i + 1}>
@@ -120,10 +127,22 @@ export default function Search() {
           ))}
         </select>
         <div className={styles.buttonContainer}>
-          <button className={`${styles.buttonSearch} buttonEffect`} type='submit'>
+          <button
+            className={`${styles.buttonSearch} buttonEffect`}
+            type='submit'
+            title='Search'
+            aria-label='Search'
+          >
             <MagnifyingGlass size={16} />
           </button>
-          <button className={`${styles.buttonSeeAll} buttonEffect`} onClick={(e)=> seeAllListings(e)}>See all</button>
+          <button
+            className={`${styles.buttonSeeAll} buttonEffect`}
+            onClick={(e) => seeAllListings(e)}
+            title='See all'
+            aria-label='See all'
+          >
+            See all
+          </button>
         </div>
       </form>
     </div>
