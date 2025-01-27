@@ -44,6 +44,9 @@ A huge thank you to the following for their contributions:
 - Map data from [OpenStreetMap](https://www.openstreetmap.org)
 - Map style from [Stadia Maps](https://stadiamaps.com/)
 - Icons by [Phosphor Icons](https://phosphoricons.com/)
+- "Haunted" Font by [fg studios](https://www.fgstudios.net/haunted-pro-font/)
+- "Face your Fear" Font by [David Kerkhoff](https://www.fontspace.com/david-kerkhoff)
+- "Special Elite" Font by [Astigmatic](https://fonts.google.com/specimen/Special+Elite?query=special+elite)
 
 ## To Do / Future Improvements
 
