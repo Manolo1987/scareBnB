@@ -1,3 +1,28 @@
+/* ------------------ Globale Scrollbar-Styling für WebKit-Browser (Chrome, Edge, Safari, Firefox) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #444, #222); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #555, #333);
+}
+
+/* Scrollbar für Firefox */
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: #444 #1e1e1e; 
+}
+
 /* ----------------------button effect */
 .buttonEffect {
   position: relative;
