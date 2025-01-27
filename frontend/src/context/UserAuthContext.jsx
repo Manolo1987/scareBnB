@@ -16,6 +16,8 @@ export default function UserAuthContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -30,9 +32,8 @@ export default function UserAuthContextProvider({ children }) {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error(
-        'Token verification failed:',
-        error.response?.data || error.message
+      console.log(
+        'Please log in to enjoy the full functionality of this website'
       );
       setIsAuthenticated(false);
     } finally {
@@ -53,20 +54,36 @@ export default function UserAuthContextProvider({ children }) {
     }
   }, [isAuthenticated]);
 
+  // useEffect(() => {
+  //   if (user?.roles === 'admin') {
+  //     const getUsers = async () => {
+  //       await getAllUsers();
+  //     };
+  //     getUsers();
+  //   }
+  // }, [user]);
+
   // Registration
   const registration = async (formData) => {
     try {
       const response = await api.post('/user/register', formData);
       if (response.status === 201) {
-        console.log(response);
         toast.success('Successfully registered!');
       }
     } catch (error) {
-      console.error('Error during registration', error);
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.msg);
+      } else {
+        console.error('Error during registration', error);
+        toast.error('Registration failed');
+      }
     }
   };
 
   // Login
+
+  const fiveHoursLater = new Date();
+  fiveHoursLater.setHours(fiveHoursLater.getHours() + 5);
   const login = async (formData) => {
     try {
       const response = await api.post('/user/login', formData, {
@@ -74,7 +91,10 @@ export default function UserAuthContextProvider({ children }) {
       });
 
       if (response.status === 200) {
-        Cookies.set('jwt', response.data.token);
+        Cookies.set('jwt', response.data.token, {
+          expires: fiveHoursLater,
+          path: '/',
+        });
         setIsAuthenticated(true);
         toast.success('Login Successfull!');
       }
@@ -95,13 +115,17 @@ export default function UserAuthContextProvider({ children }) {
       if (response.status === 200) {
         setUser(response.data.user);
         setFavourites(response.data.user.favourites || []);
-        console.log('user favourites', favourites);
-        console.log(response.data.user);
-        console.log('Data from fetchUserData', user);
+
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error fetching userdata', error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        console.error('Error fetching userdata', error);
+      }
     }
   };
 
@@ -119,7 +143,8 @@ export default function UserAuthContextProvider({ children }) {
         window.location.reload();
       }
     } catch (error) {
-      console.log('Error during logout:', error);
+      console.error('Error during logout:', error);
+      toast.error('Logout failed');
     }
   };
 
@@ -135,7 +160,12 @@ export default function UserAuthContextProvider({ children }) {
         await fetchUserData();
       }
     } catch (error) {
-      console.error('Error during update the user', error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -149,7 +179,12 @@ export default function UserAuthContextProvider({ children }) {
         setAllUsers(response.data.users);
       }
     } catch (error) {
-      console.error('Error fetching userdata from all users');
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -166,7 +201,12 @@ export default function UserAuthContextProvider({ children }) {
         await logout();
       }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -180,9 +220,15 @@ export default function UserAuthContextProvider({ children }) {
 
       if (response.status === 200) {
         toast.success('User deleted, well done!');
+        await getAllUsers();
       }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -195,7 +241,12 @@ export default function UserAuthContextProvider({ children }) {
         await fetchUserData();
       }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -210,7 +261,12 @@ export default function UserAuthContextProvider({ children }) {
         await fetchUserData();
       }
     } catch (error) {
-      console.error(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   };
 
@@ -235,6 +291,10 @@ export default function UserAuthContextProvider({ children }) {
         setShowPassword,
         togglePasswordVisibility,
         favourites,
+        showLogin,
+        setShowLogin,
+        showRegister,
+        setShowRegister,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Sort.module.css';
+import styles from './FilterAndSort.module.css';
 import { useAcco } from '../../../context/AccommodationContext.jsx';
 import { SortAscending, SortDescending } from '@phosphor-icons/react';
 
@@ -14,8 +14,14 @@ export default function Sort() {
   return (
     <div className={styles.sort_container}>
       <label htmlFor='sort'>Sort by:</label>
-      <select name='sort' id='sort' value={sortBy} onChange={handleSortChange}>
-        <option value='pricePerNight'>Price per Night</option>
+      <select
+        name='sort'
+        id='sort'
+        value={sortBy}
+        onChange={handleSortChange}
+        className={styles.controlsSelect}
+      >
+        <option value='pricePerNight'>Price</option>
         <option value='rating'>Rating</option>
         <option value='bedrooms'>Bedrooms</option>
       </select>

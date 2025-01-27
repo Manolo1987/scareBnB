@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AccommodationList.module.css';
 import OverviewMap from '../../components/AccomodationList/OverviewMap/OverviewMap.jsx';
 import AccoGallery from '../../components/AccomodationList/AccoGallery/AccoGallery.jsx';
-import Filter from '../../components/Shared/FilterAndSort/Filter.jsx';
-import Sort from '../../components/Shared/FilterAndSort/Sort.jsx';
+import FilterAndSort from '../../components/Shared/FilterAndSort/FilterAndSort.jsx';
 import { useAcco } from '../../context/AccommodationContext.jsx';
 import { MapTrifold, SquaresFour } from '@phosphor-icons/react';
 import Search from '../../components/Shared/Search/Search.jsx';
@@ -12,8 +11,6 @@ export default function AccomodationList() {
   const { stateFilter, getAllAccommodations, selectedView, setSelectedView } =
     useAcco();
 
-  // const [selectedView, setSelectedView] = useState('map-view');
-
   const handleToggleChange = (event) => {
     setSelectedView(event.target.id);
   };
@@ -21,15 +18,18 @@ export default function AccomodationList() {
   return (
     <>
       <Search />
-      <div>
-        {!stateFilter && <h1>All Accommodations</h1>}
-        {stateFilter && <h1>Accommodations in {stateFilter}</h1>}
+      <div className={styles.accommodationList}>
+        {!stateFilter && <h2 className={styles.h2}>All Listings</h2>}
+        {stateFilter && <h2 className={styles.h2}>{stateFilter}</h2>}
 
         <div className={styles.controls}>
-          <Filter />
-          {selectedView === 'gallery-view' && <Sort />}
+          <FilterAndSort />
           <div className={styles.switchView_container}>
-            <div className={styles.radio_container}>
+            <div
+              className={styles.radio_container}
+              title='Gallery View'
+              aria-label='Gallery View'
+            >
               <input
                 type='radio'
                 name='view'
@@ -45,7 +45,11 @@ export default function AccomodationList() {
                 <SquaresFour size={32} className={styles.icon} />
               </label>
             </div>
-            <div className={styles.radio_container}>
+            <div
+              className={styles.radio_container}
+              title='Map View'
+              aria-label='Map View'
+            >
               <input
                 type='radio'
                 name='view'

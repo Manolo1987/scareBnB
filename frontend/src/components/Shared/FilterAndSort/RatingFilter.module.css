@@ -1,0 +1,62 @@
+.dropdown {
+  flex-grow: 1;
+  font-size: 1rem;
+  position: relative;
+  padding: 8px;
+  border: 1px solid var(--color-mediumDark);
+  cursor: pointer;
+  min-width: 8rem;
+}
+.dropdown:hover {
+  background-color: black;
+}
+
+.selectedValue {
+  display: flex;
+  align-items: center;
+}
+
+.dropdownList {
+  position: absolute;
+  /* top: -1px; */
+  top: 2.1rem;
+  left: -1px;
+  width: 100%;
+  border: 1px solid var(--color-mediumDark);
+  background-color: rgb(0, 0, 0);
+  z-index: 500;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.dropdownItem {
+  display: flex;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover,
+.dropdownItem:focus {
+  background-color: #242424;
+}
+
+.dropdownItem[aria-selected='true'] {
+  background-color: #590202;
+}
+
+.dropdownList {
+  display: block;
+}
+
+.dropdownList:not(:empty) {
+  display: block;
+}
+
+.arrowDown {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.2rem;
+  z-index: 600;
+}

@@ -1,0 +1,14 @@
+.map {
+  max-width: 400px;
+  /* border-radius: 50%;
+  overflow: hidden; */
+  position: relative;
+}
+
+/* provisorische anpassung */
+
+@media (max-width: 500px) {
+  .map {
+    max-width: 300px;
+  }
+}

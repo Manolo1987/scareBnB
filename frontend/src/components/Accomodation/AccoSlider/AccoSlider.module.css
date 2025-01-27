@@ -1,0 +1,69 @@
+.imageGallery {
+  width: 100%;
+  max-width: 100vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+}
+
+.imageContainer {
+  position: relative;
+  max-height: 400px;
+  width: 100%;
+}
+
+.mainImage {
+  max-height: 400px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.arrow {
+  border-radius: 50%;
+  width: 2.4rem;
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+}
+
+.arrowLeft {
+  left: 10px;
+}
+
+.arrowRight {
+  right: 10px;
+}
+
+.navigationDots {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.dotActive {
+  background-color: white;
+}

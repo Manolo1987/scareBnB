@@ -1,55 +1,98 @@
-.info-wrapper {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  margin: 1rem;
 }
 
-.info {
-  max-height: 80%;
-  max-width: 768px;
-  margin: 5% auto 8% auto;
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-h3 {
-  margin: 15px 0;
-}
-
-.box {
-  padding: 1em;
-  margin-bottom: 3%;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 7px;
+.section {
+  max-width: 800px;
   width: 100%;
+  background-color: var(--color-darkOpacity);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: var(--color-light);
+  padding: 1rem;
+  margin: 1rem;
+
+  h2 {
+    text-align: center;
+    font-family: var(--font-headline);
+    font-weight: normal;
+    letter-spacing: 0.3rem;
+    color: var(--color-secondary);
+    text-shadow: 6px 6px 3px black;
+    font-size: 2.5rem;
+  }
 }
 
-ul li {
-  list-style-type: none;
+.content {
+  border: 1px solid var(--color-mediumDark);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 0.5rem;
+
+  h3 {
+    font-family: var(--font-headline);
+    font-weight: normal;
+    letter-spacing: 0.2rem;
+    color: var(--color-medium);
+    text-shadow: 6px 6px 3px black;
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+    padding: 0.3rem 0;
+  }
+
+  p,
+  address {
+    padding: 0.3rem;
+    margin-left: 1rem;
+
+    a {
+      color: var(--color-secondary);
+      transition: all 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+
+    li {
+      margin-left: 1rem;
+    }
+  }
 }
 
 .contactButton {
-  display: inline-block;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  background: #000000;
-  color: #ffffff;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  background: var(--color-prime);
   border-radius: 8px;
-  padding: 14px 24px 16px;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
-  transition: transform 200ms, background 200ms;
-  :hover {
-    transform: translateY(-2px);
+  margin-top: 1rem;
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--color-secondary);
   }
 
   a {
-    color: aqua;
-    margin: 5px 0;
+    color: var(--color-light);
+    text-decoration: none;
   }
+}
+
+strong {
+  padding-right: 0.1rem;
+}
+
+.red {
+  color: var(--color-secondary);
 }

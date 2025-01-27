@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 
-export default function Login({ showLogin, setShowLogin, setShowRegister }) {
-  const { login, showPassword, setShowPassword, togglePasswordVisibility } =
-    useAuth();
+export default function Login() {
+  const {
+    login,
+    showPassword,
+    setShowPassword,
+    togglePasswordVisibility,
+    showLogin,
+    setShowLogin,
+    setShowRegister,
+  } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -30,20 +38,13 @@ export default function Login({ showLogin, setShowLogin, setShowRegister }) {
       await login(formData);
       setShowLogin(false);
     } catch (err) {
-      setError('Fehler beim Login. Überprüfe deine Anmeldedaten.');
-      toast.error('Fehler beim Login. Überprüfe deine Anmeldedaten.');
+      setError('Error during login. Please check your login credentials.');
+      toast.error('Error during login. Please check your login credentials.');
     }
   };
 
   return (
     <>
-      <button
-        className={styles.login_button}
-        onClick={() => setShowLogin(true)}
-      >
-        Login
-      </button>
-
       {/* Login Overlay */}
       {showLogin && (
         <div className={styles.overlay}>
@@ -75,11 +76,21 @@ export default function Login({ showLogin, setShowLogin, setShowRegister }) {
                   role='button'
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? '👻' : '👁️'}
+                  {showPassword ? (
+                    <EyeSlash size={22} weight='duotone' />
+                  ) : (
+                    <Eye size={22} weight='duotone' />
+                  )}
                 </span>
               </label>
-              <button type='submit'>Login</button>
-              <button type='button' onClick={closeAndReset}>
+              <button className='buttonEffect' type='submit'>
+                Login
+              </button>
+              <button
+                className='buttonEffect'
+                type='button'
+                onClick={closeAndReset}
+              >
                 Close
               </button>
               <p>

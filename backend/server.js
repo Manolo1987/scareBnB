@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import userRouter from './routes/userRouter.js';
 import accoRouter from './routes/accommodationRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
+import './cron-job.js';
 
 const app = express();
 const PORT = process.env.PORT;

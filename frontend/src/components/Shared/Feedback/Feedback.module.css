@@ -1,0 +1,13 @@
+.feedbackContainer {
+  display: flex;
+  align-items: center;
+}
+.label {
+  font-size: 0.8em;
+  margin-right: 0.4rem;
+}
+.ratingGhostFilled,
+.ratingGhost {
+  width: 1.4rem;
+  cursor: pointer;
+}

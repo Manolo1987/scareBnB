@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './BackToTop.module.css';
 import { ArrowCircleUp } from '@phosphor-icons/react';
 
 export default function BackToTop() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <button className={styles.backToTop} onClick={() => window.scrollTo(0, 0)}>
-      <ArrowCircleUp size={32} color='#fdfcfc' weight='fill' />
+    <button
+      className={`${styles.backToTop} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      title='Back to top'
+      aria-label='Back to top'
+    >
+      <ArrowCircleUp size={40} color='#fdfcfc' weight='fill' />
     </button>
   );
 }

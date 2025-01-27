@@ -1,0 +1,190 @@
+.BookingCard {
+  max-width: 800px;
+  color: var(--color-medium);
+  background: rgba(24, 24, 24, 0.594);
+  border-radius: 8px;
+  box-shadow: 6px 6px 3px black;
+  margin: 2rem auto;
+  padding: 1.5rem;
+
+  h2 {
+    font-size: 1.8rem;
+    font-family: var(--font-headline);
+    font-weight: normal;
+    letter-spacing: 0.3rem;
+    color: var(--color-light);
+    text-shadow: 3px 6px 3px black;
+  }
+
+  h3 {
+    color: var(--color-light);
+    text-shadow: 3px 3px 3px black;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    padding: 0.1rem;
+
+    span {
+      color: var(--color-light);
+    }
+
+    strong {
+      color: var(--color-secondary);
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+
+  .img_container {
+    flex: 1;
+    max-width: 300px;
+    padding: 1rem;
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .booking_info {
+    flex: 2;
+  }
+}
+
+@media (max-width: 500px) {
+  .infoContainer {
+    gap: 0;
+
+    .img_container {
+      flex: 1;
+    }
+
+    .booking_info {
+      flex: 1;
+    }
+  }
+}
+
+.paymentMethod {
+  background: var(--color-darkOpacity);
+  border: 1px solid var(--color-mediumDark);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  label {
+    display: block;
+    margin: 0 0 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  input[type='radio'] {
+    accent-color: crimson;
+    margin-right: 10px;
+  }
+}
+
+.creditCardForm {
+  margin-bottom: 1rem;
+
+  fieldset {
+    background-color: var(--color-darkOpacity);
+    border-radius: 8px;
+    border: 1px solid var(--color-mediumDark);
+    padding: 1rem;
+
+    legend {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--color-light);
+      text-shadow: 3px 3px 3px black;
+      padding: 0.5rem;
+    }
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    color: rgb(175, 175, 175);
+
+    input {
+      width: 100%;
+      font-size: 0.9rem;
+      color: var(--color-light);
+      background-color: var(--color-dark);
+      border: 1px solid var(--color-mediumDark);
+      border-radius: 6px;
+      padding: 0.4rem;
+      margin: 0.3rem;
+
+      &:focus {
+        border-color: var(--color-secondary);
+        box-shadow: 0 0 6px var(--color-secondary);
+        outline: none;
+      }
+    }
+
+    .validMessage {
+      text-align: center;
+      color: #28a745;
+      font-size: 0.8rem;
+    }
+
+    .errorMessage {
+      text-align: center;
+      color: crimson;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.bankDetails {
+  background: var(--color-darkOpacity);
+  border: 1px solid var(--color-mediumDark);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  p:nth-of-type(1) {
+    text-align: center;
+  }
+
+  hr {
+    width: 100%;
+    margin: 0.5rem auto;
+    border: none;
+    border-top: 1px solid var(--color-mediumDark);
+  }
+}
+
+.bookButton {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  background: var(--color-prime);
+  color: var(--color-light);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bookButton:disabled {
+  background: #7777773c;
+  color: gray;
+  cursor: not-allowed;
+}
+
+.bookButton:hover:not(:disabled) {
+  background: var(--color-secondary);
+}

@@ -1,6 +1,6 @@
 // Booking.js
 import { model, Schema } from 'mongoose';
-import Accommodation from './Accommodation.js';
+import Accommodation from '../models/Accommodation.js';
 import { giveFeedback } from '../controllers/bookingController.js';
 
 const bookingSchema = new Schema({
@@ -24,7 +24,7 @@ const bookingSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['creditCard', 'paypal', 'bank transfer'],
+    enum: ['creditCard', 'banktransfer'],
     required: true,
   },
   giveFeedback: { type: Boolean, default: false },

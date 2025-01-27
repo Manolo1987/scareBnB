@@ -1,0 +1,143 @@
+.comment_section {
+  max-width: 600px;
+  background-color: var(--color-mediumOpacity);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  margin: 1rem auto;
+  padding: 2rem;
+
+  .header {
+    text-align: center;
+    font-family: var(--font-headline);
+    font-weight: normal;
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+    color: var(--color-light);
+    text-shadow: 6px 6px 3px rgb(0, 0, 0);
+    margin-bottom: 1rem;
+  }
+  .comment_list {
+    list-style: none;
+
+    .comment_item {
+      position: relative;
+      background-color: rgba(0, 0, 0, 0.761);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+
+      .comment_title {
+        color: var(--color-light);
+      }
+
+      .comment_content {
+        color: var(--color-medium);
+        margin: 0.5rem;
+      }
+
+      .comment_author {
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--color-mediumDark);
+        text-shadow: 1px 1px 1px rgb(6, 6, 6);
+      }
+
+      .deleteButton {
+        position: absolute;
+        top: 5px;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0.4rem 0.8rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+
+  .noComments {
+    text-align: center;
+    color: var(--color-medium);
+  }
+
+  .comment_form {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .input,
+    .textarea {
+      padding: 0.75rem;
+      background-color: var(--color-darkOpacity);
+      color: var(--color-light);
+      border: 1px solid var(--color-mediumDark);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .submit_button {
+      align-self: flex-end;
+      background-color: var(--color-prime);
+      color: var(--color-light);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.75rem 1.5rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--color-secondary);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.pagination_button {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination_button:hover {
+  background-color: var(--color-prime);
+}
+
+.comment_divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+

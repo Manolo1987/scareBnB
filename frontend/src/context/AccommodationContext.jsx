@@ -1,11 +1,14 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import api from '../utils/api';
+import { useAuth } from './UserAuthContext';
+import { toast } from 'react-toastify';
 
 export const AccommodationContext = createContext();
 
 export const useAcco = () => useContext(AccommodationContext);
 
 export default function AccommodationContextProvider({ children }) {
+  const { setShowLogin } = useAuth();
   const [allAccos, setAllAccos] = useState([]);
   const [specialAccos, setSpecialAccos] = useState([]);
   const [currentAcco, setCurrentAcco] = useState(null);
@@ -23,26 +26,29 @@ export default function AccommodationContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   // map and gallery view in AccommodationList Component:
   const [selectedView, setSelectedView] = useState('gallery-view');
+  //for update Listing Component
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   async function getAllAccommodations(limit) {
-    // apply loading state here
     try {
       const query = `?state=${stateFilter}&maxPrice=${maxPrice}&minPrice=${minPrice}&bedrooms=${bedrooms}&minRating=${minRating}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${currentPage}&limit=${limit}`;
       const response = await api.get(`/accommodations/all${query}`);
-      setAllAccos(response.data);
-      console.log(response.data);
+      if (response.status === 200) {
+        setAllAccos(response.data);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   async function getOneAccommodation(id) {
     try {
       const response = await api.get(`/accommodations/one/${id}`);
-      setCurrentAcco(response.data);
-      //console.log(response.data);
+      if (response.status === 200) {
+        setCurrentAcco(response.data);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -51,10 +57,16 @@ export default function AccommodationContextProvider({ children }) {
       const response = await api.get('/accommodations/my', {
         withCredentials: true,
       });
-      setMyListings(response.data);
-      //console.log(response);
+      if (response.status === 200) {
+        setMyListings(response.data);
+      }
     } catch (error) {
-      console.log(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
@@ -62,48 +74,101 @@ export default function AccommodationContextProvider({ children }) {
     console.log(formData);
     try {
       const response = await api.post('/accommodations', formData, {
-        //withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(response.data);
-      // if success navigate to myListings?
+      if (response.status === 200) {
+        toast.success('New listing added');
+        return response.data;
+      }
     } catch (error) {
-      console.log(error.response);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
+    }
+  }
+
+  async function updateListing(id, formData) {
+    console.log(formData);
+    try {
+      const response = await api.patch(
+        `/accommodations/${id}?imagesToDelete=${imagesToDelete}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success('Listing updated');
+        getMyListings();
+        return response.data;
+      }
+    } catch (error) {
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
   async function deleteListing(id) {
     try {
       const response = await api.delete(`/accommodations/${id}`);
-      console.log(response.data.msg);
+
+      if (response.status === 200) {
+        toast.success('Listing deleted');
+        getMyListings();
+      }
     } catch (error) {
-      console.log(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+      }
     }
   }
 
-  async function postComment(id) {
-    // send accommodation id as req.params
-    //send comment as body
+  async function postComment(id, comment) {
     try {
-      const response = await api.post(`/accommodations/comment/${id}`, {
-        title: 'cool',
-        content: 'sehr cool',
-      });
-      //console.log(response.data);
+      const response = await api.post(`/accommodations/comment/${id}`, comment);
+
+      setCurrentAcco(response.data);
+      return response.data;
     } catch (error) {
-      console.log(error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        return null;
+      }
     }
   }
 
   async function deleteComment(commentId) {
     try {
       const response = await api.delete(`/accommodations/comment/${commentId}`);
-      //console.log(response.data);
+
+      return response.data;
     } catch (error) {
-      console.error('Error deleting comment:', error);
+      const status = error.response?.status;
+      if (status === 403 || status === 401) {
+        setShowLogin(true);
+      } else {
+        toast.error(error.response?.data?.msg || 'Server Error.');
+        return null;
+      }
     }
   }
 
@@ -153,6 +218,9 @@ export default function AccommodationContextProvider({ children }) {
         getSpecial,
         selectedView,
         setSelectedView,
+        updateListing,
+        imagesToDelete,
+        setImagesToDelete,
       }}
     >
       {children}

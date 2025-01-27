@@ -62,6 +62,18 @@ export async function createBooking(req, res) {
   }
 }
 
+// getAllBookings from user
+export async function getMyBookings(req, res) {
+  try {
+    const bookings = await Booking.find({ guest: req.userId })
+      .populate('accommodation guest host')
+      .sort({ checkIn: -1 });
+    res.status(200).json({ msg: 'Bookings found', bookings: bookings });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+}
+
 //getAllBookings
 /* 
 this function is included in the userController. User bookings are available there via populate Methode
@@ -165,8 +177,9 @@ export async function giveFeedback(req, res) {
     }
 
     const currentDate = new Date();
-    const checkOutDate = new Date(booking.checkOut);
-    if (currentDate < checkOutDate) {
+    // const checkOutDate = new Date(booking.checkOut);
+    const checkInDate = new Date(booking.checkIn);
+    if (currentDate < checkInDate) {
       return res
         .status(400)
         .json({ msg: 'You can only give feedback after the check-out date' });

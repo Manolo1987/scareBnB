@@ -1,0 +1,100 @@
+.filterDropdown {
+  position: relative;
+}
+
+.dropdownButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+
+  &:hover {
+    background-color: var(--color-mediumDark);
+  }
+
+  &:focus {
+    background-color: var(--color-mediumDark);
+    outline: 1px solid crimson;
+  }
+}
+.dropdownButton.selected {
+  color: crimson;
+}
+.dropDownListContainer {
+  position: absolute;
+  z-index: 1000;
+  padding: 1rem;
+  background-color: #1b1b1b;
+}
+.dropdownList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.filter_item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* sort ------------------ */
+
+.sort_container {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: space-between;
+  width: 100%;
+  label {
+    white-space: nowrap;
+  }
+  .icon_button {
+    cursor: pointer;
+  }
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
+
+.controlsSelect {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: #fff;
+  padding: 8px;
+  border: 1px solid var(--color-mediumDark);
+  border-radius: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+.controlsSelect:hover {
+  background-color: black;
+}
+.controlsSelect:focus {
+  outline: none;
+}
+.controlsSelect > option {
+  background-color: rgb(0, 0, 0);
+  border: 1px solid var(--color-mediumDark);
+  cursor: pointer;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0;
+  padding-block-end: 0px;
+  padding-block-start: 0px;
+  padding-inline-end: 0px;
+  padding-inline-start: 0px;
+  border-image-width: 0px;
+  border-radius: none;
+}
+.controlsSelect:focus > option:hover {
+  background-color: #242424;
+}
+.controlsSelect:focus > option:checked {
+  background-color: #590202 !important;
+}

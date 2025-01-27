@@ -1,58 +1,86 @@
-.myProfile {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: var(--color-light);
+.profileInfo {
+  color: var(--color-light);
+  background-color: var(--color-mediumOpacity);
   border-radius: 8px;
-  box-shadow: var(--shadow-basic);
+  padding: 2rem;
 
-  h2 {
-    font-family: var(--font-headline);
-    text-align: center;
+  table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 1.5rem;
   }
-
-  .profileInfo {
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
-    }
-    td {
-      font-family: var(--font-typewriter);
-      padding: 0.2rem;
-    }
-
-    span {
-      font-family: var(--font-typewriter);
-      font-weight: bold;
-    }
+  td {
+    font-family: var(--font-typewriter);
+    padding: 0.2rem;
   }
 
-  .editForm {
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+  span {
+    font-family: var(--font-typewriter);
+    font-weight: bold;
+  }
+}
+.passwordWrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  width: 100%;
+  input[type='password'],
+  input[type='text'] {
+    flex-grow: 1;
+  }
+}
+.icon {
+  cursor: pointer;
+}
 
-      label {
-        display: flex;
-        flex-direction: column;
-        font-weight: 500;
+.deleteOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
-        input {
-          padding: 0.5rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-        }
-
-        span {
-          cursor: pointer;
-          margin-left: 0.5rem;
-          font-size: 1.2rem;
-        }
-      }
+  .deleteContent {
+    background-color: rgb(60, 60, 60);
+    padding: 2rem;
+    max-width: 300px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .deleteMessage {
+      line-height: 2rem;
     }
+  }
+}
+
+.button_container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+
+  .buttons {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: black;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .buttons:nth-last-of-type(1):hover {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: crimson;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
   }
 }

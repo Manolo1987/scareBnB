@@ -1,0 +1,97 @@
+.bookingPreviewWrapper {
+  width: 100%;
+  max-width: 250px;
+  background-color: #121212;
+  color: var(--color-light);
+  border: 1px solid crimson;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+}
+
+@media (min-width: 1401px) {
+  .bookingPreviewWrapper {
+    position: fixed;
+    top: 40%;
+    right: 2%;
+  }
+}
+
+@media (max-width: 1400px) {
+  .bookingPreviewWrapper {
+    max-width: 400px;
+    position: static;
+    margin: 0 auto;
+  }
+}
+
+.bookingPreviewContent {
+  text-align: center;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.bookingPreviewContent h2 {
+  color: var(--color-secondary);
+}
+
+.bookingPreviewContent label {
+  display: block;
+  text-align: start;
+  margin-bottom: 0.3rem;
+}
+
+.bookingPreviewContent input,
+.bookingPreviewContent select {
+  width: 100%;
+  font-size: 0.8rem;
+  background-color: #252525;
+  color: var(--color-medium);
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 6px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.bookingPreviewContent input:focus,
+.bookingPreviewContent select:focus {
+  border-color: crimson;
+  box-shadow: 0 0 6px crimson;
+  outline: none;
+}
+
+/* Guests Dropdown */
+.bookingPreviewContent select {
+  cursor: pointer;
+}
+
+/* Calculation Info */
+.bookingPreviewContent p {
+  margin: 0.5rem 0;
+}
+
+.bookingPreviewContent p span {
+  font-weight: bold;
+  color: crimson;
+}
+
+/* Reservation Button */
+.bookingPreviewContent button {
+  width: 100%;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  background-color: var(--color-prime);
+  color: var(--color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 6px;
+}
+
+.bookingPreviewContent button:hover {
+  background-color: var(--color-secondary);
+}

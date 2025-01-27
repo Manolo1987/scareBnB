@@ -1,27 +1,64 @@
 .accountNav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  /* background-color: #f5f5f5; */
-  border-bottom: 1px solid #ccc;
+  background: var(--gradient-circle);
+  background-color: var(--color-medium);
+  border-top: 2px solid #222;
+  box-shadow: 0px 10px 20px black, 0px -10px 20px black, inset 0 3px 10px black;
+  padding: 10px 0;
+
+  .accountNavList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style: none;
+
+    .accountNavLink {
+      text-decoration: none;
+      color: var(--color-light);
+      background-color: rgba(0, 0, 0, 0);
+      text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.414);
+      border-radius: 3px;
+      padding: 6px 20px;
+      transition: all 0.6s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.128);
+      }
+    }
+
+    .admin_link {
+      color: var(--color-secondary);
+    }
+
+    .activeLink {
+      font-weight: bold;
+      text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.414);
+      color: var(--color-prime);
+      background-color: rgba(220, 20, 60, 0.537);
+
+      &:hover {
+        color: var(--color-light);
+      }
+    }
+  }
 }
 
-.accountNavList {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+@media (max-width: 800px) {
+  .accountNavList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center;
 
-.accountNavLink {
-  display: block;
-  padding: 10px 20px;
-  /* color: #333; */
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
+    .accountNavLink {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  }
 
-.accountNavLink:hover {
-  background-color: #ff0000;
+  .admin_link {
+    grid-column: span 2;
+    text-align: center;
+    padding: 10px;
+  }
 }

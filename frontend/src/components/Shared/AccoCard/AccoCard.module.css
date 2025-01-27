@@ -3,7 +3,6 @@
 }
 
 .accoCardContainer {
-  width: 100%;
   max-width: 300px;
   height: auto;
   display: flex;
@@ -12,7 +11,7 @@
   background-color: #222;
   border: 1px solid #444;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 8px 8px 6px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   transition: all 0.3s ease;
 
@@ -32,6 +31,8 @@
       display: flex;
       justify-content: space-between;
       font-size: 1.2rem;
+  text-shadow: 3px 3px 3px black;
+
     }
 
     span {
@@ -46,15 +47,22 @@
 
       .ghost {
         display: inline-block;
-        margin-right: 4px;
       }
     }
 
+    .center {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .rating {
-      text-align: end;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 1.1rem;
-      /* font-weight: bold; */
-      color: orange;
+      color: #c9812c;
     }
   }
 

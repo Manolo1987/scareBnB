@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from './NotFound.module.css';
-import notFoundImage from '../../assets/notFoundImage.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function NotFound() {
@@ -18,23 +17,24 @@ export default function NotFound() {
       });
     }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [navigate]);
   return (
     <div className={styles.foundWrapper}>
-      <div>
-        <section>
-          <h1>404 - Page not found</h1>
-          <p>
-            You'll be redirected to the homepage in {timeLeft}{' '}
-            {timeLeft > 1 ? 'seconds' : 'second'}.
-          </p>
-          <p>
-            You won't wait? Click{' '}
-            <button onClick={() => navigate('/')}>here</button>
-          </p>
-        </section>
-      </div>
+      <section className={styles.notFoundSection}>
+        <h1 className={styles.notFoundHeading}>404 - Page not found</h1>
+        <h2>👻 Wow, congratulations! You've discovered a ghost page. 🕸️</h2>
+        <p>
+          Too bad it doesn't actually exist - maybe a spirit ran off with the
+          URL. But hey, just click
+          <button onClick={() => navigate('/')}>here</button> and haunt your way
+          back to the homepage like a regular person.
+        </p>
+        <p>
+          Or just wait {timeLeft} {timeLeft > 1 ? 'seconds' : 'second'}... If
+          you dare.
+        </p>
+      </section>
     </div>
   );
 }

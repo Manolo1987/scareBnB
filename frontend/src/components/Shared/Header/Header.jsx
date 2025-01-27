@@ -3,47 +3,37 @@ import styles from './Header.module.css';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import AccountDropdownMenu from '../../Account/AccountDropdownMenu/AccountDropdownMenu';
-import { useAuth } from '../../../context/UserAuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+  const isHomepage = location.pathname === '/';
 
   return (
-    <header>
+    <header className={isHomepage ? styles.bigHeader : styles.smallHeader}>
       <section className={styles.top_banner}>
-        <div className={styles.icon_container}>
-          <Link to='/'>
-            <img
-              src='https://st4.depositphotos.com/14009552/23169/i/450/depositphotos_231693396-stock-photo-paint-home-vector-logo.jpg'
-              alt='website-icon'
-            />
-          </Link>
-        </div>
-        <div className={styles.account}>
-          {isAuthenticated ? (
-            <AccountDropdownMenu />
-          ) : (
-            <>
-              <Login
-                showLogin={showLogin}
-                setShowLogin={setShowLogin}
-                setShowRegister={setShowRegister}
-              />
-              <Register
-                showRegister={showRegister}
-                setShowRegister={setShowRegister}
-              />
-            </>
+        <div className={styles.title_wrapper}>
+          {!isHomepage && (
+            <Link to='/' title='Home'>
+              <h1 className={styles.h1}>Scarebnb</h1>
+            </Link>
           )}
         </div>
+        <div>
+          <AccountDropdownMenu />
+          <Login />
+          <Register />
+        </div>
       </section>
-      <div className={styles.title}>
-        <h1>Scarebnb</h1>
-        <p>Ready getting spooked!?</p>
-      </div>
+      {isHomepage && (
+        <div className={styles.title}>
+          <Link to='/' title='Home'>
+            <h1 className={styles.h1}>Scarebnb</h1>
+          </Link>
+          <p>Ready to get spooked!?</p>
+        </div>
+      )}
+      <div className={styles.headerBorder}></div>
     </header>
   );
 }

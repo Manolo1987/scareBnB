@@ -4,6 +4,7 @@ import Accommodation from '../models/Accommodation.js';
 import Booking from '../models/Booking.js';
 import Comment from '../models/Comment.js';
 import cloudinary from '../config/cloudinary.js';
+import mongoose from 'mongoose';
 
 export async function getAllAccommodations(req, res) {
   try {
@@ -34,7 +35,7 @@ export async function getAllAccommodations(req, res) {
     if (minRating) filter.rating = { $gte: minRating };
 
     if (!limit) {
-      const allAccos = await Accommodation.find(filter);
+      const allAccos = await Accommodation.find(filter).populate('owner');
       return res.status(200).json({
         accommodations: allAccos,
       });
@@ -46,6 +47,7 @@ export async function getAllAccommodations(req, res) {
     sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
 
     const allAccos = await Accommodation.find(filter)
+      .populate('owner')
       .skip((pageNum - 1) * limitNum)
       .limit(limitNum)
       .sort(sort);
@@ -63,23 +65,41 @@ export async function getAllAccommodations(req, res) {
       },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
 
 export async function getSpecial(req, res) {
   try {
-    const specialAccos = await Accommodation.find().limit(4);
-    // TODO: get handpicked nice Accommodations here
+    // owner Ids
+    const ownerIds = [
+      '675ff2cfae1af798eba7cc9e', // Andreas Zwiebelhuber
+      '675ffef5d6e5dd8ec58f9d2e', // Danny (Dr. Acula)
+      '677e4cb25dcf46aa42037435', // Manuel
+      '679209ed8f892529f7764dde', // Jana (Frank Enstein)
+      '67920cdec87e847cc0b72286', // Kenneth (Grim Reaper)
+    ];
+
+    // change strings to objectIds
+    const objectIds = ownerIds.map(mongoose.Types.ObjectId.createFromHexString);
+
+    const specialAccos = await Accommodation.aggregate([
+      {
+        $match: {
+          owner: { $in: objectIds },
+        },
+      },
+      { $sample: { size: 4 } }, // 4 random accos
+    ]);
 
     if (specialAccos.length === 0) {
       return res.status(404).json({ msg: 'No accommodations found.' });
     }
-    res.status(200).json(specialAccos);
+    return res.status(200).json(specialAccos);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'Server Error!' });
+    console.error(error);
+    return res.status(500).json({ msg: 'Server Error!' });
   }
 }
 
@@ -88,7 +108,10 @@ export async function getOneAccommodation(req, res) {
     const { accoId } = req.params;
     //console.log(accoId);
     const acco = await Accommodation.findById(accoId)
-      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' },
+      })
       .populate('owner');
     if (!acco) {
       return res.status(404).json({ msg: 'Accommodation ID not found.' });
@@ -96,7 +119,7 @@ export async function getOneAccommodation(req, res) {
     //console.log(acco);
     res.status(200).json(acco);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -110,11 +133,13 @@ export async function getMyListings(req, res) {
       return res.status(404).json({ msg: 'User not found.' });
     }
 
-    const myListings = user.listings;
+    let myListings = user.listings;
+
+    myListings = myListings.sort((a, b) => b.createdAt - a.createdAt);
 
     res.status(200).json(myListings);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
   }
 }
@@ -177,8 +202,133 @@ export async function createListing(req, res) {
 
     res.status(200).json(newListing);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ msg: 'Server Error!' });
+  }
+}
+
+//updateListing
+export async function updateListing(req, res) {
+  try {
+    const { listingId } = req.params;
+    const userId = req.userId;
+
+    const listing = await Accommodation.findById(listingId);
+    if (!listing) {
+      return res.status(404).json({ msg: 'Listing not found.' });
+    }
+
+    const user = await User.findById(req.userId);
+    const ownerId = listing.owner._id.toString();
+
+    if (ownerId !== userId || !user) {
+      return res
+        .status(403)
+        .json({ msg: 'You are not authorized to update this listing.' });
+    }
+
+    const updatedFields = {};
+
+    const {
+      title,
+      description,
+      state,
+      city,
+      latitude,
+      longitude,
+      pricePerNight,
+      bedrooms,
+      features,
+    } = req.body;
+
+    if (title && title !== listing.title) updatedFields.title = title;
+    if (description && description !== listing.description)
+      updatedFields.description = description;
+    if (state && state !== listing.state) updatedFields.state = state;
+    if (city && city !== listing.city) updatedFields.city = city;
+    if (latitude && latitude !== listing.latitude)
+      updatedFields.latitude = latitude;
+    if (longitude && longitude !== listing.longitude)
+      updatedFields.longitude = longitude;
+    if (pricePerNight && pricePerNight !== listing.pricePerNight)
+      updatedFields.pricePerNight = pricePerNight;
+    if (bedrooms && bedrooms !== listing.bedrooms)
+      updatedFields.bedrooms = bedrooms;
+    if (features && features !== listing.features)
+      updatedFields.features = features.split(',');
+
+    //delete old images if user not admin
+    const { imagesToDelete } = req.query;
+    //console.log(imagesToDelete);
+    const imagesToDeleteArr =
+      imagesToDelete.length > 0 ? imagesToDelete.split(',') : [];
+
+    //console.log('imagesToDelete', imagesToDeleteArr);
+
+    if (imagesToDeleteArr.length > 0) {
+      if (user.roles !== 'admin') {
+        for (let img of imagesToDeleteArr) {
+          await cloudinary.uploader.destroy(img, function (error, result) {
+            console.log(result);
+            console.error(error);
+          });
+        }
+      }
+    }
+
+    const existingImages =
+      listing.images.filter(
+        (image) => !imagesToDeleteArr.includes(image.public_id)
+      ) || []; //exclude deleted images
+    //console.log('existing', existingImages);
+    updatedFields.images = [...existingImages];
+
+    if (req.files) {
+      if (req.files['titleImage']) {
+        //console.log('titleImage', req.files['titleImage']);
+        if (user.roles !== 'admin') {
+          const titleImgId = listing.titleImage.public_id;
+          await cloudinary.uploader.destroy(
+            titleImgId,
+            function (error, result) {
+              console.log(result);
+              console.error(error);
+            }
+          );
+        }
+        const titleImg = req.files['titleImage'][0];
+        updatedFields.titleImage = {
+          secure_url: titleImg.path,
+          public_id: titleImg.filename,
+        };
+      }
+
+      if (req.files['otherImages']) {
+        //console.log('otherImages', req.files['otherImages']);
+
+        const newImages = req.files['otherImages'].map((img) => ({
+          secure_url: img.path,
+          public_id: img.filename,
+        }));
+        //console.log('new', newImages);
+        updatedFields.images = [...existingImages, ...newImages];
+      }
+    }
+
+    if (Object.keys(updatedFields).length > 0) {
+      const updatedListing = await Accommodation.findByIdAndUpdate(
+        listingId,
+        updatedFields,
+        { new: true, runValidators: true }
+      );
+
+      res.status(200).json(updatedListing);
+    } else {
+      res.status(400).json({ msg: 'No fields to update.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error, please try again later.' });
   }
 }
 
@@ -313,12 +463,20 @@ export async function postComment(req, res) {
     acco.comments.push(newComment._id);
     await acco.save();
 
+    const populatedAccom = await Accommodation.findById(accoId).populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+      },
+    });
+
     await User.updateOne(
       { _id: userId },
-      { $push: { comments: newComment._id } }
+      { $push: { comments: newComment._id } },
+      { new: true }
     );
 
-    res.status(200).json(newComment);
+    res.status(200).json(populatedAccom);
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error!' });
