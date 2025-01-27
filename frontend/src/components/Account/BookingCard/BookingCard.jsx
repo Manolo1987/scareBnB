@@ -40,7 +40,7 @@ export default function BookingCard({ booking, cancelBooking, currentDate }) {
         </div>
         <div className='infoBody'>
           <p>
-            Guest: {booking.guest.firstName} {booking.guest.lastName}
+            Host: {booking.host.firstName} {booking.host.lastName}
           </p>
           <p className={styles.cardNumberOfGuests}>
             Number of Guests: {booking.numberOfGuests}
