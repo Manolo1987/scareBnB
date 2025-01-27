@@ -3,6 +3,7 @@ import '../../../App.css';
 import styles from './Profile.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/UserAuthContext.jsx';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 export default function Profile() {
   const {
@@ -315,7 +316,11 @@ export default function Profile() {
                       showPassword ? 'Hide password' : 'Show password'
                     }
                   >
-                    {showPassword ? '👻' : '👁️'}
+                    {showPassword ? (
+                      <EyeSlash size={22} weight='duotone' />
+                    ) : (
+                      <Eye size={22} weight='duotone' />
+                    )}
                   </span>
                 </div>
                 {errors.password && (
@@ -340,7 +345,11 @@ export default function Profile() {
                       showConfirmPassword ? 'Hide password' : 'Show password'
                     }
                   >
-                    {showConfirmPassword ? '👻' : '👁️'}
+                    {showConfirmPassword ? (
+                      <EyeSlash size={22} weight='duotone' />
+                    ) : (
+                      <Eye size={22} weight='duotone' />
+                    )}
                   </span>
                 </div>
                 {errors.confirmPassword && (
