@@ -2,7 +2,7 @@ main {
   position: relative;
   width: 100%;
   flex-grow: 1;
-  background: var(--gradient-circle), url('https://i.pinimg.com/originals/b0/eb/41/b0eb41bdb91e75f326a0b1056fa088c6.jpg');
+  background: var(--gradient-circle), url('../../assets/images/HG-Holzwand.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
