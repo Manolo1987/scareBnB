@@ -140,7 +140,9 @@ export default function UserAuthContextProvider({ children }) {
         setUser(null); // set User back to null
         navigate('/');
 
-        window.location.reload();
+        Cookies.set('jwt', '', { expires: new Date(0), path: '/' });
+
+        //window.location.reload();
       }
     } catch (error) {
       console.error('Error during logout:', error);
