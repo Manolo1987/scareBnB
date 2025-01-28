@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Login.module.css';
 import { useAuth } from '../../../context/UserAuthContext';
 import { Eye, EyeSlash } from '@phosphor-icons/react';
@@ -17,6 +17,15 @@ export default function Login() {
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (showLogin) {
+      setFormData({
+        email: '',
+        password: '',
+      });
+    }
+  }, [showLogin]);
 
   const closeAndReset = () => {
     setShowLogin(false);
