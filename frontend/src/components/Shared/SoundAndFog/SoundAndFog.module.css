@@ -1,0 +1,127 @@
+.fogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.toggleButton {
+  position: fixed;
+  background: transparent;
+  color: var(--color-mediumDark);
+  border-radius: 50%;
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--color-medium);
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.forFog {
+  bottom: 10px;
+  left: 20px;
+}
+
+.forSound {
+  bottom: 40px;
+  left: 20px;
+}
+
+.fogOverlay.active .fogLayer1 {
+  animation: fogMovement 80s linear infinite, fogFade 60s ease-in-out infinite;
+}
+
+.fogOverlay.active .fogLayer2 {
+  animation: fogMovementUpDown 90s linear infinite,
+    fogFade 90s ease-in-out infinite;
+}
+
+.fogOverlay.active .fogLayer3 {
+  animation: fogMovement 80s linear infinite,
+    fogFade 60s ease-in-out infinite alternate;
+  animation-delay: 35s;
+}
+
+.fogOverlay.inactive .fogLayer1,
+.fogOverlay.inactive .fogLayer2,
+.fogOverlay.inactive .fogLayer3 {
+  animation: none;
+}
+
+.fogLayer1,
+.fogLayer2,
+.fogLayer3 {
+  position: absolute;
+  top: 0;
+  left: -500px;
+  width: 300%;
+  height: 300%;
+  background-repeat: repeat;
+  background-size: cover;
+  opacity: 0;
+  animation-timing-function: ease-in-out;
+}
+
+.fogLayer1 {
+  background-image: url('../../../assets/images/white-diamond.png');
+}
+
+.fogLayer2 {
+  background-image: url('../../../assets/images/white-diamond.png');
+}
+
+.fogLayer3 {
+  background-image: url('../../../assets/images/white-diamond.png');
+  animation-delay: 35s;
+}
+
+@keyframes fogMovement {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes fogMovementUpDown {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -60%);
+  }
+}
+
+@keyframes fogFade {
+  0%,
+  5% {
+    opacity: 0;
+  }
+  5%,
+  80% {
+    opacity: 0.18;
+  }
+  90%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .fogLayer1,
+  .fogLayer2,
+  .fogLayer3 {
+    animation: none; /* funktioniert durch toggle anscheinend nicht */
+  }
+}
