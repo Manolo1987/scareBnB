@@ -5,6 +5,7 @@ import Footer from '../../components/Shared/Footer/Footer.jsx';
 import styles from './Layout.module.css';
 import BackToTop from '../../components/Shared/BackToTop/BackToTop.jsx';
 import CookieBanner from '../../components/Shared/CookieBanner/Cookiebanner.jsx';
+import SoundAndFog from '../../components/Shared/SoundAndFog/SoundAndFog.jsx';
 
 export default function Layout() {
   return (
@@ -16,6 +17,7 @@ export default function Layout() {
         <BackToTop />
       </main>
       <Footer />
+      <SoundAndFog />
     </>
   );
 }
