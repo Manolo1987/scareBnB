@@ -314,7 +314,7 @@ export default function HandleListings() {
       <ListingsNav />
       <div className='formWrapper'>
         <div className='headingEffectContainer'>
-          <h1 className='headingEffect'>Create a new listing</h1>
+          <h2 className='headingEffect'>Create a new listing</h2>
         </div>
         <form className='accountForm' onSubmit={handleSubmit}>
           <div className='inputContainer'>

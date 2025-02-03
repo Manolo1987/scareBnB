@@ -23,7 +23,7 @@ export default function BookedListings() {
       <ListingsNav />
       <div className='accountWrapper'>
         <div className='headingEffectContainer'>
-          <h1 className='headingEffect'>My Booked Listings</h1>
+          <h2 className='headingEffect'>My Booked Listings</h2>
         </div>
         {isLoading && <LoadingSpinner />}
         {!isLoading && myBookedListings?.length < 1 && (

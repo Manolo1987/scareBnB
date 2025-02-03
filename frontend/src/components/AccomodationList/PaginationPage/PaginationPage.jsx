@@ -7,16 +7,13 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
     const pages = [];
     const maxVisiblePages = 3;
 
-    // Berechne Start- und Endseiten
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    // Korrigiere Start-/Endwerte, wenn es nur wenige Seiten gibt
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
-    // Füge erste Seiten und Ellipsen hinzu
     if (startPage > 2) {
       pages.push(1);
       if (startPage > 3) {
@@ -24,12 +21,10 @@ function PaginationPage({ currentPage, totalPages, onPageChange }) {
       }
     }
 
-    // Füge alle Seiten im Bereich hinzu
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
 
-    // Füge letzte Seiten und Ellipsen hinzu
     if (endPage < totalPages - 1) {
       pages.push('...');
       pages.push(totalPages);
