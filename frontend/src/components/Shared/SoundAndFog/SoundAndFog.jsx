@@ -49,11 +49,21 @@ export default function SoundAndFog() {
 
       <audio ref={audioRef} src={bgAtmo} loop />
 
-      <button onClick={toggleFog} className={`${styles.toggleButton} ${styles.forFog}`}>
+      <button
+        onClick={toggleFog}
+        className={`${styles.toggleButton} ${styles.forFog}`}
+        aria-label={isFogActive ? 'Nebel deaktivieren' : 'Nebel aktivieren'}
+        title={isFogActive ? 'Nebel deaktivieren' : 'Nebel aktivieren'}
+      >
         {isFogActive ? <CloudSlash size={26} /> : <Cloud size={26} />}
       </button>
 
-      <button onClick={toggleSound} className={`${styles.toggleButton} ${styles.forSound}`}>
+      <button
+        onClick={toggleSound}
+        className={`${styles.toggleButton} ${styles.forSound}`}
+        aria-label={isSoundActive ? 'Sound deaktivieren' : 'Sound aktivieren'}
+        title={isSoundActive ? 'Sound deaktivieren' : 'Sound aktivieren'}
+      >
         {isSoundActive ? (
           <SpeakerSimpleSlash size={26} />
         ) : (

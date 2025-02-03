@@ -25,7 +25,7 @@ export default function Listings() {
       <ListingsNav />
       <div className='accountWrapper'>
         <div className='headingEffectContainer'>
-          <h1 className='headingEffect'>My Listings</h1>
+          <h2 className='headingEffect'>My Listings</h2>
         </div>
         {isLoading && <LoadingSpinner />}
         {!isLoading && myListings?.length < 1 && (

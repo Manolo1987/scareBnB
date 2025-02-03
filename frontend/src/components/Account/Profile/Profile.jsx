@@ -178,7 +178,7 @@ export default function Profile() {
     <>
       <div className='accountWrapper'>
         <div className='headingEffectContainer'>
-          <h1 className='headingEffect'>My Profile</h1>
+          <h2 className='headingEffect'>My Profile</h2>
         </div>
         <div className={styles.profileInfo}>
           <table>
