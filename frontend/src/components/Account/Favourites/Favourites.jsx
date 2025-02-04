@@ -20,7 +20,7 @@ export default function Favourites() {
   return (
     <>
       <div className='headingEffectContainer'>
-        <h1 className='headingEffect'>Favourites</h1>
+        <h2 className='headingEffect'>Favourites</h2>
       </div>
       <div className={styles.favouritesContainer}>
         <div className={styles.accoGallery}>

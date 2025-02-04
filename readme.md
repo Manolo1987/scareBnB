@@ -47,6 +47,7 @@ A huge thank you to the following for their contributions:
 - "Haunted" Font by [fg studios](https://www.fgstudios.net/haunted-pro-font/)
 - "Face your Fear" Font by [David Kerkhoff](https://www.fontspace.com/david-kerkhoff)
 - "Special Elite" Font by [Astigmatic](https://fonts.google.com/specimen/Special+Elite?query=special+elite)
+- Music by [Mikhail Smusev](https://pixabay.com/users/sigmamusicart-36860929/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=256309) from [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=256309)
 
 ## To Do / Future Improvements
 

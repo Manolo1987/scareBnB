@@ -61,7 +61,7 @@ export default function BookedListingsCard({ listing }) {
           <a
             href={`mailto:${listing.guest.email}`}
             className='cardButton'
-            title={`Send an email at ${listing.guest.email}`}
+            title={`Send email to ${listing.guest.email}`}
             aria-label='Send an email'
           >
             <Envelope size={32} className='buttonIcon' />
