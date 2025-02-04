@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main>
+      <main className={styles.main}>
         <CookieBanner />
         <Outlet />
         <BackToTop />
